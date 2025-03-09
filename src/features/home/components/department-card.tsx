@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from "next/image";
 
 interface DepartmentCardProps {
   title: string;
@@ -14,11 +14,11 @@ export default function DepartmentCard({
   description,
 }: DepartmentCardProps) {
   return (
-    <div className='flex flex-wrap justify-center items-center bg-blue-800 p-4 rounded-md text-white text-sm'>
-      <div className='w-48 lg:w-56'>
+    <div className="bg-primary text-primary-foreground flex flex-wrap items-center justify-center rounded-md p-4 text-sm">
+      <div className="w-48 lg:w-56">
         <Image src={imageSrc} alt={altText} width={224} height={250} />
-        <h4 className='pt-4 pb-2 font-semibold text-base'>{title}</h4>
-        <p className='text-sm'>{description}</p>
+        <h4 className="pt-4 pb-2 text-base font-semibold">{title}</h4>
+        <p className="text-sm">{description}</p>
       </div>
     </div>
   );
