@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
-import SmallLabel from './small-label';
+import { ReactNode } from "react";
+import SmallLabel from "./small-label";
 
 interface WorkOrderGroupProps {
   labelText: string;
@@ -11,9 +11,9 @@ export default function WorkOrderGroup({
   children,
 }: WorkOrderGroupProps) {
   return (
-    <div className='flex flex-col'>
+    <div className="flex flex-col">
       <SmallLabel>{labelText}</SmallLabel>
-      <span className='font-semibold text-xs md:text-sm'>{children}</span>
+      <span className="text-xs font-semibold md:text-sm">{children}</span>
     </div>
   );
 }

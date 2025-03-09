@@ -1,4 +1,4 @@
-import { Part } from '../../types/work-order.types';
+import { Part } from "../../types/work-order.types";
 
 interface ServicePartsTableProps {
   data: {
@@ -8,30 +8,33 @@ interface ServicePartsTableProps {
 
 export default function ServicePartsTable({ data }: ServicePartsTableProps) {
   return (
-    <table className='w-full bg-blue-50 text-left rounded-md'>
+    <table className="bg-secondary/30 w-full rounded-md text-left">
       <thead>
-        <tr className='text-blue-800 text-xs'>
-          <th scope='column' className='text-left font-medium px-2'>
+        <tr className="text-primary text-xs">
+          <th scope="column" className="px-2 py-1 text-left font-medium">
             Part Name
           </th>
-          <th scope='column' className='font-medium px-2'>
-            Qty<span className='block'>Need</span>
+          <th scope="column" className="px-2 py-1 font-medium">
+            Qty<span className="block">Need</span>
           </th>
-          <th scope='column' className='font-medium px-2'>
-            Qty<span className='block'>Stock</span>
+          <th scope="column" className="px-2 py-1 font-medium">
+            Qty<span className="block">Stock</span>
           </th>
         </tr>
       </thead>
       <tbody>
         {data.parts.map((part) => (
-          <tr key={part.name} className='border-t-2 border-white'>
-            <th scope='row' className='font-normal px-2 text-xs md:text-sm'>
+          <tr key={part.name}>
+            <th
+              scope="row"
+              className="px-2 py-1 text-xs font-normal md:text-sm"
+            >
               {part.name}
             </th>
-            <td className='font-normal px-2 text-xs md:text-sm'>
+            <td className="px-2 py-1 text-xs font-normal md:text-sm">
               {part.qtyNeed}
             </td>
-            <td className='font-normal px-2 text-xs md:text-sm'>
+            <td className="px-2 py-1 text-xs font-normal md:text-sm">
               {part.qtyStock}
             </td>
           </tr>
