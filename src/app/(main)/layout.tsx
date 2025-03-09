@@ -6,10 +6,10 @@ export default function ClientLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       <Header navData={clientNavItems} />
       <main className="flex-grow">{children}</main>
       <Footer />
-    </>
+    </div>
   );
 }
