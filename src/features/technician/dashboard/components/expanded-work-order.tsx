@@ -1,10 +1,10 @@
 // TODO - update supabase data sending
-import SmallLabel from "./small-label";
+import SmallLabel from "@/components/dashboard/small-label";
 import ServicePartsTable from "./service-parts-table";
-import { WorkOrderData } from "../../types/work-order.types";
+import { WorkOrderData } from "@/lib/types/work-order.types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons/faCircleCheck";
-import WorkOrderGroup from "./work-order-group";
+import WorkOrderGroup from "@/components/dashboard/work-order-group";
 import { useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 

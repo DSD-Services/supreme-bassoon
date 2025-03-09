@@ -6,9 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons/faBars";
 import MobileMenu from "./mobile-menu";
 import MotionButtonWrapper from "../buttons/motion-button-wrapper";
-import { clientNavItems } from "./nav-items";
+import { NavDataItem } from "./types/header.types";
+interface NavProps {
+  navData: NavDataItem[];
+}
 
-export default function Nav() {
+export default function Nav({ navData }: NavProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleMenuClick = () => {
@@ -18,7 +21,7 @@ export default function Nav() {
   return (
     <nav>
       <div className="hidden gap-8 font-semibold md:flex">
-        <NavLinks navData={clientNavItems} />
+        <NavLinks navData={navData} />
       </div>
       <MotionButtonWrapper>
         <div
@@ -34,7 +37,11 @@ export default function Nav() {
           />
         </div>
       </MotionButtonWrapper>
-      <MobileMenu handleMenuClick={handleMenuClick} isMenuOpen={isMenuOpen} />
+      <MobileMenu
+        handleMenuClick={handleMenuClick}
+        isMenuOpen={isMenuOpen}
+        navData={navData}
+      />
     </nav>
   );
 }

@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Sofia_Sans } from "next/font/google";
 import "./globals.css";
-import Header from "../components/header/header";
-import Footer from "../components/footer";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
@@ -20,15 +18,14 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
+  showHeaderFooter?: boolean;
 }>) {
   return (
     <html lang="en">
       <body
         className={`${sofiaSans.className} flex min-h-screen flex-col antialiased`}
       >
-        <Header />
         <main className="flex-grow">{children}</main>
-        <Footer />
       </body>
     </html>
   );

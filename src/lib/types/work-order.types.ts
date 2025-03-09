@@ -16,7 +16,7 @@ export interface WorkOrderData {
   clientCity: string;
   clientState: string;
   clientPostalCode: string;
-  workOrderStatus: 'pending' | 'complete' | 'cancelled';
+  workOrderStatus: "pending" | "complete" | "cancelled";
   clientPrimaryPhone: string;
   clientSecondaryPhone: string;
   clientEmail: string;

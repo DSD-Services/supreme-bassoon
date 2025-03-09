@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import SmallLabel from "./small-label";
+import SmallLabel from "@/components/dashboard/small-label";
 
 interface WorkOrderGroupProps {
   labelText: string;

@@ -2,12 +2,8 @@
 
 import Link from "next/link";
 import MotionButtonWrapper from "../buttons/motion-button-wrapper";
-
-type NavDataItem = {
-  label: string;
-  href: string;
-  className: string;
-};
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { NavDataItem } from "./types/header.types";
 
 interface NavLinksProps {
   navData: NavDataItem[];
@@ -19,7 +15,14 @@ export default function NavLinks({ navData }: NavLinksProps) {
       {navData.map((item) => (
         <MotionButtonWrapper key={item.label}>
           <Link href={item.href} className={item.className}>
-            {item.label}
+            {item.icon ? (
+              <>
+                <FontAwesomeIcon icon={item.icon} className="mr-2" />
+                {item.label}
+              </>
+            ) : (
+              item.label
+            )}
           </Link>
         </MotionButtonWrapper>
       ))}

@@ -9,10 +9,10 @@ import {
   faCheckCircle,
   faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { WorkOrderData } from "../../types/work-order.types";
-import SmallLabel from "./small-label";
+import SmallLabel from "@/components/dashboard/small-label";
 import ExpandedWorkOrder from "./expanded-work-order";
-import WorkOrderGroup from "./work-order-group";
+import WorkOrderGroup from "@/components/dashboard/work-order-group";
+import { WorkOrderData } from "@/lib/types/work-order.types";
 
 interface WorkOrderCardProps {
   data: WorkOrderData;

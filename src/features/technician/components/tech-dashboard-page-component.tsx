@@ -1,4 +1,4 @@
-import WorkOrderList from "./work-order-list";
+import WorkOrderList from "../dashboard/components/work-order-list";
 
 export default function TechnicianDashboardPageComponent() {
   return (
