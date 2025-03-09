@@ -3,6 +3,9 @@ import { Sofia_Sans } from 'next/font/google';
 import './globals.css';
 import Header from './components/header/Header';
 import Footer from './components/Footer';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import { config } from '@fortawesome/fontawesome-svg-core';
+config.autoAddCss = false;
 
 const sofiaSans = Sofia_Sans({
   subsets: ['latin'],
@@ -20,7 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${sofiaSans.className} antialiased`}>
+      <body
+        className={`${sofiaSans.className} antialiased flex flex-col min-h-screen`}
+      >
         <Header />
         <main className='flex-grow'>{children}</main>
         <Footer />
