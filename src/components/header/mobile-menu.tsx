@@ -6,16 +6,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NavLinks from "./nav-links";
 import { AnimatePresence, motion } from "framer-motion";
 import MotionButtonWrapper from "../buttons/motion-button-wrapper";
-import { clientMobileNavItems } from "./nav-items";
+import { NavDataItem } from "./types/header.types";
 
 interface MobileMenuProps {
   handleMenuClick: () => void;
   isMenuOpen: boolean;
+  navData: NavDataItem[];
 }
 
 export default function MobileMenu({
   handleMenuClick,
   isMenuOpen,
+  navData,
 }: MobileMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -82,7 +84,7 @@ export default function MobileMenu({
               </MotionButtonWrapper>
             </div>
             <div className="text-primary-foreground flex flex-col gap-8 p-6 font-semibold transition">
-              <NavLinks navData={clientMobileNavItems} />
+              <NavLinks navData={navData} />
             </div>
           </motion.div>
         </>
