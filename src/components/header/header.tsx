@@ -2,10 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Nav from "./nav";
 import { motion } from "framer-motion";
+import Nav from "./nav";
+import { NavDataItem } from "./types/header.types";
 
-export default function Header() {
+interface HeaderProps {
+  navData: NavDataItem[];
+}
+
+export default function Header({ navData }: HeaderProps) {
   return (
     <header className="bg-primary text-background flex h-16 items-center justify-between pr-6 pl-4 md:px-8">
       <motion.div
@@ -33,7 +38,7 @@ export default function Header() {
           </div>
         </Link>
       </motion.div>
-      <Nav />
+      <Nav navData={navData} />
     </header>
   );
 }
