@@ -1,3 +1,5 @@
+import SchedulePageComponent from "@/features/schedule/components/schedule-page-component";
+
 export default function Page() {
-  return <div>Page</div>;
+  return <SchedulePageComponent />;
 }
