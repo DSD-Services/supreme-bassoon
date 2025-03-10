@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import NavLinks from "./nav-links";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons/faBars";
 import MobileMenu from "./mobile-menu";
 import MotionButtonWrapper from "../buttons/motion-button-wrapper";
-import { NavDataItem } from "./types/header.types";
+import { NavDataItem } from "./nav-items";
+import { NavLink } from "./nav-link";
+
 interface NavProps {
   navData: NavDataItem[];
 }
@@ -21,7 +22,14 @@ export default function Nav({ navData }: NavProps) {
   return (
     <nav>
       <div className="hidden gap-8 font-semibold md:flex">
-        <NavLinks navData={navData} />
+        {navData.map((item) => (
+          <NavLink
+            key={item.label}
+            href={item.href}
+            label={item.label}
+            icon={item.icon}
+          />
+        ))}
       </div>
       <MotionButtonWrapper>
         <div

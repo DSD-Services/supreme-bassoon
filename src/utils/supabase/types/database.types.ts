@@ -9,21 +9,48 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      department: {
+      department_service_types: {
+        Row: {
+          department_id: number
+          service_type_id: number
+        }
+        Insert: {
+          department_id: number
+          service_type_id: number
+        }
+        Update: {
+          department_id?: number
+          service_type_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "department_service_types_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "department_service_types_service_type_id_fkey"
+            columns: ["service_type_id"]
+            isOneToOne: false
+            referencedRelation: "service_types"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      departments: {
         Row: {
           id: number
           name: string
-          service_type_id: number[] | null
         }
         Insert: {
-          id?: number
+          id?: never
           name: string
-          service_type_id?: number[] | null
         }
         Update: {
-          id?: number
+          id?: never
           name?: string
-          service_type_id?: number[] | null
         }
         Relationships: []
       }
@@ -31,19 +58,19 @@ export type Database = {
         Row: {
           id: number
           part_id: number | null
-          quantity: number
+          quantity: number | null
           work_order_id: number | null
         }
         Insert: {
-          id?: number
+          id?: never
           part_id?: number | null
-          quantity: number
+          quantity?: number | null
           work_order_id?: number | null
         }
         Update: {
-          id?: number
+          id?: never
           part_id?: number | null
-          quantity?: number
+          quantity?: number | null
           work_order_id?: number | null
         }
         Relationships: [
@@ -51,58 +78,35 @@ export type Database = {
             foreignKeyName: "missing_parts_part_id_fkey"
             columns: ["part_id"]
             isOneToOne: false
-            referencedRelation: "part"
+            referencedRelation: "parts"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "missing_parts_work_order_id_fkey"
             columns: ["work_order_id"]
             isOneToOne: false
-            referencedRelation: "work_order"
-            referencedColumns: ["work_order_id"]
-          },
-        ]
-      }
-      part: {
-        Row: {
-          id: number
-          name: string
-        }
-        Insert: {
-          id?: number
-          name: string
-        }
-        Update: {
-          id?: number
-          name?: string
-        }
-        Relationships: []
-      }
-      parts_inventory: {
-        Row: {
-          id: number
-          part_id: number | null
-          quantity: number
-        }
-        Insert: {
-          id?: number
-          part_id?: number | null
-          quantity: number
-        }
-        Update: {
-          id?: number
-          part_id?: number | null
-          quantity?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "parts_inventory_part_id_fkey"
-            columns: ["part_id"]
-            isOneToOne: false
-            referencedRelation: "part"
+            referencedRelation: "work_orders"
             referencedColumns: ["id"]
           },
         ]
+      }
+      parts: {
+        Row: {
+          id: number
+          name: string
+          quantity: number | null
+        }
+        Insert: {
+          id?: never
+          name: string
+          quantity?: number | null
+        }
+        Update: {
+          id?: never
+          name?: string
+          quantity?: number | null
+        }
+        Relationships: []
       }
       profiles: {
         Row: {
@@ -156,19 +160,19 @@ export type Database = {
         Row: {
           id: number
           part_id: number | null
-          quantity: number
+          quantity: number | null
           work_order_id: number | null
         }
         Insert: {
-          id?: number
+          id?: never
           part_id?: number | null
-          quantity: number
+          quantity?: number | null
           work_order_id?: number | null
         }
         Update: {
-          id?: number
+          id?: never
           part_id?: number | null
-          quantity?: number
+          quantity?: number | null
           work_order_id?: number | null
         }
         Relationships: [
@@ -176,74 +180,75 @@ export type Database = {
             foreignKeyName: "reserved_parts_part_id_fkey"
             columns: ["part_id"]
             isOneToOne: false
-            referencedRelation: "part"
+            referencedRelation: "parts"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "reserved_parts_work_order_id_fkey"
             columns: ["work_order_id"]
             isOneToOne: false
-            referencedRelation: "work_order"
-            referencedColumns: ["work_order_id"]
+            referencedRelation: "work_orders"
+            referencedColumns: ["id"]
           },
         ]
       }
-      service_type: {
-        Row: {
-          service_type_id: number
-          service_type_name: string
-        }
-        Insert: {
-          service_type_id?: number
-          service_type_name: string
-        }
-        Update: {
-          service_type_id?: number
-          service_type_name?: string
-        }
-        Relationships: []
-      }
       service_type_parts: {
         Row: {
+          id: number
           part_id: number | null
-          part_quantity: number
+          quantity: number | null
           service_type_id: number | null
-          service_type_parts_id: number
         }
         Insert: {
+          id?: never
           part_id?: number | null
-          part_quantity: number
+          quantity?: number | null
           service_type_id?: number | null
-          service_type_parts_id?: number
         }
         Update: {
+          id?: never
           part_id?: number | null
-          part_quantity?: number
+          quantity?: number | null
           service_type_id?: number | null
-          service_type_parts_id?: number
         }
         Relationships: [
           {
             foreignKeyName: "service_type_parts_part_id_fkey"
             columns: ["part_id"]
             isOneToOne: false
-            referencedRelation: "part"
+            referencedRelation: "parts"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "service_type_parts_service_type_id_fkey"
             columns: ["service_type_id"]
             isOneToOne: false
-            referencedRelation: "service_type"
-            referencedColumns: ["service_type_id"]
+            referencedRelation: "service_types"
+            referencedColumns: ["id"]
           },
         ]
+      }
+      service_types: {
+        Row: {
+          id: number
+          name: string
+        }
+        Insert: {
+          id?: never
+          name: string
+        }
+        Update: {
+          id?: never
+          name?: string
+        }
+        Relationships: []
       }
       technician_details: {
         Row: {
           break_end_time: string | null
           break_start_time: string | null
           created_at: string
+          department_id: number | null
           id: string
           updated_at: string
           work_days: Database["public"]["Enums"]["workday"][] | null
@@ -254,6 +259,7 @@ export type Database = {
           break_end_time?: string | null
           break_start_time?: string | null
           created_at?: string
+          department_id?: number | null
           id: string
           updated_at?: string
           work_days?: Database["public"]["Enums"]["workday"][] | null
@@ -264,6 +270,7 @@ export type Database = {
           break_end_time?: string | null
           break_start_time?: string | null
           created_at?: string
+          department_id?: number | null
           id?: string
           updated_at?: string
           work_days?: Database["public"]["Enums"]["workday"][] | null
@@ -271,6 +278,13 @@ export type Database = {
           work_start_time?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "technician_details_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "technician_details_id_fkey"
             columns: ["id"]
@@ -280,54 +294,68 @@ export type Database = {
           },
         ]
       }
-      work_order: {
+      work_orders: {
         Row: {
-          appointment_end_date_time: string
+          appointment_end: string | null
           appointment_notes: string | null
-          appointment_start_date_time: string
-          client_id: number
-          department_id: number
-          service_type_id: number
-          status: string
-          technician_id: number | null
-          work_order_id: number
+          appointment_start: string | null
+          client_id: string | null
+          department_id: number | null
+          id: number
+          service_type_id: number | null
+          status: Database["public"]["Enums"]["workorderstatus"]
+          technician_id: string | null
         }
         Insert: {
-          appointment_end_date_time: string
+          appointment_end?: string | null
           appointment_notes?: string | null
-          appointment_start_date_time: string
-          client_id: number
-          department_id: number
-          service_type_id: number
-          status: string
-          technician_id?: number | null
-          work_order_id?: number
+          appointment_start?: string | null
+          client_id?: string | null
+          department_id?: number | null
+          id?: never
+          service_type_id?: number | null
+          status?: Database["public"]["Enums"]["workorderstatus"]
+          technician_id?: string | null
         }
         Update: {
-          appointment_end_date_time?: string
+          appointment_end?: string | null
           appointment_notes?: string | null
-          appointment_start_date_time?: string
-          client_id?: number
-          department_id?: number
-          service_type_id?: number
-          status?: string
-          technician_id?: number | null
-          work_order_id?: number
+          appointment_start?: string | null
+          client_id?: string | null
+          department_id?: number | null
+          id?: never
+          service_type_id?: number | null
+          status?: Database["public"]["Enums"]["workorderstatus"]
+          technician_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "work_order_department_id_fkey"
-            columns: ["department_id"]
+            foreignKeyName: "work_orders_client_id_fkey"
+            columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "department"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "work_order_service_type_id_fkey"
+            foreignKeyName: "work_orders_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "work_orders_service_type_id_fkey"
             columns: ["service_type_id"]
             isOneToOne: false
-            referencedRelation: "service_type"
-            referencedColumns: ["service_type_id"]
+            referencedRelation: "service_types"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "work_orders_technician_id_fkey"
+            columns: ["technician_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -348,6 +376,7 @@ export type Database = {
         | "FRIDAY"
         | "SATURDAY"
         | "SUNDAY"
+      workorderstatus: "PENDING" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED"
     }
     CompositeTypes: {
       [_ in never]: never

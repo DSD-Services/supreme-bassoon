@@ -1,15 +1,18 @@
 import Header from "@/components/header/header";
 import Footer from "@/components/footer";
 import { clientNavItems } from "@/components/header/nav-items";
+import Nav from "@/components/header/nav";
 
-export default function AccountLayout({
+export default function LoginLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header navData={clientNavItems} />
-      <main className="flex-grow">{children}</main>
+    <>
+      <Header>
+        <Nav navData={clientNavItems} />
+      </Header>
+      <main className="min-h-[calc(100vh-4rem-4rem)]">{children}</main>
       <Footer />
-    </div>
+    </>
   );
 }

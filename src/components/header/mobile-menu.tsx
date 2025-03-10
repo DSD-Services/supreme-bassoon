@@ -3,10 +3,10 @@
 import { useEffect, useRef } from "react";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import NavLinks from "./nav-links";
 import { AnimatePresence, motion } from "framer-motion";
 import MotionButtonWrapper from "../buttons/motion-button-wrapper";
-import { NavDataItem } from "./types/header.types";
+import { NavDataItem } from "./nav-items";
+import { NavLink } from "./nav-link";
 
 interface MobileMenuProps {
   handleMenuClick: () => void;
@@ -84,7 +84,14 @@ export default function MobileMenu({
               </MotionButtonWrapper>
             </div>
             <div className="text-primary-foreground flex flex-col gap-8 p-6 font-semibold transition">
-              <NavLinks navData={navData} />
+              {navData.map((item) => (
+                <NavLink
+                  key={item.label}
+                  href={item.href}
+                  label={item.label}
+                  icon={item.icon}
+                />
+              ))}
             </div>
           </motion.div>
         </>

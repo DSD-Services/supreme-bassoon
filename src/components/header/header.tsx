@@ -3,14 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import Nav from "./nav";
-import { NavDataItem } from "./types/header.types";
 
 interface HeaderProps {
-  navData: NavDataItem[];
+  children?: React.ReactNode;
 }
 
-export default function Header({ navData }: HeaderProps) {
+export default function Header({ children }: HeaderProps) {
   return (
     <header className="bg-primary text-background flex h-16 items-center justify-between pr-6 pl-4 md:px-8">
       <motion.div
@@ -38,7 +36,8 @@ export default function Header({ navData }: HeaderProps) {
           </div>
         </Link>
       </motion.div>
-      <Nav navData={navData} />
+
+      {children}
     </header>
   );
 }
