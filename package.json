@@ -1,34 +1,40 @@
 {
-  "name": "my-turborepo",
-  "version": "0.0.0",
+  "name": "supreme-bassoon",
+  "version": "0.1.0",
   "private": true,
-  "description": "",
-  "author": "",
-  "license": "UNLICENSED",
   "scripts": {
-    "dev": "turbo run dev",
-    "dev:api": "turbo run dev --filter=\"api\"",
-    "dev:web": "turbo run dev --filter=\"web\"",
-    "build": "turbo run build",
-    "build:packages": "turbo run build --filter=\"./packages/*\"",
-    "db:generate": "turbo run db:generate",
-    "test": "turbo run test",
-    "test:e2e": "turbo run test:e2e",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@supabase/ssr": "^0.5.2",
+    "@supabase/supabase-js": "^2.49.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.4.10",
+    "next": "15.2.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.2",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
-    "prettier": "^3.2.5",
-    "turbo": "^2.4.4"
-  },
-  "engines": {
-    "node": ">=18"
-  },
-  "packageManager": "npm@10.9.2",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.2.1",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "supabase": "^2.15.8",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
 }
