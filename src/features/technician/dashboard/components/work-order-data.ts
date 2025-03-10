@@ -1,4 +1,4 @@
-import { WorkOrderData } from "@/lib/types/work-order.types";
+import { WorkOrderData } from "@/features/technician/dashboard/types/work-order.types";
 
 export const workOrderData: WorkOrderData[] = [
   {
