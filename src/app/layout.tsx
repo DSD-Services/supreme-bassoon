@@ -18,15 +18,10 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-  showHeaderFooter?: boolean;
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${sofiaSans.className} flex min-h-screen flex-col antialiased`}
-      >
-        <main className="flex-grow">{children}</main>
-      </body>
+      <body className={`${sofiaSans.className} antialiased`}>{children}</body>
     </html>
   );
 }
