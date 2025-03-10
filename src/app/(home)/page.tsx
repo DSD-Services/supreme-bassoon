@@ -4,6 +4,7 @@ export default function Page() {
   return (
     <>
       <HomePageComponent />
+      <div id="modal-root" />
     </>
   );
 }
