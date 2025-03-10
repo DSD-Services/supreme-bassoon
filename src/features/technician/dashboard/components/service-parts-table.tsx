@@ -1,4 +1,4 @@
-import { Part } from "@/lib/types/work-order.types";
+import { Part } from "@/features/technician/dashboard/types/work-order.types";
 
 interface ServicePartsTableProps {
   data: {
