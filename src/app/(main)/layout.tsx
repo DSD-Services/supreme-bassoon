@@ -1,15 +1,15 @@
 import Header from "@/components/header/header";
 import Footer from "@/components/footer";
-import { clientNavItems } from "@/components/header/nav-items";
+import { mainNavItems } from "@/components/header/nav-items";
 import Nav from "@/components/header/nav";
 
-export default function ClientLayout({
+export default function MainLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
       <Header>
-        <Nav navData={clientNavItems} />
+        <Nav navData={mainNavItems} />
       </Header>
       <main className="min-h-[calc(100vh-4rem-4rem)]">{children}</main>
       <Footer />

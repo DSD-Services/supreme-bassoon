@@ -18,7 +18,6 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-  showHeaderFooter?: boolean;
 }>) {
   return (
     <html lang="en">

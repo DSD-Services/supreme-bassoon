@@ -1,11 +1,37 @@
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import {
+  faCalendar,
+  faDashboard,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
+import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import type { UserRole } from "@/utils/supabase/types";
 
 export interface NavDataItem {
   label: string;
   href: string;
   icon?: IconDefinition;
+  roles?: UserRole[];
 }
+
+export const mainNavItems: NavDataItem[] = [
+  {
+    label: "Account",
+    href: "/account",
+    icon: faUser,
+  },
+  {
+    label: "Schedule",
+    href: "/schedule",
+    icon: faCalendar,
+    roles: ["CLIENT"],
+  },
+  {
+    label: "Dashboard",
+    href: "/dashboard",
+    icon: faDashboard,
+    roles: ["TECHNICIAN", "ADMIN"],
+  },
+];
 
 export const clientNavItems = [
   {

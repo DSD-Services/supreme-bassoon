@@ -28,6 +28,7 @@ export default function Nav({ navData }: NavProps) {
             href={item.href}
             label={item.label}
             icon={item.icon}
+            roles={item.roles}
           />
         ))}
       </div>
