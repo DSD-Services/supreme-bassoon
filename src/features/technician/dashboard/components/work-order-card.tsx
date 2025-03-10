@@ -12,7 +12,7 @@ import {
 import SmallLabel from "@/components/dashboard/small-label";
 import ExpandedWorkOrder from "./expanded-work-order";
 import WorkOrderGroup from "@/components/dashboard/work-order-group";
-import { WorkOrderData } from "@/lib/types/work-order.types";
+import { WorkOrderData } from "@/features/technician/dashboard/types/work-order.types";
 
 interface WorkOrderCardProps {
   data: WorkOrderData;
