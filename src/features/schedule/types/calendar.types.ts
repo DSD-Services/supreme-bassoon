@@ -17,16 +17,10 @@ export interface Appointment {
     customerName: string;
   };
 }
-
-export type WorkOrderStep =
-  | "appointment"
-  | "completeWorkOrder"
-  | "confirmation";
-
 export interface BackgroundEvent {
   id: string;
   start: string;
   end: string;
-  display: "background";
+  display?: string;
   classNames?: string[];
 }
