@@ -6,6 +6,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EventClickArg } from "@fullcalendar/core/index.js";
 import { Timeslot } from "../types/calendar.types";
+import { backgroundEvents } from "../data/events";
+import ScheduleWorkOrderCalendar from "./schedule-work-order-calendar";
 
 const workOrderSchema = z.object({
   clientId: z.string(),
@@ -37,8 +39,8 @@ export default function ScheduleWorkOrderForm() {
     null,
   );
   const [step, setStep] = useState(1);
-  const nextStep = () => setStep((prev) => prevStep + 1);
-  const prevStep = () => setStep((prev) => prevStep - 1);
+  const nextStep = () => setStep((prev) => prev + 1);
+  const prevStep = () => setStep((prev) => prev - 1);
   const [serviceTypes, setServiceTypes] = useState([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [filteredSlots, setFilteredSlots] = useState<Timeslot[]>([]);
@@ -73,7 +75,6 @@ export default function ScheduleWorkOrderForm() {
         const data = await response.json();
         setUserDetails(data);
 
-        // Prepopulate form with user data
         setValue("clientId", data.clientId || "");
         setValue("addressLine1", data.addressLine1 || "");
         setValue("addressLine2", data.addressLine2 || "");
@@ -183,6 +184,11 @@ export default function ScheduleWorkOrderForm() {
       {step === 2 && (
         <>
           <h2>Step 2: Select an Available Date</h2>
+          <ScheduleWorkOrderCalendar
+            backgroundEvents={backgroundEvents}
+            handleDateClick={handleDateClick}
+            handleEventClick={handleEventClick}
+          />
           <div>
             <button type="button" onClick={prevStep}>
               Back
