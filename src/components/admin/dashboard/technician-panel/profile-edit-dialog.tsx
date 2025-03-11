@@ -1,7 +1,7 @@
 "use client";
 
 import type { Profile } from "@/utils/supabase/types";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -10,6 +10,8 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { type ProfileInput, ProfileSchema } from "@/features/profile/schemas";
 import { updateProfile } from "@/features/profile/actions/update-profile.action";
+import { Button } from "@/components/kui/button";
+import { Input } from "@/components/kui/input";
 
 type ProfileEditDialogProps = { profile: Profile };
 
@@ -63,25 +65,27 @@ export const ProfileEditDialog = ({ profile }: ProfileEditDialogProps) => {
 
   return (
     <>
-      <button
+      <Button
+        size="sm"
+        className="text-foreground flex items-center bg-yellow-500 hover:bg-yellow-500/80"
         onClick={() => setIsOpen(true)}
-        className="flex w-fit cursor-pointer items-center rounded bg-yellow-500 px-2 py-1 text-sm font-bold uppercase transition hover:bg-yellow-500/80"
       >
         <FontAwesomeIcon icon={faPencil} className="mr-2 text-sm" />
         Edit
-      </button>
+      </Button>
 
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs">
           <div className="bg-background w-full max-w-md rounded border p-6 shadow-md">
             <div className="mb-4 flex justify-between">
               <h2 className="text-xl font-bold">Form</h2>
-              <button
+              <Button
+                variant="outline"
+                className="flex items-center rounded-full"
                 onClick={() => setIsOpen(false)}
-                className="text-lg font-bold"
               >
-                X
-              </button>
+                <FontAwesomeIcon icon={faX} size="xs" />
+              </Button>
             </div>
             <form onSubmit={handleSubmit(submit)} className="space-y-2">
               <div className="flex gap-2">
@@ -89,7 +93,7 @@ export const ProfileEditDialog = ({ profile }: ProfileEditDialogProps) => {
                   <label htmlFor="firstName" className="text-sm">
                     First Name
                   </label>
-                  <input
+                  <Input
                     type="text"
                     id="firstName"
                     {...register("firstName")}
@@ -99,14 +103,14 @@ export const ProfileEditDialog = ({ profile }: ProfileEditDialogProps) => {
                   <label htmlFor="lastName" className="text-sm">
                     Last Name
                   </label>
-                  <input type="text" id="lastName" {...register("lastName")} />
+                  <Input type="text" id="lastName" {...register("lastName")} />
                 </div>
               </div>
               <div className="flex flex-col">
                 <label htmlFor="addressLine1" className="text-sm">
                   Address Line 1
                 </label>
-                <input
+                <Input
                   type="text"
                   id="addressLine1"
                   {...register("addressLine1")}
@@ -116,7 +120,7 @@ export const ProfileEditDialog = ({ profile }: ProfileEditDialogProps) => {
                 <label htmlFor="addressLine2" className="text-sm">
                   Address Line 2
                 </label>
-                <input
+                <Input
                   type="text"
                   id="addressLine2"
                   {...register("addressLine2")}
@@ -127,20 +131,20 @@ export const ProfileEditDialog = ({ profile }: ProfileEditDialogProps) => {
                   <label htmlFor="city" className="text-sm">
                     City
                   </label>
-                  <input type="text" id="city" {...register("city")} />
+                  <Input type="text" id="city" {...register("city")} />
                 </div>
                 <div className="flex w-1/2 flex-col">
                   <label htmlFor="state" className="text-sm">
                     State
                   </label>
-                  <input type="text" id="state" {...register("state")} />
+                  <Input type="text" id="state" {...register("state")} />
                 </div>
               </div>
               <div className="flex flex-col">
                 <label htmlFor="postalCode" className="text-sm">
                   Postal Code
                 </label>
-                <input
+                <Input
                   type="text"
                   id="postalCode"
                   {...register("postalCode")}
@@ -150,7 +154,7 @@ export const ProfileEditDialog = ({ profile }: ProfileEditDialogProps) => {
                 <label htmlFor="primaryPhone" className="text-sm">
                   Primary Phone
                 </label>
-                <input
+                <Input
                   type="text"
                   id="primaryPhone"
                   {...register("primaryPhone")}
@@ -160,7 +164,7 @@ export const ProfileEditDialog = ({ profile }: ProfileEditDialogProps) => {
                 <label htmlFor="secondaryPhone" className="text-sm">
                   Secondary Phone
                 </label>
-                <input
+                <Input
                   type="text"
                   id="secondaryPhone"
                   {...register("secondaryPhone")}
@@ -170,16 +174,12 @@ export const ProfileEditDialog = ({ profile }: ProfileEditDialogProps) => {
                 <label htmlFor="role" className="text-sm">
                   Role
                 </label>
-                <input type="text" id="role" {...register("role")} />
+                <Input type="text" id="role" {...register("role")} />
               </div>
 
-              <button
-                type="submit"
-                className="bg-primary hover:bg-primary/70 text-primary-foreground w-full rounded px-2 py-1 font-bold transition disabled:opacity-50"
-                disabled={isSubmitting}
-              >
+              <Button type="submit" disabled={isSubmitting} className="w-full">
                 Update
-              </button>
+              </Button>
             </form>
           </div>
         </div>

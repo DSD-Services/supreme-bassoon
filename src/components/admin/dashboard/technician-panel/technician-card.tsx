@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { TechnicianDetailsEditDialog } from "./technician-details-edit-dialog copy";
 import { ProfileEditDialog } from "./profile-edit-dialog";
+import { Button } from "@/components/kui/button";
 
 type TechnicianCardProps = {
   profile: Profile & {
@@ -43,10 +44,11 @@ export const TechnicianCard = ({ profile }: TechnicianCardProps) => {
           {profile.technician_details?.departments?.name})
         </p>
         <div className="flex items-center gap-4">
-          <p className="bg-primary text-primary-foreground flex items-center rounded px-2 py-1 text-sm font-bold uppercase">
+          <p className="bg-primary text-primary-foreground rounded px-4 py-2 text-sm font-bold">
             {profile.role}
           </p>
-          <button
+          <Button
+            size="sm"
             onClick={handleChange}
             className="bg-primary hover:bg-primary/70 text-primary-foreground flex items-center rounded px-2 py-1 font-bold transition"
           >
@@ -55,7 +57,7 @@ export const TechnicianCard = ({ profile }: TechnicianCardProps) => {
             ) : (
               <FontAwesomeIcon icon={faAngleDown} />
             )}
-          </button>
+          </Button>
         </div>
       </div>
       {open ? (

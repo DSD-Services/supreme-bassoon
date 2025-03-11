@@ -94,17 +94,17 @@ export type Database = {
         Row: {
           id: number
           name: string
-          quantity: number | null
+          quantity: number
         }
         Insert: {
           id?: never
           name: string
-          quantity?: number | null
+          quantity?: number
         }
         Update: {
           id?: never
           name?: string
-          quantity?: number | null
+          quantity?: number
         }
         Relationships: []
       }

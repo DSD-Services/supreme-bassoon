@@ -1,7 +1,7 @@
 "use client";
 
 import { Department, TechnicianDetail } from "@/utils/supabase/types";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -13,6 +13,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
 import { updateTechnicianDetails } from "@/features/technician/actions/update-technician-details.action";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/kui/button";
+import { Input } from "@/components/kui/input";
 type TechnicianDetailsEditDialogProps = {
   technicianDetails:
     | (TechnicianDetail & { departments: { name: string } | null })
@@ -79,25 +81,27 @@ export const TechnicianDetailsEditDialog = ({
 
   return (
     <>
-      <button
+      <Button
+        size="sm"
+        className="text-foreground flex items-center bg-yellow-500 hover:bg-yellow-500/80"
         onClick={() => setIsOpen(true)}
-        className="flex w-fit cursor-pointer items-center rounded bg-yellow-500 px-2 py-1 text-sm font-bold uppercase transition hover:bg-yellow-500/80"
       >
         <FontAwesomeIcon icon={faPencil} className="mr-2 text-sm" />
         Edit
-      </button>
+      </Button>
 
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs">
           <div className="bg-background w-full max-w-sm rounded border p-6 shadow-md">
             <div className="mb-4 flex justify-between">
               <h2 className="text-xl font-bold">Form</h2>
-              <button
+              <Button
+                variant="outline"
+                className="flex items-center rounded-full"
                 onClick={() => setIsOpen(false)}
-                className="text-lg font-bold"
               >
-                X
-              </button>
+                <FontAwesomeIcon icon={faX} size="xs" />
+              </Button>
             </div>
             <form onSubmit={handleSubmit(submit)} className="space-y-4">
               <div className="flex justify-between gap-2">
@@ -108,7 +112,7 @@ export const TechnicianDetailsEditDialog = ({
                     <label htmlFor="workStartTime" className="text-sm">
                       Start Time
                     </label>
-                    <input
+                    <Input
                       type="time"
                       id="workStartTime"
                       {...register("workStartTime")}
@@ -118,7 +122,7 @@ export const TechnicianDetailsEditDialog = ({
                     <label htmlFor="workEndTime" className="text-sm">
                       End Time
                     </label>
-                    <input
+                    <Input
                       type="time"
                       id="workEndTime"
                       {...register("workEndTime")}
@@ -132,7 +136,7 @@ export const TechnicianDetailsEditDialog = ({
                     <label htmlFor="breakStartTime" className="text-sm">
                       Start Time
                     </label>
-                    <input
+                    <Input
                       type="time"
                       id="breakStartTime"
                       {...register("breakStartTime")}
@@ -142,7 +146,7 @@ export const TechnicianDetailsEditDialog = ({
                     <label htmlFor="breakEndTime" className="text-sm">
                       End Time
                     </label>
-                    <input
+                    <Input
                       type="time"
                       id="breakEndTime"
                       {...register("breakEndTime")}
@@ -180,7 +184,11 @@ export const TechnicianDetailsEditDialog = ({
                   Department
                 </label>
                 {
-                  <select id="departmentId" {...register("departmentId")}>
+                  <select
+                    id="departmentId"
+                    {...register("departmentId")}
+                    className="text-muted-foreground w-full appearance-none rounded border px-3 py-2 leading-tight shadow focus:outline-none"
+                  >
                     {departments.map((department) => (
                       <option key={department.id} value={department.id}>
                         {department.name}
@@ -189,13 +197,9 @@ export const TechnicianDetailsEditDialog = ({
                   </select>
                 }
               </div>
-              <button
-                type="submit"
-                className="bg-primary hover:bg-primary/70 text-primary-foreground w-full rounded px-2 py-1 font-bold transition disabled:opacity-50"
-                disabled={isSubmitting}
-              >
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
                 Update
-              </button>
+              </Button>
             </form>
           </div>
         </div>

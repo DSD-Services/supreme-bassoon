@@ -1,6 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { notFound, redirect } from "next/navigation";
 import type { Department, TechnicianDetail } from "@/utils/supabase/types";
+import { Button } from "@/components/kui/button";
 
 export default async function Page() {
   const supabase = await createClient();
@@ -134,7 +135,9 @@ export default async function Page() {
       <hr />
 
       <form action="/api/auth/signout" method="post">
-        <button type="submit">Sign out</button>
+        <Button variant="destructive" type="submit">
+          Sign out
+        </Button>
       </form>
     </div>
   );
