@@ -43,7 +43,7 @@ export default function ScheduleWorkOrderCalendar({
         center: "title",
         end: "prev,next",
       }}
-      height={600}
+      height={500}
     />
   );
 }
