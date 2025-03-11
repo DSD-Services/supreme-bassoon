@@ -24,7 +24,7 @@ export async function GET() {
   const { data: clientData, error: clientError } = await supabase
     .from("profiles")
     .select(
-      "id, address_line1, address_line2, city, state, postal_code, primary_phone, secondary_phone",
+      "first_name, last_name, address_line1, address_line2, city, state, postal_code, primary_phone, secondary_phone",
     )
     .eq("user_id", user.id)
     .single();
@@ -34,7 +34,8 @@ export async function GET() {
   }
 
   return NextResponse.json({
-    clientId: clientData.id,
+    firstName: clientData.first_name,
+    lastName: clientData.last_name,
     addressLine1: clientData.address_line1,
     addressLine2: clientData.address_line2,
     city: clientData.city,
