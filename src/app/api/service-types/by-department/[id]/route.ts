@@ -1,9 +1,3 @@
-// TODO test if this will retrieve department service types
-// based on department id
-
-// utilized in work order form to populate step 1 select
-// for service type
-
 import { createClient } from "@/utils/supabase/server";
 import { type NextRequest, NextResponse } from "next/server";
 
@@ -11,7 +5,8 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } },
 ) {
-  const departmentId = parseInt(params.id, 10);
+  const { id } = await params;
+  const departmentId = parseInt(id, 10);
 
   if (isNaN(departmentId)) {
     return NextResponse.json(
