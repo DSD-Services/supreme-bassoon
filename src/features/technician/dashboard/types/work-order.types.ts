@@ -1,7 +1,7 @@
 export interface Part {
   name: string;
   qtyNeed: number;
-  qtyStock: number;
+  qtyReserved: number;
 }
 
 export interface WorkOrderData {
