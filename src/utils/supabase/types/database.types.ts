@@ -114,9 +114,9 @@ export type Database = {
           address_line2: string | null
           city: string | null
           created_at: string
-          first_name: string | null
+          first_name: string
           id: string
-          last_name: string | null
+          last_name: string
           postal_code: string | null
           primary_phone: string | null
           role: Database["public"]["Enums"]["userrole"]
@@ -129,9 +129,9 @@ export type Database = {
           address_line2?: string | null
           city?: string | null
           created_at?: string
-          first_name?: string | null
+          first_name: string
           id: string
-          last_name?: string | null
+          last_name: string
           postal_code?: string | null
           primary_phone?: string | null
           role: Database["public"]["Enums"]["userrole"]
@@ -144,9 +144,9 @@ export type Database = {
           address_line2?: string | null
           city?: string | null
           created_at?: string
-          first_name?: string | null
+          first_name?: string
           id?: string
-          last_name?: string | null
+          last_name?: string
           postal_code?: string | null
           primary_phone?: string | null
           role?: Database["public"]["Enums"]["userrole"]

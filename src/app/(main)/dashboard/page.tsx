@@ -27,5 +27,9 @@ export default async function Page() {
     return <TechnicianDashboardPageComponent />;
   }
 
-  return <div>Admin Hello</div>;
+  if (profile.role === "ADMIN") {
+    redirect("/a/dashboard");
+  }
+
+  return null;
 }
