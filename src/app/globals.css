@@ -38,3 +38,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+.fc .fc-toolbar-title {
+  @media screen and (max-width: 640) {
+    font-size: x-large;
+  }
+}
