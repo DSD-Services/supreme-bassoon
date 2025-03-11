@@ -2,11 +2,12 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { EventClickArg } from "@fullcalendar/core/index.js";
+import { BackgroundEvent } from "../types/calendar.types";
 
 interface ScheduleWorkOrderCalendarProps {
-  backgroundEvents: [];
-  handleDateClick: () => void;
-  handleEventClick: () => void;
+  backgroundEvents: BackgroundEvent[];
+  handleDateClick: (arg: { date: Date }) => void;
+  handleEventClick: (info: EventClickArg) => void;
 }
 
 export default function ScheduleWorkOrderCalendar({
