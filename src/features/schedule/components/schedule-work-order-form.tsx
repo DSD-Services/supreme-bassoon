@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { createClient } from "@/utils/supabase/server";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { EventClickArg } from "@fullcalendar/core/index.js";
+import { Timeslot } from "../types/calendar.types";
 
 const workOrderSchema = z.object({
   clientId: z.string(),
@@ -95,7 +96,7 @@ export default function ScheduleWorkOrderForm() {
     const fetchTechnicians = async () => {
       try {
         const response = await fetch(
-          `/api/departments/${departmentId}/technicians`,
+          `/api/technicians/by-department${departmentId}`,
         );
         if (!response.ok) throw new Error("Failed to fetch technicians");
 
@@ -136,6 +137,11 @@ export default function ScheduleWorkOrderForm() {
     setSelectedDate(arg.date);
     setFilteredSlots(slots);
     setStep(2);
+  };
+
+  const handleEventClick = (info: EventClickArg) => {
+    info.jsEvent.preventDefault();
+    console.log("Event clicked:", info.event.start);
   };
 
   const handleSelectSlot = (slot: Timeslot) => {
