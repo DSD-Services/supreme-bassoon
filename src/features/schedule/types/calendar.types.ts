@@ -22,3 +22,11 @@ export type WorkOrderStep =
   | "appointment"
   | "completeWorkOrder"
   | "confirmation";
+
+export interface BackgroundEvent {
+  id: string;
+  start: string;
+  end: string;
+  display: "background";
+  classNames?: string[];
+}
