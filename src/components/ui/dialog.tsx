@@ -1,20 +1,31 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "./button";
 import { faX } from "@fortawesome/free-solid-svg-icons";
+import { cn } from "@/lib/utils";
 
 type DialogProps = {
   isOpen: boolean;
   onClose: () => void;
   title: string;
   children: React.ReactNode;
+  backdropClassName?: string;
 };
 
-export const Dialog = ({ isOpen, onClose, title, children }: DialogProps) => {
+export const Dialog = ({
+  isOpen,
+  onClose,
+  title,
+  children,
+  backdropClassName,
+}: DialogProps) => {
   if (!isOpen) return null;
 
   return (
     <div
-      className="bg-opacity-80 fixed inset-0 z-10 flex items-center justify-center backdrop-blur-sm"
+      className={cn(
+        "bg-opacity-80 fixed inset-0 z-10 flex items-center justify-center backdrop-blur-sm",
+        backdropClassName,
+      )}
       onClick={onClose}
     >
       <div
