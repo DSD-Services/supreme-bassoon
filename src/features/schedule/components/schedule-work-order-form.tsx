@@ -1,6 +1,8 @@
 // TODO -- onSubmit will need to be typed like the form data
 // TODO -- verify that required fields are filled out and validated
 //    before moving to next step of form
+// TODO -- render errors beneath inputs with error
+//    message using React hook form
 
 "use client";
 
@@ -18,6 +20,7 @@ import StepButtons from "./step-buttons";
 import ScheduleWorkOrderCalendar from "./schedule-work-order-calendar";
 import { backgroundEvents, availableTimeslots } from "../data/events";
 import { EventClickArg } from "@fullcalendar/core/index.js";
+import { Timeslot } from "../types/calendar.types";
 
 export default function ScheduleWorkOrderForm() {
   const [step, setStep] = useState(1);
@@ -29,6 +32,7 @@ export default function ScheduleWorkOrderForm() {
   >([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [filteredSlots, setFilteredSlots] = useState<Timeslot[]>([]);
+  const [isTimeslotModalOpen, setIsTimeslotModalOpen] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState<Timeslot | null>(null);
 
   const {
@@ -115,10 +119,9 @@ export default function ScheduleWorkOrderForm() {
     const slots = availableTimeslots.filter((slot) => {
       slot.start.startsWith(clickedDate);
     });
-
     setSelectedDate(arg.date);
     setFilteredSlots(slots);
-    setStep(2);
+    setIsTimeslotModalOpen(true);
   };
 
   const handleEventClick = (info: EventClickArg) => {
@@ -130,9 +133,18 @@ export default function ScheduleWorkOrderForm() {
     console.log(data);
   };
 
+  const formatDate = (date: Date): string => {
+    return date.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="bg-secondary mx-2 my-6 rounded-lg p-2 shadow-xl md:mx-4 lg:mx-10">
+      <div className="bg-secondary mx-2 my-6 rounded-lg p-2 pb-6 shadow-xl md:mx-4 lg:mx-10">
         {step === 1 && (
           <>
             <h2>Step 1: Select Department & Service</h2>
@@ -169,15 +181,118 @@ export default function ScheduleWorkOrderForm() {
           </>
         )}
         {step === 2 && (
-          <div className="flex flex-col items-center justify-center py-6">
-            <h2>Step 2: Select an available Date</h2>
-            <div className="w-full max-w-[400px] rounded-lg bg-white p-2 shadow-lg md:mx-4 lg:mx-10">
-              <ScheduleWorkOrderCalendar
-                backgroundEvents={backgroundEvents}
-                handleDateClick={handleDateClick}
-                handleEventClick={handleEventClick}
+          <>
+            <div className="flex flex-col items-center justify-center py-6">
+              <h2>Step 2: Select an available date</h2>
+              <div className="w-full max-w-[400px] rounded-lg bg-white p-2 shadow-lg md:mx-4 lg:mx-10">
+                <ScheduleWorkOrderCalendar
+                  backgroundEvents={backgroundEvents}
+                  handleDateClick={handleDateClick}
+                  handleEventClick={handleEventClick}
+                />
+              </div>
+              <StepButtons
+                type="prevNext"
+                prevStep={prevStep}
+                nextStep={nextStep}
               />
             </div>
+            {isTimeslotModalOpen && (
+              <div className="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+                <div className="w-[90%] max-w-md rounded-lg bg-white p-6 shadow-lg">
+                  <h2 className="text-center">Select an available timeslot:</h2>
+                  {selectedDate && (
+                    <h3 className="mb-4 text-center">
+                      {formatDate(selectedDate)}
+                    </h3>
+                  )}
+                  {filteredSlots.length > 0 ? (
+                    <ul>
+                      {filteredSlots.map((slot: Timeslot) => (
+                        <li
+                          key={slot.id}
+                          className="my-2 cursor-pointer rounded bg-gray-100 p-2 text-black hover:bg-gray-300"
+                          onClick={() => handleSelectSlot(slot)}
+                        >
+                          {new Date(slot.start).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}{" "}
+                          -
+                          {new Date(slot.end).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <div className="rounded-lg bg-white py-10">
+                      <span className="block text-center text-black">
+                        No available slots for this day.
+                      </span>
+                      <span className="block text-center">
+                        Please go back and select another day.
+                      </span>
+                    </div>
+                  )}
+                  <div className="mt-4 flex justify-between">
+                    <button
+                      onClick={() => setIsTimeslotModalOpen(false)}
+                      className="rounded bg-gray-300 p-2"
+                    >
+                      Cancel
+                    </button>
+                    {/* <button
+                      onClick={() => nextStep()}
+                      className="rounded bg-blue-500 p-2 text-white"
+                    >
+                      Confirm & Continue
+                    </button> */}
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
+        )}
+        {step === 3 && (
+          <div className="z-50 bg-white">
+            <h2 className="text-center">
+              Step 3: Select an available timeslot:
+            </h2>
+            {selectedDate && (
+              <h3 className="mb-4 text-center">{formatDate(selectedDate)}</h3>
+            )}
+            {filteredSlots.length > 0 ? (
+              <ul>
+                {filteredSlots.map((slot: Timeslot) => (
+                  <li
+                    key={slot.id}
+                    className="my-2 cursor-pointer rounded bg-gray-100 p-2 text-black hover:bg-gray-300"
+                    onClick={() => handleSelectSlot(slot)}
+                  >
+                    {new Date(slot.start).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}{" "}
+                    -
+                    {new Date(slot.end).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="rounded-lg bg-white py-10">
+                <span className="block text-center text-black">
+                  No available slots for this day.
+                </span>
+                <span className="block text-center">
+                  Please go back and select another day.
+                </span>
+              </div>
+            )}
             <StepButtons
               type="prevNext"
               prevStep={prevStep}
@@ -185,7 +300,6 @@ export default function ScheduleWorkOrderForm() {
             />
           </div>
         )}
-        {step === 3 && <div>You made it to step 3!</div>}
       </div>
     </form>
   );
