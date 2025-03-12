@@ -1,8 +1,10 @@
-import { Part } from "@/lib/types/work-order.types";
-
 interface ServicePartsTableProps {
   data: {
-    parts: Part[];
+    [key: number]: {
+      name: string;
+      qtyNeed: number;
+      qtyReserved: number;
+    };
   };
 }
 
@@ -23,22 +25,28 @@ export default function ServicePartsTable({ data }: ServicePartsTableProps) {
         </tr>
       </thead>
       <tbody>
-        {data.parts.map((part) => (
-          <tr key={part.name}>
-            <th
-              scope="row"
-              className="px-2 py-1 text-xs font-normal md:text-sm"
-            >
-              {part.name}
-            </th>
-            <td className="px-2 py-1 text-xs font-normal md:text-sm">
-              {part.qtyNeed}
-            </td>
-            <td className="px-2 py-1 text-xs font-normal md:text-sm">
-              {part.qtyStock}
-            </td>
-          </tr>
-        ))}
+        {Object.keys(data).map((partId) => {
+          // Cast partId to number
+          const id = Number(partId);
+          const part = data[id];
+
+          return (
+            <tr key={id}>
+              <th
+                scope="row"
+                className="px-2 py-1 text-xs font-normal md:text-sm"
+              >
+                {part.name}
+              </th>
+              <td className="px-2 py-1 text-xs font-normal md:text-sm">
+                {part.qtyNeed}
+              </td>
+              <td className="px-2 py-1 text-xs font-normal md:text-sm">
+                {part.qtyReserved}
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );

@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { getAuthUser } from "@/features/auth/queries";
 import { createPartAction } from "@/features/parts/action/create-part.action";
 import { findAllParts } from "@/features/parts/queries";
-import { findOneProfile } from "@/features/profile/queries";
+import { findOneProfile } from "@/features/profiles/queries";
 import { faAdd, faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { notFound, redirect } from "next/navigation";
@@ -23,7 +23,7 @@ export default async function Page() {
     <div className="container mx-auto space-y-4 px-4 py-8">
       <div className="flex items-center justify-between gap-2">
         <h1 className="text-3xl font-bold tracking-tight">Manage Inventory</h1>
-        <Button asLink href="/account/dashboard">
+        <Button asLink href="/dashboard">
           <FontAwesomeIcon icon={faLeftLong} />
         </Button>
       </div>

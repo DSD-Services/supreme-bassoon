@@ -1,7 +1,7 @@
 "use server";
 
 import { getAuthUser } from "@/features/auth/queries";
-import { findOneProfile } from "@/features/profile/queries";
+import { findOneProfile } from "@/features/profiles/queries";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";

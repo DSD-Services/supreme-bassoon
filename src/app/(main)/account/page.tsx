@@ -2,7 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import type { Department, TechnicianDetail } from "@/utils/supabase/types";
 import { Button } from "@/components/ui/button";
 import { getAuthUser } from "@/features/auth/queries";
-import { findOneProfile } from "@/features/profile/queries";
+import { findOneProfile } from "@/features/profiles/queries";
 import { findOneTechnicianDetails } from "@/features/technician-details/queries";
 
 export default async function Page() {

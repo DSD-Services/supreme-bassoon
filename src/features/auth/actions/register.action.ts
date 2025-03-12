@@ -23,7 +23,7 @@ export async function registerAction(formData: FormData) {
   });
 
   if (error) {
-    throw new Error("Registration failed");
+    throw new Error(error.message);
   }
 
   revalidatePath("/", "layout");

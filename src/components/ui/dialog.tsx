@@ -9,6 +9,7 @@ type DialogProps = {
   title: string;
   children: React.ReactNode;
   backdropClassName?: string;
+  className?: string;
 };
 
 export const Dialog = ({
@@ -17,6 +18,7 @@ export const Dialog = ({
   title,
   children,
   backdropClassName,
+  className,
 }: DialogProps) => {
   if (!isOpen) return null;
 
@@ -29,7 +31,10 @@ export const Dialog = ({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-[425px] rounded-lg border bg-white p-6"
+        className={cn(
+          "w-full max-w-[425px] rounded-lg border bg-white p-6",
+          className,
+        )}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between">
