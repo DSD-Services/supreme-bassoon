@@ -27,7 +27,7 @@ export const mainNavItems: NavDataItem[] = [
   },
   {
     label: "Dashboard",
-    href: "/dashboard",
+    href: "/account/dashboard",
     icon: faDashboard,
     roles: ["TECHNICIAN", "ADMIN"],
   },

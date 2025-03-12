@@ -14,7 +14,7 @@ export default function DepartmentCard({
   description,
 }: DepartmentCardProps) {
   return (
-    <div className="bg-primary text-primary-foreground flex flex-wrap items-center justify-center rounded-md p-4 text-sm">
+    <div className="flex flex-wrap items-center justify-center rounded-md bg-blue-500 p-4 text-sm text-white">
       <div className="w-48 lg:w-56">
         <Image src={imageSrc} alt={altText} width={224} height={250} />
         <h4 className="pt-4 pb-2 text-base font-semibold">{title}</h4>

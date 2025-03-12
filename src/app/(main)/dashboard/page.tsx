@@ -1,4 +1,4 @@
-import TechnicianDashboardPageComponent from "@/features/technician/components/tech-dashboard-page-component";
+import TechnicianDashboardPageComponent from "@/features/technician-details/components/tech-dashboard-page-component";
 import { createClient } from "@/utils/supabase/server";
 import { notFound, redirect } from "next/navigation";
 
@@ -28,7 +28,7 @@ export default async function Page() {
   }
 
   if (profile.role === "ADMIN") {
-    redirect("/a/dashboard");
+    redirect("/account/dashboard");
   }
 
   return null;

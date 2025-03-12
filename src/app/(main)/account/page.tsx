@@ -1,40 +1,24 @@
-import { createClient } from "@/utils/supabase/server";
 import { notFound, redirect } from "next/navigation";
 import type { Department, TechnicianDetail } from "@/utils/supabase/types";
-import { Button } from "@/components/kui/button";
+import { Button } from "@/components/ui/button";
+import { getAuthUser } from "@/features/auth/queries";
+import { findOneProfile } from "@/features/profile/queries";
+import { findOneTechnicianDetails } from "@/features/technician-details/queries";
 
 export default async function Page() {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
+  const user = await getAuthUser();
   if (!user) redirect("/login");
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user.id)
-    .single();
-
+  const { data: profile } = await findOneProfile(user.id);
   if (!profile) notFound();
 
   let technicianDetails:
-    | (TechnicianDetail & { departments: Pick<Department, "name"> | null })
+    | (TechnicianDetail & { departments: Department | null })
     | null = null;
+
   if (profile.role === "TECHNICIAN") {
-    const { data, error: technicianDetailsError } = await supabase
-      .from("technician_details")
-      .select("*, departments(name)")
-      .eq("id", profile.id)
-      .single();
-
-    if (technicianDetailsError) {
-      console.error(technicianDetailsError);
-    }
-
-    if (data) technicianDetails = data;
+    const { data } = await findOneTechnicianDetails(user.id);
+    technicianDetails = data;
   }
 
   return (
