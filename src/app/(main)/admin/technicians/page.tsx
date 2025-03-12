@@ -1,7 +1,7 @@
 import { TechnicianCard } from "@/components/admin/dashboard/technicians/technician-card";
 import { Button } from "@/components/ui/button";
 import { getAuthUser } from "@/features/auth/queries";
-import { findOneProfile } from "@/features/profile/queries";
+import { findOneProfile } from "@/features/profiles/queries";
 import { createClient } from "@/utils/supabase/server";
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -36,7 +36,7 @@ export default async function Page() {
         <h1 className="text-3xl font-bold tracking-tight">
           Manage Technicians
         </h1>
-        <Button asLink href="/account/dashboard">
+        <Button asLink href="/dashboard">
           <FontAwesomeIcon icon={faLeftLong} />
         </Button>
       </div>

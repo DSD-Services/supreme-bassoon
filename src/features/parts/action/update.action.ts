@@ -1,7 +1,7 @@
 "use server";
 
 import { getAuthUser } from "@/features/auth/queries";
-import { findOneProfile } from "@/features/profile/queries";
+import { findOneProfile } from "@/features/profiles/queries";
 import { createClient } from "@/utils/supabase/server";
 
 export async function updatePart(partId: number, quantity: number) {

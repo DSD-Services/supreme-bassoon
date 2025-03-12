@@ -74,6 +74,7 @@ export async function GET() {
     if (isRedirectError(err)) {
       return Response.json({ success: true }, { status: 200 });
     }
+    console.error(err);
     return Response.json({ success: false }, { status: 500 });
   }
 }

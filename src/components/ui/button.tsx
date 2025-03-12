@@ -7,6 +7,8 @@ type ButtonVariants =
   | "destructive"
   | "outline"
   | "secondary"
+  | "success"
+  | "warning"
   | "ghost"
   | "link";
 type ButtonSizes = "default" | "sm" | "lg" | "icon";
@@ -27,6 +29,8 @@ const buttonVariants = ({
     outline:
       "border border-gray-300 bg-white shadow-sm hover:bg-gray-100 hover:text-gray-900",
     secondary: "bg-gray-200 text-gray-900 shadow-sm hover:bg-gray-300",
+    success: "bg-green-500 text-white shadow-sm hover:bg-green-600",
+    warning: "bg-yellow-500 text-white shadow-sm hover:bg-yellow-600",
     ghost: "hover:bg-gray-100 hover:text-gray-900",
     link: "text-blue-500 underline-offset-4 hover:underline",
   };

@@ -1,35 +1,25 @@
+import { AdminDashboard } from "@/components/dashboard/admin-dashboard";
+import { ClientDashboard } from "@/components/dashboard/client-dashboard";
+import { getAuthUser } from "@/features/auth/queries";
+import { findOneProfile } from "@/features/profiles/queries";
 import TechnicianDashboardPageComponent from "@/features/technician-details/components/tech-dashboard-page-component";
-import { createClient } from "@/utils/supabase/server";
 import { notFound, redirect } from "next/navigation";
 
 export default async function Page() {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
+  const user = await getAuthUser();
   if (!user) redirect("/login");
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user.id)
-    .single();
-
+  const { data: profile } = await findOneProfile(user.id);
   if (!profile) notFound();
 
-  if (!["TECHNICIAN", "ADMIN"].includes(profile.role)) {
-    redirect("/account");
+  switch (profile.role) {
+    case "CLIENT":
+      return <ClientDashboard />;
+    case "TECHNICIAN":
+      return <TechnicianDashboardPageComponent />;
+    case "ADMIN":
+      return <AdminDashboard />;
+    default:
+      notFound();
   }
-
-  if (profile.role === "TECHNICIAN") {
-    return <TechnicianDashboardPageComponent />;
-  }
-
-  if (profile.role === "ADMIN") {
-    redirect("/account/dashboard");
-  }
-
-  return null;
 }
