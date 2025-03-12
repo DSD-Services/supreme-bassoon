@@ -5,5 +5,5 @@ interface SmallLabelProps {
 }
 
 export default function SmallLabel({ children }: SmallLabelProps) {
-  return <span className="text-primary text-xs font-medium">{children}</span>;
+  return <span className="text-xs font-medium text-blue-500">{children}</span>;
 }

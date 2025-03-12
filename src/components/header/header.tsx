@@ -6,7 +6,7 @@ interface HeaderProps {
 
 export default function Header({ children }: HeaderProps) {
   return (
-    <header className="bg-primary text-background flex h-16 items-center justify-between pr-6 pl-4 md:px-8">
+    <header className="text-background flex h-16 items-center justify-between bg-blue-500 pr-6 pl-4 md:px-8">
       <Logo />
 
       {children}
