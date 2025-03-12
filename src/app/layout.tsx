@@ -3,6 +3,7 @@ import { Sofia_Sans } from "next/font/google";
 import "./globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import { Toaster } from "react-hot-toast";
 config.autoAddCss = false;
 
 const sofiaSans = Sofia_Sans({
@@ -21,7 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${sofiaSans.className} antialiased`}>{children}</body>
+      <body className={`${sofiaSans.className} antialiased`}>
+        {children}
+        <Toaster position="bottom-right" />
+      </body>
     </html>
   );
 }

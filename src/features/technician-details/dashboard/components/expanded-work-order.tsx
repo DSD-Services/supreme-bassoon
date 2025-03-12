@@ -54,7 +54,7 @@ export default function ExpandedWorkOrder({ data }: ExpandedWorkOrderProps) {
       </div>
       <div className="col-span-6 mt-2">
         <div className="flex justify-center">
-          <div className="bg-secondary/30 w-full rounded-md p-2">
+          <div className="w-full rounded-md bg-gray-200 p-2">
             <SmallLabel>Appointment notes:</SmallLabel>
             <p className="pt-1 text-xs md:text-sm">{data.appointmentNotes}</p>
           </div>
@@ -63,7 +63,7 @@ export default function ExpandedWorkOrder({ data }: ExpandedWorkOrderProps) {
       <div className="col-span-6 mt-2 pb-2">
         <div className="flex justify-center">
           <button
-            className="bg-primary text-primary-foreground hover:bg-primary/80 flex w-36 cursor-pointer items-center gap-2 rounded-lg px-2 py-1 text-sm font-semibold shadow-lg transition hover:scale-105"
+            className="flex w-36 cursor-pointer items-center gap-2 rounded-lg bg-blue-500 px-2 py-1 text-sm font-semibold text-white shadow-lg transition hover:scale-105 hover:bg-blue-600"
             onClick={markOrderComplete}
             disabled={isUpdating}
           >
