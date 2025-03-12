@@ -36,7 +36,7 @@ export const NavLink = ({
       <Link
         href={href}
         className={cn(
-          "text-primary-foreground hover:text-primary-foreground/80 flex items-center justify-center text-sm transition",
+          "flex items-center justify-center text-sm text-white transition hover:text-white/80",
           className,
         )}
       >

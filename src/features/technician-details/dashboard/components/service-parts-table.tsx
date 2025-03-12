@@ -8,9 +8,9 @@ interface ServicePartsTableProps {
 
 export default function ServicePartsTable({ data }: ServicePartsTableProps) {
   return (
-    <table className="bg-secondary/30 w-full rounded-md text-left">
+    <table className="w-full rounded-md bg-gray-200 text-left">
       <thead>
-        <tr className="text-primary text-xs">
+        <tr className="text-xs text-blue-500">
           <th scope="column" className="px-2 py-1 text-left font-medium">
             Part Name
           </th>

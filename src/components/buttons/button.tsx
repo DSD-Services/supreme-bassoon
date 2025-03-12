@@ -33,8 +33,7 @@ export default function Button({
   return (
     <MotionButtonWrapper>
       <button
-        className={`bg-primary text-primary-foreground hover:bg-primary/80 cursor-pointer rounded-md shadow-lg transition ${sizeClasses[size]} ${weightClasses[fontWeight]}`}
-        type={type}
+        className={`cursor-pointer rounded-md bg-blue-500 text-white shadow-lg transition hover:bg-blue-600 ${sizeClasses[size]} ${weightClasses[fontWeight]}`}
       >
         {children}
       </button>

@@ -1,3 +1,3 @@
 export default function Footer() {
-  return <footer className="bg-primary h-16"></footer>;
+  return <footer className="h-16 bg-blue-500"></footer>;
 }

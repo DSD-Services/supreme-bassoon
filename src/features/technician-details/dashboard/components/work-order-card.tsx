@@ -43,7 +43,7 @@ export default function WorkOrderCard({ data }: WorkOrderCardProps) {
       <div className="col-span-1">
         <div className="flex flex-col">
           <span
-            className="text-primary pr-2 text-right text-xl font-medium"
+            className="pr-2 text-right text-xl font-medium text-blue-500"
             onClick={() => setIsExpanded(!isExpanded)}
           >
             {isExpanded ? (
@@ -79,7 +79,7 @@ export default function WorkOrderCard({ data }: WorkOrderCardProps) {
             <SmallLabel>Status</SmallLabel>
             <div className="flex items-center">
               <span
-                className={`text-primary self-end pr-1 text-lg font-medium ${
+                className={`self-end pr-1 text-lg font-medium text-blue-500 ${
                   statusIcons[data.workOrderStatus].color
                 }`}
               >
