@@ -25,8 +25,78 @@
   }
 }
 
+.fc-h-event,
+.fc-v-event {
+  background-color: theme("colors.blue.500");
+  border: 1px solid theme("colors.blue.600");
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+  background-color: theme("colors.blue.200");
+}
+
+.fc-event,
+.fc-event-grid {
+  cursor: pointer;
+}
+
+.fc .fc-toolbar.fc-header-toolbar {
+  margin: 0px 0px 8px;
+}
+
 .fc .fc-toolbar-title {
+  color: theme("colors.blue.500");
+  margin: 0px 16px 0px 16px;
+
   @media screen and (max-width: 640) {
     font-size: x-large;
+    margin: 0px 12px 0px 12px;
   }
+}
+
+.fc-bus-hours {
+  background-color: #f0f8ff;
+  color: #000;
+  border: 1px solid #aaa;
+}
+
+.fc .fc-button {
+  background-color: theme("colors.blue.800");
+  border: none;
+}
+
+.fc .fc-button:hover {
+  background-color: theme("colors.blue.900");
+  border: none;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+  background-color: theme("colors.blue.600");
+  border: none;
+}
+
+.fc .fc-button-primary:disabled {
+  background-color: theme("colors.blue.600");
+  border: none;
+}
+
+.break-event {
+  background-color: theme("colors.slate.500") !important;
+  border: 1px solid theme("colors.slate.600") !important;
+  color: black;
+}
+
+.bg-event-green {
+  background-color: rgba(0, 255, 0, 0.3) !important;
+  border: 1px solid green !important;
+}
+
+.bg-event-yellow {
+  background-color: rgba(255, 255, 0, 0.3) !important;
+  border: 1px solid yellow !important;
+}
+
+.bg-event-red {
+  background-color: rgba(255, 85, 0, 0.3) !important;
+  border: 1px solid rgb(255, 89, 0) !important;
 }
