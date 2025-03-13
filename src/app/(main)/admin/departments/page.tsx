@@ -18,7 +18,9 @@ export default async function Page() {
   return (
     <div className="container mx-auto space-y-4 px-4 py-8">
       <div className="flex items-center justify-between gap-2">
-        <h1 className="text-3xl font-bold tracking-tight">Manage Inventory</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          Manage Departments
+        </h1>
         <Button asLink href="/dashboard">
           <FontAwesomeIcon icon={faLeftLong} />
         </Button>

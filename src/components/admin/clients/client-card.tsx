@@ -14,7 +14,7 @@ export const ClientCard = ({ profile }: ClientCardProps) => {
             {profile.first_name} {profile.last_name}
           </p>
           <div className="flex items-center gap-4">
-            <p className="rounded bg-blue-500 px-4 py-2 text-sm font-bold text-white">
+            <p className="rounded border border-gray-300 bg-white px-4 py-2 text-sm font-bold shadow-sm">
               {profile.role}
             </p>
             <span className="flex size-6 items-center justify-center rounded-md bg-blue-500 px-2 text-xs text-white shadow group-open:rotate-180 hover:bg-blue-600">
