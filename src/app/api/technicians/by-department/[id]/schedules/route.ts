@@ -19,7 +19,6 @@ export async function GET(
 
   const supabase = await createClient();
 
-  // Step 1: Get technicians
   const { data: technicians, error: techError } = await supabase
     .from("profiles")
     .select(
@@ -39,8 +38,9 @@ export async function GET(
   const technicianIds = technicians.map((tech) => tech.id);
 
   const today = new Date();
-  const appointmentLeadTime = new Date(today);
-  appointmentLeadTime.setDate(today.getDate() + APPOINTMENT_LEAD_TIME);
+  const tomorrow = new Date(today.getDate() + 1);
+  const appointmentLeadTime = new Date(today.getDate());
+  appointmentLeadTime.setDate(tomorrow.getDate() + APPOINTMENT_LEAD_TIME);
 
   // const todayStr = today.toISOString();
   // const thirtyDaysAheadStr = thirtyDaysAhead.toISOString();
@@ -58,9 +58,6 @@ export async function GET(
       { status: 500 },
     );
   }
-
-  console.log("Technicians:", technicians);
-  console.log("Work Orders:", workOrders);
 
   const existingIds = workOrders.map((order) => order.id);
   const timeslots = generateTimeslots(technicians, workOrders, existingIds);
