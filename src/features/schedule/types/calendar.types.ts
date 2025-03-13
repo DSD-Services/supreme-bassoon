@@ -1,3 +1,5 @@
+export const APPOINTMENT_LEAD_TIME = 28;
+
 export interface Timeslot {
   title: string;
   start: Date | string;
