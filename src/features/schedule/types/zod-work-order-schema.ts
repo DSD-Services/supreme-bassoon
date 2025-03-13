@@ -25,3 +25,20 @@ export type WorkOrderFormData = z.infer<typeof workOrderSchema>;
 // work_orders (client_id, technician_id, service_type_id, department_id, status, appointment_start, appointment_end, appointment_notes)
 
 // need to also add client address since they might not have entered it in their profile -- or check for it first and populate? and if not there then they need to enter
+
+// const workOrderSchema = z.object({
+//   technicianId: z.string(),
+//   serviceTypeId: z.string().min(1, "Service type is required"),
+//   departmentId: z.string().min(1, "Department is required"),
+//   status: z.enum(["pending", "in progress", "completed", "cancelled"]),
+//   appointmentStart: z.date(),
+//   appointmentEnd: z.date(),
+//   appointmentNotes: z.string(),
+//   addressLine1: z.string().min(1, "Address is required"),
+//   addressLine2: z.string(),
+//   city: z.string().min(1, "City is required"),
+//   state: z.string().min(1, "State is required"),
+//   postalCode: z.string().min(1, "Postal code is required"),
+//   primaryPhone: z.string().min(1, "Primary phone is required"),
+//   secondaryPhone: z.string(),
+// });
