@@ -1,18 +1,24 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { deletePartAction } from "@/features/parts/action/delete-part.action";
+import { deleteServiceTypeAction } from "@/features/service-types/actions/delete-service-type.action";
 import { useTransition } from "react";
 import toast from "react-hot-toast";
 
-type DeletePartFormProps = { partId: string | number; onCancel: () => void };
+type DeleteServiceTypeFormProps = {
+  serviceTypeId: string | number;
+  onCancel: () => void;
+};
 
-export const DeletePartForm = ({ partId, onCancel }: DeletePartFormProps) => {
+export const DeleteServiceTypeForm = ({
+  serviceTypeId,
+  onCancel,
+}: DeleteServiceTypeFormProps) => {
   const [isPending, startTransition] = useTransition();
 
   const handleClick = () => {
     startTransition(async () => {
-      await deletePartAction(partId);
+      await deleteServiceTypeAction(serviceTypeId);
       onCancel();
       toast.success("Delete successful");
     });

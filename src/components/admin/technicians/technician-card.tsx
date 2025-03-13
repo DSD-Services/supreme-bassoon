@@ -1,16 +1,12 @@
-"use client";
-
 import type {
   Department,
   Profile,
   TechnicianDetail,
 } from "@/utils/supabase/types";
-import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
 import { UpdateTechnicianDialog } from "./update-technician-dialog";
 import { UpdateProfileDialog } from "./update-profile-dialog";
-import { Button } from "@/components/ui/button";
 import { formatTime } from "@/lib/utils";
 
 type TechnicianCardProps = {
@@ -22,35 +18,24 @@ type TechnicianCardProps = {
 };
 
 export const TechnicianCard = ({ profile }: TechnicianCardProps) => {
-  const [open, setOpen] = useState(false);
-  const handleChange = () => setOpen((prev) => !prev);
-
   return (
     <div key={profile.id} className="space-y-2 rounded border p-4 shadow">
-      <div className="flex items-center justify-between gap-4">
-        <p>
-          {profile.first_name} {profile.last_name} (
-          {profile.technician_details?.departments?.name})
-        </p>
-        <div className="flex items-center gap-4">
-          <p className="rounded bg-blue-500 px-4 py-2 text-sm font-bold text-white">
-            {profile.role}
+      <details className="group">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+          <p>
+            {profile.first_name} {profile.last_name} (
+            {profile.technician_details?.departments?.name})
           </p>
-          <Button
-            size="sm"
-            onClick={handleChange}
-            className="flex items-center rounded bg-blue-500 px-2 py-1 font-bold text-white transition hover:bg-blue-600"
-          >
-            {open ? (
-              <FontAwesomeIcon icon={faAngleUp} />
-            ) : (
+          <div className="flex items-center gap-4">
+            <p className="rounded border border-gray-300 bg-white px-4 py-2 text-sm font-bold shadow-sm">
+              {profile.role}
+            </p>
+            <span className="flex size-6 items-center justify-center rounded-md bg-blue-500 px-2 text-xs text-white shadow group-open:rotate-180 hover:bg-blue-600">
               <FontAwesomeIcon icon={faAngleDown} />
-            )}
-          </Button>
-        </div>
-      </div>
-      {open ? (
-        <>
+            </span>
+          </div>
+        </summary>
+        <div className="space-y-2 pt-2">
           <div className="bg-muted h-0.5" />
           <ProfileInformation profile={profile} />
           <div className="bg-muted h-0.5" />
@@ -59,8 +44,8 @@ export const TechnicianCard = ({ profile }: TechnicianCardProps) => {
               technicianDetails={profile.technician_details}
             />
           ) : null}
-        </>
-      ) : null}
+        </div>
+      </details>
     </div>
   );
 };

@@ -1,24 +1,25 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { authorize } from "../auth/queries";
+import { protect } from "../auth/queries";
 
 export async function findAllDepartments() {
-  authorize();
+  protect();
   const supabase = await createClient();
-  const { data, error } = await supabase.from("departments").select("*");
-  return { data, error };
+
+  return await supabase
+    .from("departments")
+    .select("*")
+    .order("id", { ascending: true });
 }
 
 export async function findOneDepartment(departmentId: string | number) {
-  authorize();
+  protect();
   const supabase = await createClient();
 
-  const { data, error } = await supabase
+  return await supabase
     .from("departments")
     .select("*")
     .eq("id", +departmentId)
     .single();
-
-  return { data, error };
 }

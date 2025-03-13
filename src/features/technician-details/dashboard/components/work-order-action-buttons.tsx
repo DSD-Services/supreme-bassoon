@@ -54,7 +54,9 @@ export const WorkOrderActionButtons = ({
           .from("profiles")
           .select("role")
           .eq("id", user.id)
+          .in("role", ["TECHNICIAN", "ADMIN"])
           .single();
+
         if (profile?.role === "TECHNICIAN" || profile?.role === "ADMIN") {
           setState("authenticate");
           return;

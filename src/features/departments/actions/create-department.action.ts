@@ -1,0 +1,21 @@
+"use server";
+
+import { reqRoles } from "@/features/auth/queries";
+import { createClient } from "@/utils/supabase/server";
+import { revalidatePath } from "next/cache";
+
+export async function createDepartmentAction(formData: FormData) {
+  await reqRoles(["ADMIN"]);
+
+  const name = formData.get("name") as string;
+
+  const supabase = await createClient();
+
+  const { error } = await supabase.from("departments").insert({ name });
+
+  if (error) {
+    console.error("[errror]", error.message);
+  }
+
+  revalidatePath("/");
+}

@@ -1,19 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { getAuthUser } from "@/features/auth/queries";
-import { findOneProfile } from "@/features/profiles/queries";
+import { reqRoles } from "@/features/auth/queries";
 import WorkOrderCard from "@/features/technician-details/dashboard/components/work-order-card";
 import { findAllWorkOrdersHydrated } from "@/features/work-orders/queries";
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 export default async function Page() {
-  const user = await getAuthUser();
-  if (!user) redirect("/login");
-
-  const { data: profile } = await findOneProfile(user.id, { role: "ADMIN" });
+  const profile = await reqRoles(["ADMIN"]);
   if (!profile) notFound();
-
   const { data: workOrders } = await findAllWorkOrdersHydrated();
 
   return (
