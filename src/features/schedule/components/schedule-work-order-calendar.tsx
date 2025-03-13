@@ -3,6 +3,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { EventClickArg } from "@fullcalendar/core/index.js";
 import { BackgroundEvent } from "../types/calendar.types";
+import { APPOINTMENT_LEAD_TIME } from "../types/calendar.types";
 
 interface ScheduleWorkOrderCalendarProps {
   backgroundEvents: BackgroundEvent[];
@@ -22,7 +23,7 @@ export default function ScheduleWorkOrderCalendar({
         {
           events: backgroundEvents,
           display: "background",
-          backgroundColor: "#d4edda",
+          backgroundColor: "#05df72",
         },
       ]}
       initialView="dayGridMonth"
@@ -31,7 +32,7 @@ export default function ScheduleWorkOrderCalendar({
         const endDate = new Date(currentDate.valueOf());
 
         startDate.setDate(startDate.getDate());
-        endDate.setDate(endDate.getDate() + 28);
+        endDate.setDate(endDate.getDate() + APPOINTMENT_LEAD_TIME);
 
         return { start: startDate, end: endDate };
       }}
