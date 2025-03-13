@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { updatePart } from "@/features/parts/action/update.action";
+import { updatePartAction } from "@/features/parts/actions/update-part.action";
 import { cn } from "@/lib/utils";
 import { Part } from "@/utils/supabase/types";
 import { faCheck, faPencil } from "@fortawesome/free-solid-svg-icons";
@@ -28,7 +28,7 @@ export const UpdatePartQuantityForm = ({
       return;
     }
 
-    const { success } = await updatePart(part.id, +quantity);
+    const { success } = await updatePartAction(part.id, +quantity);
 
     if (!success) {
       toast.error("Update failed");

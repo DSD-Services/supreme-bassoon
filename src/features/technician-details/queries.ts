@@ -1,8 +1,8 @@
 import { createClient } from "@/utils/supabase/server";
-import { authorize } from "@/features/auth/queries";
+import { protect } from "@/features/auth/queries";
 
 export async function findAllTechnicianDetails() {
-  await authorize();
+  await protect();
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -13,7 +13,7 @@ export async function findAllTechnicianDetails() {
 }
 
 export async function findOneTechnicianDetails(userId: string) {
-  await authorize();
+  await protect();
   const supabase = await createClient();
 
   const { data, error } = await supabase
