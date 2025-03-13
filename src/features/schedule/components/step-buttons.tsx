@@ -1,38 +1,45 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { Button } from "@/components/ui/button";
 
 interface StepButtonProps {
-  type: "prevOnly" | "prevNext" | "nextOnly";
+  variant: "prevOnly" | "prevNext" | "nextOnly";
   prevStep?: () => void;
   nextStep?: () => void;
+  isBackDisabled?: boolean;
+  isNextDisabled?: boolean;
 }
 
 export default function StepButtons({
-  type,
+  variant,
   prevStep,
   nextStep,
+  isBackDisabled,
+  isNextDisabled,
 }: StepButtonProps) {
   return (
-    <div className="flex justify-center gap-10 pt-10">
-      {(type === "prevOnly" || type === "prevNext") && (
-        <button
+    <div className="flex justify-between gap-10">
+      {(variant === "prevOnly" || variant === "prevNext") && (
+        <Button
           type="button"
           onClick={prevStep}
-          className="bg-primary text-primary-foreground hover:bg-primary/80 cursor-pointer rounded-md px-3 py-2 text-base font-semibold shadow-lg transition"
+          variant="default"
+          disabled={isBackDisabled}
         >
-          <FontAwesomeIcon icon={faArrowLeft} className="pr-3" />
+          <FontAwesomeIcon icon={faArrowLeft} />
           Back
-        </button>
+        </Button>
       )}
-      {(type === "nextOnly" || type === "prevNext") && (
-        <button
+      {(variant === "nextOnly" || variant === "prevNext") && (
+        <Button
           type="button"
           onClick={nextStep}
-          className="bg-primary text-primary-foreground hover:bg-primary/80 cursor-pointer rounded-md px-3 py-2 text-base font-semibold shadow-lg transition"
+          variant="default"
+          disabled={isNextDisabled}
         >
           Next
-          <FontAwesomeIcon icon={faArrowRight} className="pl-3" />
-        </button>
+          <FontAwesomeIcon icon={faArrowRight} />
+        </Button>
       )}
     </div>
   );
