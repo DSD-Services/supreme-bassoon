@@ -20,7 +20,7 @@ export default function ServicePartsTable({ data }: ServicePartsTableProps) {
             Qty<span className="block">Need</span>
           </th>
           <th scope="column" className="px-2 py-1 font-medium">
-            Qty<span className="block">Stock</span>
+            Qty<span className="block">Reserved</span>
           </th>
         </tr>
       </thead>
