@@ -57,20 +57,20 @@ export type Database = {
       missing_parts: {
         Row: {
           id: number
-          part_id: number | null
-          quantity: number | null
+          part_id: number
+          quantity: number
           work_order_id: number | null
         }
         Insert: {
           id?: never
-          part_id?: number | null
-          quantity?: number | null
+          part_id: number
+          quantity?: number
           work_order_id?: number | null
         }
         Update: {
           id?: never
-          part_id?: number | null
-          quantity?: number | null
+          part_id?: number
+          quantity?: number
           work_order_id?: number | null
         }
         Relationships: [
@@ -108,12 +108,31 @@ export type Database = {
         }
         Relationships: []
       }
+      parts_duplicate: {
+        Row: {
+          id: number
+          name: string
+          quantity: number
+        }
+        Insert: {
+          id?: never
+          name: string
+          quantity?: number
+        }
+        Update: {
+          id?: never
+          name?: string
+          quantity?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           address_line1: string | null
           address_line2: string | null
           city: string | null
           created_at: string
+          email: string
           first_name: string
           id: string
           last_name: string
@@ -129,6 +148,7 @@ export type Database = {
           address_line2?: string | null
           city?: string | null
           created_at?: string
+          email: string
           first_name: string
           id: string
           last_name: string
@@ -144,6 +164,7 @@ export type Database = {
           address_line2?: string | null
           city?: string | null
           created_at?: string
+          email?: string
           first_name?: string
           id?: string
           last_name?: string
@@ -159,20 +180,20 @@ export type Database = {
       reserved_parts: {
         Row: {
           id: number
-          part_id: number | null
-          quantity: number | null
+          part_id: number
+          quantity: number
           work_order_id: number | null
         }
         Insert: {
           id?: never
-          part_id?: number | null
-          quantity?: number | null
+          part_id: number
+          quantity?: number
           work_order_id?: number | null
         }
         Update: {
           id?: never
-          part_id?: number | null
-          quantity?: number | null
+          part_id?: number
+          quantity?: number
           work_order_id?: number | null
         }
         Relationships: [
@@ -195,20 +216,20 @@ export type Database = {
       service_type_parts: {
         Row: {
           id: number
-          part_id: number | null
-          quantity: number | null
+          part_id: number
+          quantity: number
           service_type_id: number | null
         }
         Insert: {
           id?: never
-          part_id?: number | null
-          quantity?: number | null
+          part_id: number
+          quantity?: number
           service_type_id?: number | null
         }
         Update: {
           id?: never
-          part_id?: number | null
-          quantity?: number | null
+          part_id?: number
+          quantity?: number
           service_type_id?: number | null
         }
         Relationships: [
@@ -299,34 +320,34 @@ export type Database = {
           appointment_end: string | null
           appointment_notes: string | null
           appointment_start: string | null
-          client_id: string | null
-          department_id: number | null
+          client_id: string
+          department_id: number
           id: number
-          service_type_id: number | null
+          service_type_id: number
           status: Database["public"]["Enums"]["workorderstatus"]
-          technician_id: string | null
+          technician_id: string
         }
         Insert: {
           appointment_end?: string | null
           appointment_notes?: string | null
           appointment_start?: string | null
-          client_id?: string | null
-          department_id?: number | null
+          client_id: string
+          department_id: number
           id?: never
-          service_type_id?: number | null
+          service_type_id: number
           status?: Database["public"]["Enums"]["workorderstatus"]
-          technician_id?: string | null
+          technician_id: string
         }
         Update: {
           appointment_end?: string | null
           appointment_notes?: string | null
           appointment_start?: string | null
-          client_id?: string | null
-          department_id?: number | null
+          client_id?: string
+          department_id?: number
           id?: never
-          service_type_id?: number | null
+          service_type_id?: number
           status?: Database["public"]["Enums"]["workorderstatus"]
-          technician_id?: string | null
+          technician_id?: string
         }
         Relationships: [
           {

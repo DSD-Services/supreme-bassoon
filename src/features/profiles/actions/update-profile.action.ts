@@ -2,7 +2,7 @@
 
 import { getAuthUser } from "@/features/auth/queries";
 import { ProfileInput, ProfileSchema } from "../schemas";
-import { findOneProfile } from "@/features/profile/queries";
+import { findOneProfile } from "@/features/profiles/queries";
 import { createClient } from "@/utils/supabase/server";
 
 export async function updateProfile(profileId: string, values: ProfileInput) {

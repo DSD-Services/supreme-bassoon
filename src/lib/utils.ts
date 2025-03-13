@@ -21,6 +21,19 @@ export function formatTime(time: string) {
     .toUpperCase();
 }
 
+export function formatDateTime(dateTime: string) {
+  const date = new Date(dateTime);
+
+  return date.toLocaleString("en-US", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "2-digit",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
+
 export function formatDateLong(date: Date): string {
   return date.toLocaleDateString("en-US", {
     weekday: "long",
