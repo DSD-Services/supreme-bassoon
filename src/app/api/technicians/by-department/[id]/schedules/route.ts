@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { type NextRequest, NextResponse } from "next/server";
-import { generateTimeslots } from "@/features/schedule/lib/generate-timeslots";
-import { APPOINTMENT_LEAD_TIME } from "@/features/schedule/types/calendar.types";
+import { generateTimeslots } from "@/components/schedule/lib/generate-timeslots";
+import { APPOINTMENT_LEAD_TIME } from "@/components/schedule/types/calendar.types";
 
 export async function GET(
   request: NextRequest,

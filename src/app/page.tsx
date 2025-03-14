@@ -1,6 +1,6 @@
 import Footer from "@/components/footer";
 import { HomeHeader } from "@/components/header/header";
-import HomePageComponent from "@/features/home/components/home-page-component";
+import HomePageComponent from "@/components/home/components/home-page-component";
 
 export default function Page() {
   return (

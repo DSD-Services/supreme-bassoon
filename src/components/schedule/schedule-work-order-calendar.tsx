@@ -2,8 +2,8 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { EventClickArg } from "@fullcalendar/core/index.js";
-import { BackgroundEvent } from "../types/calendar.types";
-import { APPOINTMENT_LEAD_TIME } from "../types/calendar.types";
+import { BackgroundEvent } from "./types/calendar.types";
+import { APPOINTMENT_LEAD_TIME } from "./types/calendar.types";
 
 interface ScheduleWorkOrderCalendarProps {
   backgroundEvents: BackgroundEvent[];

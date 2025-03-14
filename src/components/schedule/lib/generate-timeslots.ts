@@ -118,11 +118,13 @@ export function generateTimeslots(
 }
 
 export function groupTimeslotsByDay(timeslots: Timeslot[]) {
+  if (timeslots.length === 0) return [];
+
   const grouped: { [key: string]: { id: string; start: string; end: string } } =
     {};
 
   timeslots.forEach(({ start }) => {
-    const date = start.slice(0, 10); // Extract YYYY-MM-DD from ISO string
+    const date = start.slice(0, 10);
     if (!grouped[date]) {
       grouped[date] = {
         id: `bg-${date}`,
