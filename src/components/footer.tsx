@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-blue-500 px-6 py-4 text-white md:px-12">
+    <footer className="min-h-16 bg-blue-500 px-6 py-4 text-white md:px-12">
       <div className="container mx-auto flex flex-col items-center justify-between md:flex-row">
         <div
           aria-label="Copyright notice"
