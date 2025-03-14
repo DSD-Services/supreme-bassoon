@@ -4,9 +4,9 @@ import { useEffect, useRef } from "react";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";
-import MotionButtonWrapper from "../buttons/motion-button-wrapper";
-import { NavDataItem } from "./nav-items";
-import { NavLink } from "./nav-link";
+import MotionButtonWrapper from "@/components/buttons/motion-button-wrapper";
+import { NavDataItem } from "@/components/header/nav-items";
+import { NavLink } from "@/components/header/nav-link";
 
 interface MobileMenuProps {
   handleMenuClick: () => void;
@@ -35,7 +35,13 @@ export default function MobileMenu({
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent | TouchEvent) {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      const isClickInsideMenu = menuRef.current?.contains(event.target as Node);
+      const clickedLabel = (event.target as HTMLElement)?.textContent?.trim();
+      const isClickOnNavLabel = navData.some(
+        (item) => item.label === clickedLabel,
+      );
+
+      if (menuRef.current && (!isClickInsideMenu || isClickOnNavLabel)) {
         handleMenuClick();
       }
     }
@@ -47,7 +53,7 @@ export default function MobileMenu({
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("touchstart", handleClickOutside);
     };
-  }, [handleMenuClick]);
+  }, [handleMenuClick, navData]);
 
   return (
     <AnimatePresence mode="wait">
