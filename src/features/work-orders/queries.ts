@@ -1,8 +1,8 @@
 import { createClient } from "@/utils/supabase/server";
-import { authorize } from "@/features/auth/queries";
+import { protect } from "@/features/auth/queries";
 
 export async function findAllWorkOrders() {
-  await authorize();
+  await protect();
   const supabase = await createClient();
 
   const { data, error } = await supabase.from("work_orders").select("*");
@@ -11,7 +11,7 @@ export async function findAllWorkOrders() {
 }
 
 export async function findAllWorkOrdersHydrated() {
-  await authorize();
+  await protect();
   const supabase = await createClient();
 
   const { data, error } = await supabase.from("work_orders").select(
@@ -36,7 +36,7 @@ export async function findAllWorkOrdersHydrated() {
 }
 
 export async function findOneWorkOrders(workOrderId: number) {
-  await authorize();
+  await protect();
   const supabase = await createClient();
 
   const { data, error } = await supabase

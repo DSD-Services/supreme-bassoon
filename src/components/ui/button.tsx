@@ -30,7 +30,7 @@ const buttonVariants = ({
       "border border-gray-300 bg-white shadow-sm hover:bg-gray-100 hover:text-gray-900",
     secondary: "bg-gray-200 text-gray-900 shadow-sm hover:bg-gray-300",
     success: "bg-green-500 text-white shadow-sm hover:bg-green-600",
-    warning: "bg-yellow-500 text-white shadow-sm hover:bg-yellow-600",
+    warning: "bg-yellow-500 text-foreground shadow-sm hover:bg-yellow-600",
     ghost: "hover:bg-gray-100 hover:text-gray-900",
     link: "text-blue-500 underline-offset-4 hover:underline",
   };
@@ -39,7 +39,7 @@ const buttonVariants = ({
     default: "h-9 px-4 py-2",
     sm: "h-8 rounded-md px-3 text-xs",
     lg: "h-10 rounded-md px-8",
-    icon: "h-9 w-9",
+    icon: "h-8 w-8",
   };
 
   return cn(base, variants[variant], sizes[size]);

@@ -1,15 +1,14 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import type { Department, TechnicianDetail } from "@/utils/supabase/types";
 import { Button } from "@/components/ui/button";
-import { getAuthUser } from "@/features/auth/queries";
+import { protect } from "@/features/auth/queries";
 import { findOneProfile } from "@/features/profiles/queries";
 import { findOneTechnicianDetails } from "@/features/technician-details/queries";
 
 export default async function Page() {
-  const user = await getAuthUser();
-  if (!user) redirect("/login");
+  const { userId } = await protect({ action: "redirect" });
 
-  const { data: profile } = await findOneProfile(user.id);
+  const { data: profile } = await findOneProfile(userId);
   if (!profile) notFound();
 
   let technicianDetails:
@@ -17,7 +16,7 @@ export default async function Page() {
     | null = null;
 
   if (profile.role === "TECHNICIAN") {
-    const { data } = await findOneTechnicianDetails(user.id);
+    const { data } = await findOneTechnicianDetails(userId);
     technicianDetails = data;
   }
 

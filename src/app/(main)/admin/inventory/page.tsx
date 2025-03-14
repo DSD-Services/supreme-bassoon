@@ -1,20 +1,16 @@
-import { DeletePartDialog } from "@/components/admin/dashboard/inventory/delete-part-dialog";
-import { UpdatePartQuantityForm } from "@/components/admin/dashboard/inventory/update-part-quantity-form";
+import { DeletePartDialog } from "@/components/admin/inventory/delete-part-dialog";
+import { UpdatePartQuantityForm } from "@/components/admin/inventory/update-part-quantity-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { getAuthUser } from "@/features/auth/queries";
-import { createPartAction } from "@/features/parts/action/create-part.action";
+import { reqRoles } from "@/features/auth/queries";
+import { createPartAction } from "@/features/parts/actions/create-part.action";
 import { findAllParts } from "@/features/parts/queries";
-import { findOneProfile } from "@/features/profiles/queries";
 import { faAdd, faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 export default async function Page() {
-  const user = await getAuthUser();
-  if (!user) redirect("/login");
-
-  const { data: profile } = await findOneProfile(user.id, { role: "ADMIN" });
+  const profile = await reqRoles(["ADMIN"]);
   if (!profile) notFound();
 
   const { data: parts } = await findAllParts();

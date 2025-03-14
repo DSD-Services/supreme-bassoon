@@ -1,45 +1,35 @@
-import { registerAction } from "@/features/auth/actions/register.action";
+import { Button } from "@/components/ui/button";
+import { RegisterForm } from "@/features/auth/components/register-form";
+import Link from "next/link";
 
 export default function Page() {
   return (
-    <div>
-      <h1>Register Page</h1>
+    <div className="px-14">
+      <div className="flex flex-col items-center justify-center pt-12 sm:gap-2 md:flex-row md:justify-between">
+        <Link href="/">
+          <p>Home</p>
+        </Link>
+        <h1 className="text-4xl font-bold">Welcome to DSD Services!</h1>
+        <div></div>
+      </div>
 
-      <form action={registerAction}>
-        <div>
-          <div>
-            <div>
-              <label htmlFor="firstName">First Name:</label>
-              <input type="text" id="firstName" name="firstName" />
-            </div>
-            <div>
-              <label htmlFor="lastName">Last Name:</label>
-              <input type="text" id="lastName" name="lastName" />
-            </div>
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="mt-2 rounded-lg bg-[#E2EAFF] p-6 shadow-lg sm:mx-auto sm:w-full sm:max-w-md">
+          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+            <h2 className="my-2 text-center text-2xl/9 font-bold tracking-tight text-[#215CFF]">
+              Register
+            </h2>
           </div>
-
-          <div>
-            <label htmlFor="email">Email:</label>
-            <input id="email" name="email" type="email" />
-          </div>
-
-          <div>
-            <label htmlFor="role">Role:</label>
-            <select id="role" name="role" defaultValue="CLIENT">
-              <option value="CLIENT">CLIENT</option>
-              <option value="TECHNICIAN">TECHNICIAN</option>
-              <option value="ADMIN">ADMIN</option>
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="password">Password:</label>
-            <input id="password" name="password" type="password" />
-          </div>
-
-          <button type="submit">Register</button>
+          <RegisterForm />
+          <p className="mt-10 text-center text-sm/6 text-gray-500">
+            Already have an account?{" "}
+            <Button asLink href="/login" variant="link" className="px-0">
+              Log in
+            </Button>{" "}
+            instead.
+          </p>
         </div>
-      </form>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 // DELETE FOR PRODUCTION
 
-import { registerAction } from "@/features/auth/actions/register.action";
+import { createClient } from "@/utils/supabase/server";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 const seedData = [
@@ -55,20 +55,28 @@ const seedData = [
   },
 ];
 
-// map each to a formData
-const registerFormValues = seedData.map((data) => {
-  const formData = new FormData();
-  for (const key in data) {
-    formData.append(key, data[key as keyof typeof data]);
-  }
-  return formData;
-});
-
 export async function GET() {
   return Response.json({ early_return: true }, { status: 200 });
 
+  const supabase = await createClient();
+
   try {
-    await Promise.all(registerFormValues.map(registerAction));
+    await Promise.all(
+      seedData.map(({ role, ...values }) => {
+        return supabase.auth.signUp({
+          email: values.email,
+          password: values.password,
+          options: {
+            data: {
+              first_name: values.firstName,
+              last_name: values.lastName,
+              role,
+            },
+          },
+        });
+      }),
+    );
+
     return Response.json({ success: true }, { status: 200 });
   } catch (err) {
     if (isRedirectError(err)) {

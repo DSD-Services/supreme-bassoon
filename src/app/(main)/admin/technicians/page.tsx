@@ -1,17 +1,13 @@
-import { TechnicianCard } from "@/components/admin/dashboard/technicians/technician-card";
+import { TechnicianCard } from "@/components/admin/technicians/technician-card";
 import { Button } from "@/components/ui/button";
-import { getAuthUser } from "@/features/auth/queries";
-import { findOneProfile } from "@/features/profiles/queries";
+import { reqRoles } from "@/features/auth/queries";
 import { createClient } from "@/utils/supabase/server";
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 export default async function Page() {
-  const user = await getAuthUser();
-  if (!user) redirect("/login");
-
-  const { data: profile } = await findOneProfile(user.id, { role: "ADMIN" });
+  const profile = await reqRoles(["ADMIN"]);
   if (!profile) notFound();
 
   const supabase = await createClient();
