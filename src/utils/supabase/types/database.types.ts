@@ -108,24 +108,6 @@ export type Database = {
         }
         Relationships: []
       }
-      parts_duplicate: {
-        Row: {
-          id: number
-          name: string
-          quantity: number
-        }
-        Insert: {
-          id?: never
-          name: string
-          quantity?: number
-        }
-        Update: {
-          id?: never
-          name?: string
-          quantity?: number
-        }
-        Relationships: []
-      }
       profiles: {
         Row: {
           address_line1: string | null
@@ -272,7 +254,6 @@ export type Database = {
           department_id: number | null
           id: string
           updated_at: string
-          work_days: Database["public"]["Enums"]["workday"][] | null
           work_end_time: string | null
           work_start_time: string | null
         }
@@ -283,7 +264,6 @@ export type Database = {
           department_id?: number | null
           id: string
           updated_at?: string
-          work_days?: Database["public"]["Enums"]["workday"][] | null
           work_end_time?: string | null
           work_start_time?: string | null
         }
@@ -294,7 +274,6 @@ export type Database = {
           department_id?: number | null
           id?: string
           updated_at?: string
-          work_days?: Database["public"]["Enums"]["workday"][] | null
           work_end_time?: string | null
           work_start_time?: string | null
         }
@@ -323,6 +302,7 @@ export type Database = {
           client_id: string
           department_id: number
           id: number
+          service_address: Json
           service_type_id: number
           status: Database["public"]["Enums"]["workorderstatus"]
           technician_id: string
@@ -334,6 +314,7 @@ export type Database = {
           client_id: string
           department_id: number
           id?: never
+          service_address: Json
           service_type_id: number
           status?: Database["public"]["Enums"]["workorderstatus"]
           technician_id: string
@@ -345,6 +326,7 @@ export type Database = {
           client_id?: string
           department_id?: number
           id?: never
+          service_address?: Json
           service_type_id?: number
           status?: Database["public"]["Enums"]["workorderstatus"]
           technician_id?: string

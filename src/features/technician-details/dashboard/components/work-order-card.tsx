@@ -29,6 +29,8 @@ const statusIcons = {
 export default function WorkOrderCard({ workOrder }: WorkOrderCardProps) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
+  console.log(workOrder);
+
   const aggregatedParts: {
     [key: number]: {
       name: string;
