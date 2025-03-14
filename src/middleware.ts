@@ -2,6 +2,9 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "./utils/supabase/types/database.types.ts";
 
+const PUBLIC_PAGES = ["/", "/login", "/register"];
+const AUTH_PAGES = ["/login", "/register"];
+
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
@@ -14,8 +17,6 @@ export async function middleware(request: NextRequest) {
         setAll: (cookiesToSet) => {
           cookiesToSet.forEach(({ name, value, options }) => {
             request.cookies.set(name, value);
-          });
-          cookiesToSet.forEach(({ name, value, options }) => {
             response.cookies.set(name, value, options);
           });
         },
@@ -23,15 +24,17 @@ export async function middleware(request: NextRequest) {
     },
   );
 
-  // Allow public access only to specific pages
-  const publicPages = ["/", "/login", "/register"];
-  const isPublicPage = publicPages.includes(request.nextUrl.pathname);
+  const isPublicPage = PUBLIC_PAGES.includes(request.nextUrl.pathname);
+  const isAuthPage = AUTH_PAGES.includes(request.nextUrl.pathname);
 
-  // Fetch authenticated user
   const { data, error } = await supabase.auth.getUser();
+  const isAuthenticated = !error && data?.user;
 
-  // If the user is NOT logged in and tries to access a protected page, redirect them
-  if (!isPublicPage && (error || !data?.user)) {
+  if (isAuthenticated && isAuthPage) {
+    return NextResponse.redirect(new URL("/account", request.url));
+  }
+
+  if (!isPublicPage && !isAuthenticated) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
