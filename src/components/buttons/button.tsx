@@ -33,6 +33,7 @@ export default function Button({
   return (
     <MotionButtonWrapper>
       <button
+        type={type}
         className={`cursor-pointer rounded-md bg-blue-500 text-white shadow-lg transition hover:bg-blue-600 ${sizeClasses[size]} ${weightClasses[fontWeight]}`}
       >
         {children}
