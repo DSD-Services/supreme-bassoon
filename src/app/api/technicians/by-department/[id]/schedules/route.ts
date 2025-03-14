@@ -5,7 +5,7 @@ import { APPOINTMENT_LEAD_TIME } from "@/features/schedule/types/calendar.types"
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
   const departmentId = parseInt(id, 10);

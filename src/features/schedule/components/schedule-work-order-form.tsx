@@ -26,6 +26,7 @@ import { formatDateLong } from "@/lib/utils";
 import { Select } from "@/components/ui/select";
 import { groupTimeslotsByDay } from "../lib/generate-timeslots";
 import { Timeslot } from "@/lib/types/work-order-types";
+// import { WorkOrderFormData } from "../types/zod-work-order-schema";
 
 export default function ScheduleWorkOrderForm() {
   const [step, setStep] = useState(1);
@@ -33,8 +34,9 @@ export default function ScheduleWorkOrderForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [serviceTypes, setServiceTypes] = useState<ServiceType[]>([]);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [isNextDisabled, setIsNextDisabled] = useState(false);
-  const [isBackDisabled, setIsBackDisabled] = useState(false);
+  const [isNextDisabled] = useState(false);
+  // const [isNextDisabled, setIsNextDisabled] = useState(false);
+  // const [isBackDisabled, setIsBackDisabled] = useState(false);
   const [backgroundEvents, setBackgroundEvents] = useState<
     BackgroundEvent[] | []
   >([]);
@@ -204,7 +206,9 @@ export default function ScheduleWorkOrderForm() {
   };
 
   // TODO - Create Work Order Form Data type
-  const onSubmit: SubmitHandler<WorkOrderFormData> = (data) => {
+  // const onSubmit: SubmitHandler<WorkOrderFormData> = (data) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onSubmit: SubmitHandler<any> = (data) => {
     console.log("Submitting:", data);
   };
 
