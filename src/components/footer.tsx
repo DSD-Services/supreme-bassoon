@@ -4,14 +4,14 @@ export default function Footer() {
       <div className="container mx-auto flex flex-col items-center justify-between md:flex-row">
         <div
           aria-label="Copyright notice"
-          className="flex flex-col justify-center text-sm md:flex-row md:gap-1"
+          className="flex flex-col items-center justify-center text-sm md:flex-row md:gap-1"
         >
           <span>&copy; {new Date().getFullYear()} DSD Services</span>
           <span>All rights reserved.</span>
         </div>
 
         <nav aria-label="Footer navigation" className="mt-4 md:mt-0">
-          <ul className="flex flex-col gap-4 text-sm md:flex-row md:gap-6">
+          <ul className="flex flex-col items-center gap-4 text-sm md:flex-row md:gap-6">
             <li>
               <a
                 href="#services"
