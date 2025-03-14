@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
       cookies: {
         getAll: () => request.cookies.getAll(),
         setAll: (cookiesToSet) => {
-          cookiesToSet.forEach(({ name, value, options }) => {
+          cookiesToSet.forEach(({ name, value }) => {
             request.cookies.set(name, value);
           });
           supabaseResponse = NextResponse.next({ request });
@@ -25,13 +25,16 @@ export async function middleware(request: NextRequest) {
   );
 
   // Allow public access only to the home page
-  const isHomePage = request.nextUrl.pathname === "/";
+  const publicRoutes = ["/", "/login", "/register"];
+  const isOnPublic = publicRoutes.some(
+    (item) => item === request.nextUrl.pathname,
+  );
 
   // Fetch authenticated user
   const { data, error } = await supabase.auth.getUser();
 
   // If the user is NOT logged in and tries to access a restricted page (anything other than the home page), redirect them to the home page.
-  if (!isHomePage && (error || !data?.user)) {
+  if (!isOnPublic && (error || !data?.user)) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
