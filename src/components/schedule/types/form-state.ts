@@ -14,5 +14,3 @@ export type FormState = {
   primaryPhone: string;
   secondaryPhone?: string;
 };
-
-// TODO add more fields if added to form and import in the form file
