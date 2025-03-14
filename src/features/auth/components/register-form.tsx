@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { PasswordInput } from "@/components/ui/password-input";
 
 export const RegisterForm = () => {
   const router = useRouter();
@@ -36,11 +37,11 @@ export const RegisterForm = () => {
       return;
     }
 
+    router.push("/login");
     toast.success(
       "Registration successful! Please check your email to verify your account.",
       { duration: 4000 },
     );
-    router.push("/login");
   };
 
   return (
@@ -110,11 +111,10 @@ export const RegisterForm = () => {
         >
           Password:
         </label>
-        <Input
-          type="password"
+        <PasswordInput
           id="password"
           {...register("password", { required: true })}
-          className="bg-white"
+          className="bg-white pe-9"
         />
         {errors.password && (
           <span className="text-sm text-red-600">
@@ -129,11 +129,10 @@ export const RegisterForm = () => {
         >
           Confirm Password:
         </label>
-        <Input
-          type="password"
+        <PasswordInput
           id="confirmPassword"
           {...register("confirmPassword", { required: true })}
-          className="bg-white"
+          className="bg-white pe-9"
         />
         {errors.confirmPassword && (
           <span className="text-sm text-red-600">
