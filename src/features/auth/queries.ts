@@ -2,7 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import type { UserRole } from "@/utils/supabase/types";
 import { redirect } from "next/navigation";
 
-async function getAuthUser() {
+export async function getAuthUser() {
   const supabase = await createClient();
 
   const {
