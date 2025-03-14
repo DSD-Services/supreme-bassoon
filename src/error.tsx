@@ -34,6 +34,7 @@ export default function Error({ error, reset }: ErrorProps) {
     router.push('/');
   };
 
+  
   return (
     <div style={{ textAlign: 'center', padding: '50px' }}>
       <h1>Oops! Something went wrong.</h1>
