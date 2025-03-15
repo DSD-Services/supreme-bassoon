@@ -123,7 +123,6 @@ export function generateTimeslots(
           const slotStart = startTime.toMillis();
           const slotEnd = nextSlot.toMillis();
 
-          // return !(apptEnd <= slotStart || apptStart >= slotEnd);
           return apptStart < slotEnd && apptEnd > slotStart;
         });
 
