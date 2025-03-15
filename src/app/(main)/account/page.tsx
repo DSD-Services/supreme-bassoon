@@ -28,7 +28,7 @@ export default async function Page() {
 
       <ul className="mt-4 list-none space-y-2 text-gray-600">
         <li>
-          <strong>First Name::</strong> {profile.first_name}
+          <strong>First Name:</strong> {profile.first_name}
         </li>
         <li>
           <strong>Last Name:</strong> {profile.last_name}
@@ -39,7 +39,7 @@ export default async function Page() {
           {profile.state}, {profile.postal_code}
         </li>
         <li>
-          <strong>Primary Phone::</strong> {profile.primary_phone}
+          <strong>Primary Phone:</strong> {profile.primary_phone}
         </li>
         <li>
           <strong>Secondary Phone:</strong> {profile.secondary_phone}
