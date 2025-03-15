@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import type { WorkDay } from "@/utils/supabase/types";
 import { APPOINTMENT_LEAD_TIME } from "../types/calendar.types";
 import type {
@@ -21,6 +22,7 @@ export function generateTimeslots(
   appointments: Appointment[],
   existingIds: number[],
 ) {
+  const timeZone = "America/Denver";
   const timeslots: Timeslot[] = [];
   let maxId = existingIds.length > 0 ? Math.max(...existingIds) : 0;
 
@@ -40,6 +42,30 @@ export function generateTimeslots(
       !break_start_time ||
       !break_end_time
     ) {
+      console.warn(`Technician ${id} has missing time data. Skipping.`);
+      return;
+    }
+
+    const workStart = DateTime.fromISO(work_start_time, {
+      zone: timeZone,
+    }).toUTC();
+    const workEnd = DateTime.fromISO(work_end_time, {
+      zone: timeZone,
+    }).toUTC();
+    const breakStart = DateTime.fromISO(break_start_time, {
+      zone: timeZone,
+    }).toUTC();
+    const breakEnd = DateTime.fromISO(break_end_time, {
+      zone: timeZone,
+    }).toUTC();
+
+    if (
+      !workStart.isValid ||
+      !workEnd.isValid ||
+      !breakStart.isValid ||
+      !breakEnd.isValid
+    ) {
+      console.error(`Invalid time conversion for technician ${id}. Skipping.`);
       return;
     }
 
@@ -48,37 +74,34 @@ export function generateTimeslots(
     );
 
     for (let i = 0; i < APPOINTMENT_LEAD_TIME; i++) {
-      const currentDate = new Date();
-      currentDate.setHours(0, 0, 0, 0);
-      currentDate.setDate(currentDate.getDate() + i);
+      const currentDate = DateTime.now().plus({ days: i }).startOf("day");
+      if (i === 0) continue;
 
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (currentDate.getTime() === today.getTime()) {
-        continue;
-      }
-
-      const dayOfWeek = currentDate.getDay();
-      const workDay = dayOfWeekMap[dayOfWeek];
+      const workDay = dayOfWeekMap[currentDate.weekday % 7];
       if (!work_days?.includes(workDay)) continue;
 
-      let startTime = new Date(
-        currentDate.toISOString().slice(0, 10) + `T${work_start_time}`,
-      );
-      const endTime = new Date(
-        currentDate.toISOString().slice(0, 10) + `T${work_end_time}`,
-      );
-      const breakStart = new Date(
-        currentDate.toISOString().slice(0, 10) + `T${break_start_time}`,
-      );
-      const breakEnd = new Date(
-        currentDate.toISOString().slice(0, 10) + `T${break_end_time}`,
-      );
+      let startTime = DateTime.fromISO(
+        `${currentDate.toISODate()}T${work_start_time}`,
+        { zone: timeZone },
+      ).toUTC();
+      const endTime = DateTime.fromISO(
+        `${currentDate.toISODate()}T${work_end_time}`,
+        { zone: timeZone },
+      ).toUTC();
+      const breakStart = DateTime.fromISO(
+        `${currentDate.toISODate()}T${break_start_time}`,
+        { zone: timeZone },
+      ).toUTC();
+      const breakEnd = DateTime.fromISO(
+        `${currentDate.toISODate()}T${break_end_time}`,
+        { zone: timeZone },
+      ).toUTC();
 
-      const slotDuration = 60 * 60 * 1000;
+      let failsafeCounter = 0;
+      const maxIterations = 24;
 
-      while (startTime < endTime) {
-        const nextSlot = new Date(startTime.getTime() + slotDuration);
+      while (startTime < endTime && failsafeCounter < maxIterations) {
+        const nextSlot = startTime.plus({ hours: 1 });
 
         if (
           (startTime >= breakStart && startTime < breakEnd) ||
@@ -89,27 +112,37 @@ export function generateTimeslots(
         }
 
         const isBooked = techAppointments.some((appt) => {
-          if (!appt.appointment_start || !appt.appointment_end) {
-            return false;
-          }
-          return (
-            new Date(appt.appointment_start) < nextSlot &&
-            new Date(appt.appointment_end) > startTime
-          );
+          if (!appt.appointment_start || !appt.appointment_end) return false;
+
+          const apptStart = DateTime.fromISO(appt.appointment_start, {
+            zone: "utc",
+          }).toMillis();
+          const apptEnd = DateTime.fromISO(appt.appointment_end, {
+            zone: "utc",
+          }).toMillis();
+          const slotStart = startTime.toMillis();
+          const slotEnd = nextSlot.toMillis();
+
+          return apptStart < slotEnd && apptEnd > slotStart;
         });
 
         if (!isBooked) {
           timeslots.push({
             id: ++maxId,
-            start: startTime.toISOString(),
-            end: nextSlot.toISOString(),
-            extendedProps: {
-              technicianId: id,
-            },
+            start: startTime.toISO() || "",
+            end: nextSlot.toISO() || "",
+            extendedProps: { technicianId: id },
           });
         }
 
         startTime = nextSlot;
+        failsafeCounter++;
+      }
+
+      if (failsafeCounter >= maxIterations) {
+        console.error(
+          `Possible infinite loop detected for technician ${id} on ${currentDate.toISODate()}`,
+        );
       }
     }
   });
