@@ -1,11 +1,4 @@
-export type WorkDay =
-  | "MONDAY"
-  | "TUESDAY"
-  | "WEDNESDAY"
-  | "THURSDAY"
-  | "FRIDAY"
-  | "SATURDAY"
-  | "SUNDAY";
+import type { WorkDay } from "@/utils/supabase/types";
 
 export type Technician = {
   id: string;

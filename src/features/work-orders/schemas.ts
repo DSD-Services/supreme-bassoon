@@ -1,23 +1,26 @@
 import { z } from "zod";
 
-export const WorkOrderSchema = z.object({
-  client_id: z.string().uuid(),
-  technician_id: z.string().uuid(),
-  service_type_id: z.number().int().positive(),
-  department_id: z.number().int().positive(),
-  status: z
-    .enum(["PENDING", "IN_PROGRESS", "COMPLETED", "CANCELLED"])
-    .default("PENDING"),
-  appointment_start: z.string().datetime(),
-  appointment_end: z.string().datetime(),
-  appointment_notes: z.string().nullable(),
-  service_address: z.object({
-    address_line_1: z.string(),
-    address_line_2: z.string().nullable(),
+const WorkOrderSchema = z.object({
+  clientId: z.string().uuid(),
+  technicianId: z.string().uuid(),
+  serviceTypeId: z
+    .union([z.string(), z.number()])
+    .pipe(z.coerce.number().int().positive()),
+  departmentId: z
+    .union([z.string(), z.number()])
+    .pipe(z.coerce.number().int().positive()),
+  appointmentStart: z.string().datetime(),
+  appointmentEnd: z.string().datetime(),
+  appointmentNotes: z.string().nullable(),
+  serviceAddress: z.object({
+    addressLine1: z.string(),
+    addressLine2: z.string().nullable(),
     city: z.string(),
     state: z.string(),
-    postal_code: z.string(),
+    postalCode: z.string(),
   }),
 });
 
-export type WorkOrderInput = z.infer<typeof WorkOrderSchema>;
+export const CreateWorkOrderSchema = WorkOrderSchema.omit({ clientId: true });
+
+export type CreateWorkOrderInput = z.infer<typeof CreateWorkOrderSchema>;

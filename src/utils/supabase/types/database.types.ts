@@ -254,6 +254,7 @@ export type Database = {
           department_id: number | null
           id: string
           updated_at: string
+          work_days: Database["public"]["Enums"]["workday"][] | null
           work_end_time: string | null
           work_start_time: string | null
         }
@@ -264,6 +265,7 @@ export type Database = {
           department_id?: number | null
           id: string
           updated_at?: string
+          work_days?: Database["public"]["Enums"]["workday"][] | null
           work_end_time?: string | null
           work_start_time?: string | null
         }
@@ -274,6 +276,7 @@ export type Database = {
           department_id?: number | null
           id?: string
           updated_at?: string
+          work_days?: Database["public"]["Enums"]["workday"][] | null
           work_end_time?: string | null
           work_start_time?: string | null
         }

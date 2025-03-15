@@ -23,6 +23,7 @@ export const Logo = () => {
               alt="Small white logo with roof and four circles underneath with a lightning bolt, flame, snowflake and water droplet."
               width={49}
               height={24}
+              style={{ width: "auto", height: "auto" }}
             />
           </div>
           <span className="pl-2 text-xl font-semibold md:text-2xl">
