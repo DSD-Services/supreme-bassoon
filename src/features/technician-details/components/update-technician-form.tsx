@@ -1,6 +1,10 @@
 "use client";
 
-import { Department, TechnicianDetail } from "@/utils/supabase/types";
+import type {
+  Department,
+  TechnicianDetail,
+  UserRole,
+} from "@/utils/supabase/types";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -21,11 +25,13 @@ type UpdateTechnicianFormProps = {
     | (TechnicianDetail & { departments: { name: string } | null })
     | null;
   onSuccess?: () => void;
+  role: UserRole;
 };
 
 export const UpdateTechnicianForm = ({
   technicianDetails,
   onSuccess,
+  role,
 }: UpdateTechnicianFormProps) => {
   const [departments, setDepartments] = useState<Array<Department>>([]);
   const router = useRouter();
@@ -157,7 +163,7 @@ export const UpdateTechnicianForm = ({
         <label htmlFor="departmentId" className="text-sm">
           Department
         </label>
-        {
+        {role === "ADMIN" ? (
           <Select id="departmentId" {...register("departmentId")}>
             {departments.map((department) => (
               <option key={department.id} value={department.id}>
@@ -165,7 +171,15 @@ export const UpdateTechnicianForm = ({
               </option>
             ))}
           </Select>
-        }
+        ) : (
+          <Input
+            type="text"
+            id="departmentId"
+            value={technicianDetails?.departments?.name ?? ""}
+            className="pointer-events-none opacity-50"
+            readOnly
+          />
+        )}
       </div>
       <Button type="submit" className="w-full" disabled={isSubmitting}>
         Update

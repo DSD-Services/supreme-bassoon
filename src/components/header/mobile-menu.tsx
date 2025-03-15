@@ -42,7 +42,9 @@ export default function MobileMenu({
       );
 
       if (menuRef.current && (!isClickInsideMenu || isClickOnNavLabel)) {
-        handleMenuClick();
+        setTimeout(() => {
+          handleMenuClick();
+        }, 500);
       }
     }
 

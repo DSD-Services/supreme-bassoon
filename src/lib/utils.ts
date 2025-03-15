@@ -6,19 +6,14 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatTime(time: string) {
+  const now = new Date();
   const [hours, minutes] = time.split(":");
-  const date = new Date();
-  date.setHours(Number(hours));
-  date.setMinutes(Number(minutes));
-
-  return date
-    .toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    })
-    .replace(" ", "")
-    .toUpperCase();
+  now.setHours(+hours, +minutes, 0, 0);
+  return now.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
 }
 
 export function formatDateTime(dateTime: string) {

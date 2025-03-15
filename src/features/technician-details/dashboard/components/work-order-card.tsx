@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleDown,
@@ -10,10 +10,13 @@ import {
   faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import SmallLabel from "@/components/dashboard/small-label";
-import ExpandedWorkOrder from "./expanded-work-order";
 import WorkOrderGroup from "@/components/dashboard/work-order-group";
-import type { HydratedWorkOrder } from "@/utils/supabase/types";
+import { Profile, type HydratedWorkOrder } from "@/utils/supabase/types";
 import { formatDateTime } from "@/lib/utils";
+import ServicePartsTable from "./service-parts-table";
+import { WorkOrderActionButtons } from "./work-order-action-buttons";
+import { createClient } from "@/utils/supabase/client";
+import { Button } from "@/components/ui/button";
 
 interface WorkOrderCardProps {
   workOrder: HydratedWorkOrder;
@@ -28,6 +31,7 @@ const statusIcons = {
 
 export default function WorkOrderCard({ workOrder }: WorkOrderCardProps) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [profile, setProfile] = useState<Profile | null | "loading">("loading");
 
   const aggregatedParts: {
     [key: number]: {
@@ -66,9 +70,31 @@ export default function WorkOrderCard({ workOrder }: WorkOrderCardProps) {
     (part) => part.qtyReserved < part.qtyNeed,
   );
 
+  useEffect(() => {
+    (async function run() {
+      const supabase = createClient();
+
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        setProfile(null);
+        return;
+      }
+
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .single();
+
+      setProfile(profile);
+    })();
+  }, []);
+
   return (
-    <div className="bg-background m-1 mb-2 grid w-full grid-cols-6 gap-3 rounded-md p-2 shadow-lg md:w-2/3 lg:w-1/2">
-      <div className="col-span-1">
+    <div className="bg-background m-1 mb-2 grid w-full max-w-lg grid-cols-6 gap-3 rounded-md p-2 shadow-lg">
+      <div className="col-span-5">
         <WorkOrderGroup labelText="Time">
           {workOrder.appointment_start
             ? formatDateTime(workOrder.appointment_start)
@@ -78,14 +104,6 @@ export default function WorkOrderCard({ workOrder }: WorkOrderCardProps) {
             ? formatDateTime(workOrder.appointment_end)
             : null}
         </WorkOrderGroup>
-      </div>
-      <div className="col-span-3">
-        <WorkOrderGroup labelText="Service Type">
-          {workOrder.service_type.name}
-        </WorkOrderGroup>
-      </div>
-      <div className="col-span-1">
-        <WorkOrderGroup labelText="Job #">{workOrder.id}</WorkOrderGroup>
       </div>
       <div className="col-span-1">
         <div className="flex flex-col">
@@ -101,25 +119,25 @@ export default function WorkOrderCard({ workOrder }: WorkOrderCardProps) {
           </span>
         </div>
       </div>
-      <div className="col-span-4">
-        <WorkOrderGroup labelText="Client Name">
-          {workOrder.client.first_name} {workOrder.client.last_name}
+
+      <div className="col-span-3">
+        <WorkOrderGroup labelText="Service Type">
+          {workOrder.service_type.name}
         </WorkOrderGroup>
+      </div>
+      <div className="col-span-1">
+        <WorkOrderGroup labelText="Job #">{workOrder.id}</WorkOrderGroup>
       </div>
       <div className="col-span-2">
         <WorkOrderGroup labelText="Missing Parts?">
           {isMissingParts ? "Yes" : "No"}
         </WorkOrderGroup>
       </div>
+
       <div className="col-span-4">
-        <div className="flex flex-col">
-          <SmallLabel>Client Address</SmallLabel>
-          <span className="text-xs font-semibold md:text-sm">
-            {workOrder.client.address_line1}, {workOrder.client.address_line2},{" "}
-            {workOrder.client.city}, {workOrder.client.state}{" "}
-            {workOrder.client.postal_code}
-          </span>
-        </div>
+        <WorkOrderGroup labelText="Client Name">
+          {workOrder.client.first_name} {workOrder.client.last_name}
+        </WorkOrderGroup>
       </div>
       <div className="col-span-2">
         <div className="flex">
@@ -140,11 +158,67 @@ export default function WorkOrderCard({ workOrder }: WorkOrderCardProps) {
           </div>
         </div>
       </div>
+
+      <div className="col-span-6">
+        <div className="flex flex-col">
+          <SmallLabel>Client Address</SmallLabel>
+          <span className="text-xs font-semibold md:text-sm">
+            {workOrder.client.address_line1}, {workOrder.client.address_line2},{" "}
+            {workOrder.client.city}, {workOrder.client.state}{" "}
+            {workOrder.client.postal_code}
+          </span>
+        </div>
+      </div>
+
       {isExpanded && (
-        <ExpandedWorkOrder
-          workOrder={workOrder}
-          aggregatedParts={aggregatedParts}
-        />
+        <>
+          <div className="col-span-2 lg:col-span-2">
+            <WorkOrderGroup labelText="Client Primary Phone">
+              {workOrder.client.primary_phone}
+            </WorkOrderGroup>
+          </div>
+          <div className="col-span-4 lg:col-span-2">
+            <WorkOrderGroup labelText="Client Secondary Phone">
+              {workOrder.client.secondary_phone}
+            </WorkOrderGroup>
+          </div>
+          <div className="col-span-6">
+            <WorkOrderGroup labelText="Client Email">
+              {workOrder.client.email}
+            </WorkOrderGroup>
+          </div>
+          <div className="col-span-6">
+            <div className="flex justify-center">
+              <ServicePartsTable data={aggregatedParts} />
+            </div>
+          </div>
+          <div className="col-span-6 mt-2">
+            <div className="flex justify-center">
+              <div className="w-full rounded-md bg-gray-200 p-2">
+                <SmallLabel>Appointment notes:</SmallLabel>
+                <p className="pt-1 text-xs md:text-sm">
+                  {workOrder.appointment_notes}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="col-span-6 mt-2 pb-2">
+            {profile === "loading" ? (
+              <div className="flex justify-center">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="pointer-events-none w-24 animate-pulse text-transparent opacity-50"
+                />
+              </div>
+            ) : profile?.role !== "CLIENT" ? (
+              <WorkOrderActionButtons
+                workOrderId={workOrder.id}
+                currentWorkOrderStatus={workOrder.status}
+              />
+            ) : null}
+          </div>
+        </>
       )}
     </div>
   );

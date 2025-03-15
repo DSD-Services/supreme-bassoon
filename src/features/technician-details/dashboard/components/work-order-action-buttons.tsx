@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { updateWorkOrderStatusAction } from "@/features/work-orders/actions/update-work-order-status-.action";
-import { createClient } from "@/utils/supabase/client";
 import type { WorkOrderStatus } from "@/utils/supabase/types";
 import {
   faCancel,
@@ -11,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { useTransition } from "react";
 import toast from "react-hot-toast";
 
 type WorkOrderActionButtonsProps = {
@@ -23,10 +22,6 @@ export const WorkOrderActionButtons = ({
   workOrderId,
   currentWorkOrderStatus,
 }: WorkOrderActionButtonsProps) => {
-  const [state, setState] = useState<
-    "authenticate" | "unauthenticated" | "loading"
-  >("loading");
-
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -42,38 +37,6 @@ export const WorkOrderActionButtons = ({
       }
     });
   };
-
-  useEffect(() => {
-    (async function run() {
-      const supabase = createClient();
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (user) {
-        const { data: profile } = await supabase
-          .from("profiles")
-          .select("role")
-          .eq("id", user.id)
-          .in("role", ["TECHNICIAN", "ADMIN"])
-          .single();
-
-        if (profile?.role === "TECHNICIAN" || profile?.role === "ADMIN") {
-          setState("authenticate");
-          return;
-        }
-      }
-
-      setState("unauthenticated");
-    })();
-  }, []);
-
-  if (state === "loading") {
-    return <div>Loading...</div>;
-  }
-
-  if (state === "unauthenticated") {
-    return null;
-  }
 
   return (
     <div className="flex justify-center gap-4">

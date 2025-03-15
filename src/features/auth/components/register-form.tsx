@@ -45,7 +45,7 @@ export const RegisterForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="space-y-4">
+    <form onSubmit={handleSubmit(submit)} className="space-y-2.5">
       <div>
         <label
           htmlFor="firstName"

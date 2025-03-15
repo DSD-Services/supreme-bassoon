@@ -1,7 +1,7 @@
 import type { Profile } from "@/utils/supabase/types";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { UpdateProfileDialog } from "./update-profile-dialog";
+import { UpdateProfileDialog } from "../../../features/profiles/components/update-profile-dialog";
 
 type ClientCardProps = { profile: Profile };
 
