@@ -2,7 +2,7 @@
 
 <p align="center"><img src="https://socialify.git.ci/Demonico/supreme-bassoon/image?custom_description=Local+Contract+Service+Booking+System&amp;description=1&amp;font=Inter&amp;language=1&amp;logo=https%3A%2F%2Fpouch.jumpshare.com%2Fpreview%2F2lod8mHlL4OIUc3FZ5mvFS0q1UxrW83DZvudixD4OWrjDizt7UbmziTnv6Tom7HPVF4xW6MEulR3U_kwM8vkMFCRHSETOw8wySW-u22wITM&amp;name=1&amp;owner=1&amp;pattern=Solid&amp;stargazers=1&amp;theme=Light" alt="project-image"></p>
 
-<p id="description">This project is a web-based booking system for local contract services such as plumbing electrical work and HVAC repairs. The system allows customers to schedule service appointments by selecting available time slots.</p>
+<p id="description">This project is a web-based booking system for local contract services such as plumbing, electrical work and HVAC repairs. The system allows customers to schedule service appointments by selecting available time slots.</p>
 
 <p align="center"><img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&amp;logo=next.js&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&amp;logo=typescript&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&amp;logo=tailwind-css&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&amp;logo=framer&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/React_Hook_Form-EC5990?style=for-the-badge&amp;logo=reacthookform&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/Supabase-3FCF8E?style=for-the-badge&amp;logo=supabase&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/Zod-3E61EE?style=for-the-badge&amp;logo=apachespark&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&amp;logo=postgresql&amp;logoColor=white" alt="shields"></p>
 
@@ -20,9 +20,9 @@
 
 <h2>🧐 Features</h2>
 
-Here're some of the project's best features:
+Here are some of the project's best features:
 
-- Customers can pick a time slot to book a service and they can also cancel or change the appointment later.
+- Customers can pick a time slot to book a service across multiple departments.
 - Lists required parts and checks PostgreSQL inventory using Supabase. Missing parts trigger contractor notifications.
 - Supabase Auth sends confirmation and reminder emails with Nodemailer for alerts on missing parts.
 - Admins manage schedules and inventory with secure access using Supabase’s row-level security.
