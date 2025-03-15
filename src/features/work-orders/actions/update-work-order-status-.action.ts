@@ -1,6 +1,6 @@
 "use server";
 
-import { authorize, reqTechnicianOrAdmin } from "@/features/auth/queries";
+import { protect, reqRoles } from "@/features/auth/queries";
 import { createClient } from "@/utils/supabase/server";
 import { WorkOrderStatus } from "@/utils/supabase/types";
 
@@ -16,18 +16,19 @@ export async function updateWorkOrderStatusAction(
     .eq("id", workOrderId);
 
   if (status === "CANCELLED") {
-    await authorize();
+    await protect();
     const { error } = await query;
     return { error };
   }
 
-  const { id, role } = await reqTechnicianOrAdmin();
-  if (role === "TECHNICIAN") {
-    const { error } = await query.eq("technician_id", id);
+  const profile = await reqRoles(["ADMIN", "TECHNICIAN"]);
+
+  if (profile?.role === "TECHNICIAN") {
+    const { error } = await query.eq("technician_id", profile.id);
     return { error };
   }
 
-  if (role === "ADMIN") {
+  if (profile?.role === "ADMIN") {
     const { error } = await query;
     return { error };
   }

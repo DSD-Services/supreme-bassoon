@@ -1,4 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
+import type { UserRole } from "@/utils/supabase/types";
+import { redirect } from "next/navigation";
 
 export async function getAuthUser() {
   const supabase = await createClient();
@@ -10,39 +12,28 @@ export async function getAuthUser() {
   return user;
 }
 
-export async function authorize() {
+export async function protect(
+  { action }: { action: "throw" | "redirect" } = { action: "throw" },
+) {
   const user = await getAuthUser();
-  if (!user) throw new Error("Unauthorized");
+  if (!user) {
+    if (action === "redirect") redirect("/login");
+    throw new Error("Unauthorized");
+  }
+
+  return { userId: user.id };
 }
 
-export async function reqAdmin() {
-  const user = await getAuthUser();
-  if (!user) throw new Error("Unauthorized");
-
-  const supabase = await createClient();
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("id")
-    .eq("id", user.id)
-    .eq("role", "ADMIN")
-    .single();
-
-  if (!profile) throw new Error("Forbidden");
-  return profile;
-}
-
-export async function reqTechnicianOrAdmin() {
-  const user = await getAuthUser();
-  if (!user) throw new Error("Unauthorized");
+export async function reqRoles(roles: UserRole[]) {
+  const { userId } = await protect();
 
   const supabase = await createClient();
   const { data: profile } = await supabase
     .from("profiles")
     .select("id, role")
-    .eq("id", user.id)
-    .in("role", ["ADMIN", "TECHNICIAN"])
+    .eq("id", userId)
+    .in("role", roles)
     .single();
 
-  if (!profile) throw new Error("Forbidden");
   return profile;
 }

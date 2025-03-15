@@ -7,12 +7,14 @@ interface ButtonProps {
   children: ReactNode;
   size?: "sm" | "md" | "lg" | "xl";
   fontWeight: "regular" | "medium" | "semibold" | "bold";
+  type?: "button" | "submit";
 }
 
 export default function Button({
   children,
   size = "md",
   fontWeight = "semibold",
+  type = "button",
 }: ButtonProps) {
   const sizeClasses = {
     sm: "text-base py-1 px-2",
@@ -31,6 +33,7 @@ export default function Button({
   return (
     <MotionButtonWrapper>
       <button
+        type={type}
         className={`cursor-pointer rounded-md bg-blue-500 text-white shadow-lg transition hover:bg-blue-600 ${sizeClasses[size]} ${weightClasses[fontWeight]}`}
       >
         {children}

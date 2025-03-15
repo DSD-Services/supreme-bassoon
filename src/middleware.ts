@@ -2,39 +2,43 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "./utils/supabase/types/database.types.ts";
 
+const PUBLIC_PAGES = ["/", "/login", "/register"];
+const AUTH_PAGES = ["/login", "/register"];
+
 export async function middleware(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
-    request,
-  });
+  const response = NextResponse.next();
 
   const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          cookiesToSet.forEach(({ name, value, options }) =>
-            request.cookies.set(name, value)
-          );
-          supabaseResponse = NextResponse.next({
-            request,
+        getAll: () => request.cookies.getAll(),
+        setAll: (cookiesToSet) => {
+          cookiesToSet.forEach(({ name, value }) => {
+            request.cookies.set(name, value);
+            response.cookies.set(name, value, options);
           });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          );
         },
       },
-    }
+    },
   );
 
-  // refreshing the auth token
-  await supabase.auth.getUser();
+  const isPublicPage = PUBLIC_PAGES.includes(request.nextUrl.pathname);
+  const isAuthPage = AUTH_PAGES.includes(request.nextUrl.pathname);
 
-  return supabaseResponse;
+  const { data, error } = await supabase.auth.getUser();
+  const isAuthenticated = !error && data?.user;
+
+  if (isAuthenticated && isAuthPage) {
+    return NextResponse.redirect(new URL("/account", request.url));
+  }
+
+  if (!isPublicPage && !isAuthenticated) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  return response;
 }
 
 export const config = {

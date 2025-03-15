@@ -1,18 +1,17 @@
 "use server";
 
-import { getAuthUser } from "@/features/auth/queries";
+import { protect } from "@/features/auth/queries";
 import { ProfileInput, ProfileSchema } from "../schemas";
 import { findOneProfile } from "@/features/profiles/queries";
 import { createClient } from "@/utils/supabase/server";
 
 export async function updateProfile(profileId: string, values: ProfileInput) {
-  const user = await getAuthUser();
-  if (!user) return { error: "Unauthenticated" };
+  const { userId } = await protect();
 
-  const { data: profile } = await findOneProfile(user.id);
+  const { data: profile } = await findOneProfile(userId);
   if (!profile) return { error: "Unauthenticated" };
 
-  if (profile.role !== "ADMIN" && user.id !== profile.id) {
+  if (profile.role !== "ADMIN" && userId !== profile.id) {
     return { error: "Unauthorized" };
   }
 
