@@ -2,11 +2,12 @@ import type {
   Department,
   Profile,
   TechnicianDetail,
+  UserRole,
 } from "@/utils/supabase/types";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { UpdateTechnicianDialog } from "./update-technician-dialog";
-import { UpdateProfileDialog } from "./update-profile-dialog";
+import { UpdateTechnicianDialog } from "@/features/technician-details/components/update-technician-dialog";
+import { UpdateProfileDialog } from "@/features/profiles/components/update-profile-dialog";
 import { formatTime } from "@/lib/utils";
 
 type TechnicianCardProps = {
@@ -42,6 +43,7 @@ export const TechnicianCard = ({ profile }: TechnicianCardProps) => {
           {profile.technician_details ? (
             <TechnicianDetailsInformation
               technicianDetails={profile.technician_details}
+              role={profile.role}
             />
           ) : null}
         </div>
@@ -87,8 +89,10 @@ const ProfileInformation = ({ profile }: { profile: Profile }) => {
 
 const TechnicianDetailsInformation = ({
   technicianDetails,
+  role,
 }: {
   technicianDetails: TechnicianDetail & { departments: Department | null };
+  role: UserRole;
 }) => {
   return (
     <div className="flex flex-col justify-between sm:flex-row">
@@ -125,7 +129,10 @@ const TechnicianDetailsInformation = ({
         </div>
       </div>
       <div>
-        <UpdateTechnicianDialog technicianDetails={technicianDetails} />
+        <UpdateTechnicianDialog
+          technicianDetails={technicianDetails}
+          role={role}
+        />
       </div>
     </div>
   );

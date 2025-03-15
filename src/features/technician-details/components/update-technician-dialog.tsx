@@ -1,6 +1,6 @@
 "use client";
 
-import { TechnicianDetail } from "@/utils/supabase/types";
+import { TechnicianDetail, UserRole } from "@/utils/supabase/types";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { UpdateTechnicianForm } from "./update-technician-form";
@@ -12,10 +12,12 @@ type UpdateTechnicianDialogProps = {
   technicianDetails:
     | (TechnicianDetail & { departments: { name: string } | null })
     | null;
+  role: UserRole;
 };
 
 export const UpdateTechnicianDialog = ({
   technicianDetails,
+  role,
 }: UpdateTechnicianDialogProps) => {
   const { isOpen, closeDialog, openDialog } = useDialog();
 
@@ -30,6 +32,7 @@ export const UpdateTechnicianDialog = ({
         <UpdateTechnicianForm
           technicianDetails={technicianDetails}
           onSuccess={closeDialog}
+          role={role}
         />
       </Dialog>
     </>

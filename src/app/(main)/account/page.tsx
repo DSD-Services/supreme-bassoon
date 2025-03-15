@@ -5,6 +5,8 @@ import { protect } from "@/features/auth/queries";
 import { findOneProfile } from "@/features/profiles/queries";
 import { findOneTechnicianDetails } from "@/features/technician-details/queries";
 import { formatTime } from "@/lib/utils";
+import { UpdateProfileDialog } from "@/features/profiles/components/update-profile-dialog";
+import { UpdateTechnicianDialog } from "@/features/technician-details/components/update-technician-dialog";
 
 export default async function Page() {
   const { userId } = await protect({ action: "redirect" });
@@ -21,14 +23,15 @@ export default async function Page() {
     technicianDetails = data;
   }
 
-  console.log("profile", profile);
-
   return (
-    <div className="mx-auto max-w-3xl py-6">
+    <div className="mx-auto max-w-3xl px-4 py-6">
       <div className="rounded border-2 p-4">
         <h1 className="mb-6 text-center text-3xl font-semibold">Account</h1>
 
-        <h2 className="text-2xl font-medium text-gray-700">Profile</h2>
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-2xl font-medium text-gray-700">Profile</h2>
+          <UpdateProfileDialog profile={profile} />
+        </div>
 
         <ul className="mt-4 list-none space-y-2 text-gray-600">
           <li>
@@ -48,19 +51,24 @@ export default async function Page() {
         </ul>
 
         {technicianDetails ? (
-          <>
-            <hr className="my-6" />
+          <div className="space-y-4">
+            <hr />
+
+            <div className="h-9 w-fit rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium shadow-sm">
+              {technicianDetails.departments?.name}
+            </div>
 
             <div className="flex items-center justify-between gap-2">
               <h2 className="text-2xl font-medium text-gray-700">
                 Technician Details
               </h2>
-              <div className="h-9 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium shadow-sm">
-                {technicianDetails.departments?.name}
-              </div>
+              <UpdateTechnicianDialog
+                technicianDetails={technicianDetails}
+                role={profile.role}
+              />
             </div>
 
-            <div className="mt-4 space-y-4 text-gray-600">
+            <div className="space-y-4 text-gray-600">
               <p>
                 <strong>Work Days: </strong>
                 {technicianDetails.work_days
@@ -94,7 +102,7 @@ export default async function Page() {
                 </span>
               </p>
             </div>
-          </>
+          </div>
         ) : null}
 
         <hr className="my-6" />

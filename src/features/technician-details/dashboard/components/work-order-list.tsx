@@ -1,5 +1,5 @@
 import { findAllWorkOrdersHydrated } from "@/features/work-orders/queries";
-import WorkOrderCard from "./work-order-card";
+import WorkOrderCard from "@/features/technician-details/dashboard/components/work-order-card";
 
 export default async function WorkOrderList() {
   const { data: workOrders } = await findAllWorkOrdersHydrated();

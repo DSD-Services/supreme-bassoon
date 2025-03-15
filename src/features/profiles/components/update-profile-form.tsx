@@ -130,12 +130,6 @@ export const UpdateProfileForm = ({
           {...register("secondaryPhone")}
         />
       </div>
-      <div className="flex flex-col">
-        <label htmlFor="role" className="text-sm">
-          Role
-        </label>
-        <Input type="text" id="role" {...register("role")} disabled />
-      </div>
 
       <Button type="submit" disabled={isSubmitting} className="w-full">
         Update
