@@ -1,9 +1,9 @@
+import type { WorkDay } from "@/utils/supabase/types";
 import { APPOINTMENT_LEAD_TIME } from "../types/calendar.types";
-import {
+import type {
   Technician,
   Appointment,
   Timeslot,
-  WorkDay,
 } from "@/lib/types/work-order-types";
 
 const dayOfWeekMap: { [key: number]: WorkDay } = {

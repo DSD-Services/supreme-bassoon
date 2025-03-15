@@ -11,6 +11,8 @@ import TodaySelected from "./today-selected";
 import TimeslotList from "./timeslot-list";
 import NoTimesAvailable from "./no-times-avail";
 import { BackgroundEvent } from "./types/calendar.types";
+import { UseFormSetValue } from "react-hook-form";
+import { CreateWorkOrderInput } from "@/features/work-orders/schemas";
 
 interface Step2SelectDateTimeProps {
   backgroundEvents: BackgroundEvent[];
@@ -18,12 +20,12 @@ interface Step2SelectDateTimeProps {
   setSelectedDate: React.Dispatch<React.SetStateAction<Date | null>>;
   isTimeslotModalOpen: boolean;
   setIsTimeslotModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setSelectedSlot: React.Dispatch<React.SetStateAction<Timeslot | null>>;
   allTimeslots: Timeslot[];
   setFilteredSlots: React.Dispatch<React.SetStateAction<Timeslot[]>>;
   filteredSlots: Timeslot[];
   prevStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  setValue: UseFormSetValue<CreateWorkOrderInput>;
 }
 
 export default function Step2SelectDateTime({
@@ -32,12 +34,12 @@ export default function Step2SelectDateTime({
   setSelectedDate,
   isTimeslotModalOpen,
   setIsTimeslotModalOpen,
-  setSelectedSlot,
   allTimeslots,
   setFilteredSlots,
   filteredSlots,
   prevStep,
   setStep,
+  setValue,
 }: Step2SelectDateTimeProps) {
   const [todaySelected, setTodaySelected] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -63,8 +65,6 @@ export default function Step2SelectDateTime({
       setTodaySelected(false);
     }
 
-    console.log("Clicked Date:", clickedDate);
-
     const slots = allTimeslots.filter((slot: Timeslot) => {
       if (!slot.start) return false;
       const slotDate = new Date(slot.start);
@@ -85,17 +85,17 @@ export default function Step2SelectDateTime({
 
   const handleEventClick = (info: EventClickArg) => {
     info.jsEvent.preventDefault();
-    console.log("Event clicked:", info.event.start);
   };
 
   const handleCloseTimeslotModal = () => {
     setIsTimeslotModalOpen(false);
-    setSelectedSlot(null);
+    setValue("appointmentStart", "");
+    setValue("appointmentEnd", "");
   };
 
   const handleSelectSlot = (slot: Timeslot) => {
-    console.log("Timeslot clicked:", slot);
-    setSelectedSlot(slot);
+    setValue("appointmentStart", slot.start);
+    setValue("appointmentEnd", slot.end);
     setIsTimeslotModalOpen(false);
     setStep(3);
   };

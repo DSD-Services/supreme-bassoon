@@ -5,13 +5,17 @@ import { fetchServiceTypes, fetchTimeslots } from "./lib/work-order-queries";
 import toast from "react-hot-toast";
 import { Department, ServiceType } from "@/utils/supabase/types";
 import { cn } from "@/lib/utils";
-import { UseFormRegister, UseFormReset } from "react-hook-form";
-import { FormState } from "./types/form-state";
+import {
+  UseFormRegister,
+  UseFormReset,
+  UseFormSetValue,
+} from "react-hook-form";
 import { Timeslot } from "@/lib/types/work-order-types";
+import { CreateWorkOrderInput } from "@/features/work-orders/schemas";
 
 interface Step1DepartmentServiceProps {
-  register: UseFormRegister<FormState>;
-  reset: UseFormReset<FormState>;
+  register: UseFormRegister<CreateWorkOrderInput>;
+  reset: UseFormReset<CreateWorkOrderInput>;
   departments: Department[];
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   isLoading: boolean;
@@ -22,6 +26,7 @@ interface Step1DepartmentServiceProps {
   setAllTimeslots: React.Dispatch<React.SetStateAction<Timeslot[]>>;
   nextStep: () => void;
   isNextDisabled: boolean;
+  setValue: UseFormSetValue<CreateWorkOrderInput>;
 }
 
 export default function Step1DepartmentService({
@@ -37,6 +42,7 @@ export default function Step1DepartmentService({
   setAllTimeslots,
   nextStep,
   isNextDisabled,
+  setValue,
 }: Step1DepartmentServiceProps) {
   const handleDepartmentSelect = async (
     evt: React.ChangeEvent<HTMLSelectElement>,
@@ -60,15 +66,13 @@ export default function Step1DepartmentService({
     if (fetchTimeslotsError) {
       toast.error(fetchTimeslotsError);
     } else {
+      setValue("technicianId", timeslots?.[0].extendedProps.technicianId ?? "");
       setAllTimeslots(timeslots ?? []);
     }
   };
 
   const handleReset = () => {
-    reset({
-      departmentId: "",
-      serviceTypeId: "",
-    });
+    reset({ departmentId: undefined, serviceTypeId: undefined });
     setIsDisabled(true);
     setServiceTypes([]);
   };

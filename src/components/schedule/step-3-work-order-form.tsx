@@ -1,40 +1,40 @@
 import { formatDateLong } from "@/lib/utils";
 import StepButtons from "./step-buttons";
-import { Timeslot } from "@/lib/types/work-order-types";
+import { CreateWorkOrderInput } from "@/features/work-orders/schemas";
 
 interface Step3ConfirmDateTimeProps {
-  selectedSlot: Timeslot | null;
   prevStep: () => void;
   nextStep: () => void;
+  formValues: CreateWorkOrderInput;
 }
 
 export default function Step3ConfirmDateTime({
-  selectedSlot,
   prevStep,
   nextStep,
+  formValues,
 }: Step3ConfirmDateTimeProps) {
   return (
     <div className="flex flex-col items-center justify-center px-2">
       <h2 className="flex pb-2 text-center text-lg font-semibold">
         Step 3: Confirm selected appointment time:
       </h2>
-      {selectedSlot && (
+      {formValues.appointmentStart && formValues.appointmentEnd && (
         <div className="pb-6 text-center">
           <div className="rounded-md bg-white p-4">
             <span className="block font-semibold text-blue-800">
               Selected Time:
             </span>
             <span className="block text-lg font-medium">
-              {formatDateLong(new Date(selectedSlot.start))}
+              {formatDateLong(new Date(formValues.appointmentStart))}
             </span>
             <span className="block text-lg font-medium">
-              {new Date(selectedSlot.start).toLocaleTimeString([], {
+              {new Date(formValues.appointmentStart).toLocaleTimeString([], {
                 hour: "numeric",
                 minute: "2-digit",
                 hour12: true,
               })}{" "}
               -{" "}
-              {new Date(selectedSlot.end).toLocaleTimeString([], {
+              {new Date(formValues.appointmentEnd).toLocaleTimeString([], {
                 hour: "numeric",
                 minute: "2-digit",
                 hour12: true,

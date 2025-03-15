@@ -1,19 +1,27 @@
 import { Input } from "../ui/input";
 import StepButtons from "./step-buttons";
 import { UseFormRegister } from "react-hook-form";
-import { FormState } from "./types/form-state";
+import { CreateWorkOrderInput } from "@/features/work-orders/schemas";
+import { Profile } from "@/utils/supabase/types";
+
+type PartialProfile = Omit<
+  Profile,
+  "id" | "created_at" | "updated_at" | "role"
+>;
 
 interface Step4ContactInformationProps {
-  register: UseFormRegister<FormState>;
+  register: UseFormRegister<CreateWorkOrderInput>;
   prevStep: () => void;
   nextStep: () => void;
   isNextDisabled: boolean;
+  userProfile: PartialProfile;
 }
 
 export default function Step4ContactInformation({
   register,
   prevStep,
   nextStep,
+  userProfile,
   isNextDisabled,
 }: Step4ContactInformationProps) {
   return (
@@ -28,7 +36,12 @@ export default function Step4ContactInformation({
               <label htmlFor="firstName" className="text-sm">
                 First Name *
               </label>
-              <Input type="text" id="firstName" {...register("firstName")} />
+              <Input
+                type="text"
+                id="firstName"
+                value={userProfile.first_name}
+                readOnly
+              />
             </div>
             <div className="flex w-1/2 flex-col">
               <label htmlFor="lastName" className="text-sm">
@@ -37,7 +50,8 @@ export default function Step4ContactInformation({
               <Input
                 type="text"
                 id="lastName"
-                {...register("lastName", { required: true })}
+                value={userProfile.last_name}
+                readOnly
               />
             </div>
           </div>
@@ -48,7 +62,7 @@ export default function Step4ContactInformation({
             <Input
               type="text"
               id="addressLine1"
-              {...register("addressLine1", { required: true })}
+              {...register("serviceAddress.addressLine1", { required: true })}
             />
           </div>
           <div className="flex flex-col">
@@ -58,7 +72,7 @@ export default function Step4ContactInformation({
             <Input
               type="text"
               id="addressLine2"
-              {...register("addressLine2")}
+              {...register("serviceAddress.addressLine2")}
             />
           </div>
           <div className="flex gap-2">
@@ -69,7 +83,7 @@ export default function Step4ContactInformation({
               <Input
                 type="text"
                 id="city"
-                {...register("city", { required: true })}
+                {...register("serviceAddress.city", { required: true })}
               />
             </div>
             <div className="flex w-1/2 flex-col">
@@ -79,7 +93,7 @@ export default function Step4ContactInformation({
               <Input
                 type="text"
                 id="state"
-                {...register("state", { required: true })}
+                {...register("serviceAddress.state", { required: true })}
               />
             </div>
           </div>
@@ -90,7 +104,7 @@ export default function Step4ContactInformation({
             <Input
               type="text"
               id="postalCode"
-              {...register("postalCode", { required: true })}
+              {...register("serviceAddress.state", { required: true })}
             />
           </div>
           <div className="flex flex-col">
@@ -100,7 +114,8 @@ export default function Step4ContactInformation({
             <Input
               type="text"
               id="primaryPhone"
-              {...register("primaryPhone", { required: true })}
+              defaultValue={userProfile.primary_phone ?? ""}
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -110,7 +125,8 @@ export default function Step4ContactInformation({
             <Input
               type="text"
               id="secondaryPhone"
-              {...register("secondaryPhone")}
+              value={userProfile.secondary_phone ?? ""}
+              readOnly
             />
           </div>
         </div>

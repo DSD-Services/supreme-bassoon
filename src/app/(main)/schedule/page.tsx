@@ -2,7 +2,6 @@ import ScheduleWorkOrderForm from "@/components/schedule/schedule-work-order-for
 import { findAllDepartments } from "@/features/departments/queries";
 import { getAuthUser } from "@/features/auth/queries";
 import { findOneProfile } from "@/features/profiles/queries";
-import type { UserProfile } from "@/components/schedule/types/backend-data";
 
 export default async function Page() {
   const { data: departments } = await findAllDepartments();
@@ -18,13 +17,10 @@ export default async function Page() {
     return <p>Error loading profile.</p>;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { id, created_at, updated_at, ...filteredProfile } = userProfile;
-
   return (
     <ScheduleWorkOrderForm
       sortedDepartments={sortedDepartments}
-      userProfile={filteredProfile as UserProfile}
+      userProfile={userProfile}
     />
   );
 }
