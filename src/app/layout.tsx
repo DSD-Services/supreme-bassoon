@@ -4,7 +4,7 @@ import "./globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 //import { Toaster } from "react-hot-toast";
-config.autoAddCss = false;//
+config.autoAddCss = false; //
 
 const sofiaSans = Sofia_Sans({
   subsets: ["latin"],
@@ -22,10 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${sofiaSans.className} antialiased`}>
-        {children}
-     
-      </body>
+      <body className={`${sofiaSans.className} antialiased`}>{children}</body>
     </html>
   );
 }

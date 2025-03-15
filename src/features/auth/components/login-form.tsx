@@ -27,7 +27,7 @@ export const LoginForm = () => {
   }, [state, router]);
 
   return (
-    <form action={formAction} className="space-y-6">
+    <form action={formAction} className="space-y-2.5">
       <div>
         <label
           htmlFor="email"
@@ -35,43 +35,40 @@ export const LoginForm = () => {
         >
           Email:
         </label>
-        <div className="mt-2">
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            className="bg-white"
-            defaultValue={state?.error ? state.defaultValues?.email : ""}
-            required
-          />
-        </div>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          className="bg-white"
+          defaultValue={state?.error ? state.defaultValues?.email : ""}
+          required
+        />
       </div>
 
       {/* <div> */}
-      <div className="flex items-center justify-between">
-        <label
-          htmlFor="password"
-          className="block text-sm/6 font-medium text-gray-900"
-        >
-          Password:
-        </label>
-        <div className="text-sm">
-          <a
-            href="#"
-            className="font-semibold text-indigo-600 hover:text-indigo-500"
+      <div>
+        <div className="flex items-center justify-between">
+          <label
+            htmlFor="password"
+            className="block text-sm/6 font-medium text-gray-900"
           >
-            Forgot password?
-          </a>
+            Password:
+          </label>
+          <div className="text-sm">
+            <a
+              href="#"
+              className="font-semibold text-indigo-600 hover:text-indigo-500"
+            >
+              Forgot password?
+            </a>
+          </div>
         </div>
-      </div>
-      <div className="mt-2">
         <PasswordInput
           id="password"
           name="password"
           className="bg-white"
           required
         />
-        <div />
       </div>
 
       <Button type="submit" className="w-full" disabled={isPending}>
