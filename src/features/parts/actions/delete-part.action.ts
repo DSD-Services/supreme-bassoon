@@ -12,7 +12,7 @@ export async function deletePartAction(partId: string | number) {
   const { error } = await supabase.from("parts").delete().eq("id", +partId);
 
   if (error) {
-    console.error("[errror]", error.message);
+    console.error("[DeletePartError]", error.message);
   }
 
   revalidatePath("/");

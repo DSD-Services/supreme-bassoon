@@ -35,10 +35,7 @@ export async function createWorkOrderAction(values: CreateWorkOrderInput) {
     await findAllServiceTypeParts(serviceTypeId);
 
   if (serviceTypePartsError) {
-    console.error(
-      "[createWorkOrderActionError]:",
-      serviceTypePartsError.message,
-    );
+    console.error("[CreateWorkOrderError]:", serviceTypePartsError.message);
     return { error: "Oops! Something went wrong." };
   }
 
@@ -90,7 +87,7 @@ export async function createWorkOrderAction(values: CreateWorkOrderInput) {
     .select("id");
 
   if (error) {
-    console.error("[createWorkOrderActionError]:", error.message);
+    console.error("[CreateWorkOrderError]:", error.message);
     return { error: "Oops! Something went wrong." };
   }
 
@@ -144,7 +141,7 @@ export async function createWorkOrderAction(values: CreateWorkOrderInput) {
 
   if (missingPartsResults?.error) {
     console.error(
-      "[createWorkOrderActionError]:",
+      "[CreateWorkOrderError]:",
       missingPartsResults?.error.message,
     );
     await deleteWorkOrderAction(data[0].id); // CLEAN UP
@@ -153,7 +150,7 @@ export async function createWorkOrderAction(values: CreateWorkOrderInput) {
 
   if (reservedPartsResults?.error) {
     console.error(
-      "[createWorkOrderActionError]:",
+      "[CreateWorkOrderError]:",
       reservedPartsResults?.error.message,
     );
     await deleteWorkOrderAction(data[0].id); // CLEAN UP
@@ -161,7 +158,7 @@ export async function createWorkOrderAction(values: CreateWorkOrderInput) {
   }
 
   if (partsResults?.error) {
-    console.error("[createWorkOrderActionError]:", partsResults?.error.message);
+    console.error("[CreateWorkOrderError]:", partsResults?.error.message);
     await deleteWorkOrderAction(data[0].id); // CLEAN UP
     return { error: "Oops! Something went wrong." };
   }

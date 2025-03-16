@@ -14,7 +14,7 @@ export async function createServiceTypeAction(formData: FormData) {
   const { error } = await supabase.from("service_types").insert({ name });
 
   if (error) {
-    console.error("[errror]", error.message);
+    console.error("[CreateServiceTypeError]", error.message);
   }
 
   revalidatePath("/");

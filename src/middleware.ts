@@ -2,8 +2,14 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "./utils/supabase/types/database.types.ts";
 
-const PUBLIC_PAGES = ["/", "/login", "/register"];
-const AUTH_PAGES = ["/login", "/register"];
+const AUTH_PAGES = [
+  "/login",
+  "/register",
+  "/register/resend",
+  "/register/success",
+  "/forgot-password",
+];
+const PUBLIC_PAGES = ["/", ...AUTH_PAGES];
 
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
@@ -34,7 +40,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/account", request.url));
   }
 
-  if (!isPublicPage && !isAuthenticated) {
+  if (!isAuthenticated && !isPublicPage) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
@@ -43,6 +49,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
   ],
 };

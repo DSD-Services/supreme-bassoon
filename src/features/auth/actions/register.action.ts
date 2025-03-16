@@ -20,6 +20,16 @@ export async function registerAction(
 
   const supabase = await createClient();
 
+  const { data: existingUser } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("email", parsedValues.data.email)
+    .single();
+
+  if (existingUser) {
+    return { error: "An account with this email is already registered." };
+  }
+
   const { error } = await supabase.auth.signUp({
     email: parsedValues.data.email,
     password: parsedValues.data.password,
@@ -33,7 +43,7 @@ export async function registerAction(
   });
 
   if (error) {
-    console.error("[RegisterActionError]:", error);
+    console.error("[RegisterError]:", error);
     return { error: "Oops! Something went wrong." };
   }
 

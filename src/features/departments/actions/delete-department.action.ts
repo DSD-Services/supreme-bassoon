@@ -15,7 +15,7 @@ export async function deleteDepartmentAction(departmentId: string | number) {
     .eq("id", +departmentId);
 
   if (error) {
-    console.error("[errror]", error.message);
+    console.error("[DeleteDepartmentError]", error.message);
   }
 
   revalidatePath("/");
