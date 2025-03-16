@@ -48,7 +48,7 @@ export const NavWrapper = () => {
   if (!userRole) {
     return <Nav navData={loggedOutNavItems} />;
   }
-  console.log("here");
+
   let navData = [];
   switch (userRole) {
     case "CLIENT":
