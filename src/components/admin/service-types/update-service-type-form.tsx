@@ -28,6 +28,11 @@ export const UpdateServiceTypeForm = ({
       return;
     }
 
+    if (name === serviceType.name) {
+      setEditing(false);
+      return;
+    }
+
     const { success } = await updateServiceTypeAction(serviceType.id, name);
 
     if (!success) {
@@ -41,7 +46,10 @@ export const UpdateServiceTypeForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-2">
+    <form
+      onSubmit={handleSubmit}
+      className="flex w-full items-center justify-between gap-2"
+    >
       <Input
         type="text"
         value={name}

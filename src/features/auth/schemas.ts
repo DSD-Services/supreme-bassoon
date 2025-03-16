@@ -1,15 +1,16 @@
+import { capitalize } from "@/lib/utils";
 import { z } from "zod";
 
 export const RegisterSchema = z
   .object({
     firstName: z
       .string({ required_error: "Please enter your first name." })
-      .toLowerCase()
-      .min(1, "Please enter your first name."),
+      .min(1, "Please enter your first name.")
+      .transform(capitalize),
     lastName: z
       .string({ required_error: "Please enter your last name." })
-      .toLowerCase()
-      .min(1, "Please enter your last name."),
+      .min(1, "Please enter your last name.")
+      .transform(capitalize),
     email: z
       .string({ required_error: "Please enter your email." })
       .email("The email address is badly formatted.")

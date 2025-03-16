@@ -1,6 +1,7 @@
 import type {
   Department,
   Profile,
+  ProfileWithTechnicianDetails,
   TechnicianDetail,
   UserRole,
 } from "@/utils/supabase/types";
@@ -9,28 +10,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { UpdateTechnicianDialog } from "@/features/technician-details/components/update-technician-dialog";
 import { UpdateProfileDialog } from "@/features/profiles/components/update-profile-dialog";
 import { formatTime } from "@/lib/utils";
+import { DeleteUserDialog } from "@/features/users/components/delete-user-dialog";
 
 type TechnicianCardProps = {
-  profile: Profile & {
-    technician_details:
-      | (TechnicianDetail & { departments: Department | null })
-      | null;
-  };
+  profile: ProfileWithTechnicianDetails;
 };
 
 export const TechnicianCard = ({ profile }: TechnicianCardProps) => {
   return (
-    <div key={profile.id} className="space-y-2 rounded border p-4 shadow">
-      <details className="group">
+    <div key={profile.id} className="flex items-center gap-1">
+      <details className="group flex-1 rounded border p-4 shadow">
         <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
           <p>
-            {profile.first_name} {profile.last_name} (
-            {profile.technician_details?.departments?.name})
+            {profile.last_name}, {profile.first_name}
           </p>
           <div className="flex items-center gap-4">
-            <p className="rounded border border-gray-300 bg-white px-4 py-2 text-sm font-bold shadow-sm">
-              {profile.role}
-            </p>
+            {profile.technician_details?.department_id ? (
+              <p className="rounded border border-gray-300 bg-white px-4 py-2 text-sm font-bold shadow-sm">
+                {profile.technician_details?.departments?.name}
+              </p>
+            ) : null}
             <span className="flex size-6 items-center justify-center rounded-md bg-blue-500 px-2 text-xs text-white shadow group-open:rotate-180 hover:bg-blue-600">
               <FontAwesomeIcon icon={faAngleDown} />
             </span>
@@ -48,6 +47,9 @@ export const TechnicianCard = ({ profile }: TechnicianCardProps) => {
           ) : null}
         </div>
       </details>
+      <div className="self-start">
+        <DeleteUserDialog userId={profile.id} />
+      </div>
     </div>
   );
 };

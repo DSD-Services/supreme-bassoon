@@ -47,7 +47,6 @@ export default async function Page() {
       <table className="mt-4 table-auto divide-y">
         <thead>
           <tr className="divide-x">
-            <th className="bg-muted px-6 py-3 text-start">id</th>
             <th className="bg-muted px-6 py-3 text-start">name</th>
             <th className="bg-muted px-6 py-3 text-start" />
           </tr>
@@ -56,8 +55,7 @@ export default async function Page() {
         <tbody>
           {departments?.map((department) => (
             <tr key={department.id} className="divide-x">
-              <td className="px-6 py-3">{department.id}</td>
-              <td className="px-6 py-3">
+              <td className="w-full px-6 py-3">
                 <UpdateDepartmentForm department={department} />
               </td>
               <td className="px-6 py-3">

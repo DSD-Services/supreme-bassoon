@@ -4,20 +4,23 @@ import { useEffect, useRef } from "react";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";
-import MotionButtonWrapper from "@/components/buttons/motion-button-wrapper";
+import MotionButtonWrapper from "@/components/ui/motion-button-wrapper";
 import { NavDataItem } from "@/components/header/nav-items";
 import { NavLink } from "@/components/header/nav-link";
+import { SignOutButton } from "@/features/auth/components/sign-out-button";
 
 interface MobileMenuProps {
   handleMenuClick: () => void;
   isMenuOpen: boolean;
   navData: NavDataItem[];
+  authenticated?: boolean;
 }
 
 export default function MobileMenu({
   handleMenuClick,
   isMenuOpen,
   navData,
+  authenticated,
 }: MobileMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -91,7 +94,7 @@ export default function MobileMenu({
                 </div>
               </MotionButtonWrapper>
             </div>
-            <div className="flex flex-col gap-8 p-6 font-semibold text-white transition">
+            <div className="flex h-full max-h-[calc(100dvh-4rem)] flex-col gap-8 p-6 font-semibold text-white transition">
               {navData.map((item) => (
                 <NavLink
                   key={item.label}
@@ -100,6 +103,12 @@ export default function MobileMenu({
                   icon={item.icon}
                 />
               ))}
+              <div className="flex-1" />
+              {authenticated ? (
+                <div className="flex justify-center">
+                  <SignOutButton />
+                </div>
+              ) : null}
             </div>
           </motion.div>
         </>

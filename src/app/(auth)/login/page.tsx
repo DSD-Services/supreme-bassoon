@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { LoginForm } from "@/features/auth/components/login-form";
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";

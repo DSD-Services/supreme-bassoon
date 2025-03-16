@@ -41,7 +41,10 @@ export const UpdateDepartmentForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-2">
+    <form
+      onSubmit={handleSubmit}
+      className="flex w-full items-center justify-between gap-2"
+    >
       <Input
         type="text"
         value={name}

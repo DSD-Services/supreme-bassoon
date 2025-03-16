@@ -12,25 +12,32 @@ import { z } from "zod";
 //     department_id INT REFERENCES departments(id) ON DELETE SET NULL
 //   );
 
-export const TechnicianDetailsSchema = z.object({
-  workStartTime: z.string().nullable(),
-  workEndTime: z.string().nullable(),
-  workDays: z
-    .array(
-      z.enum([
-        "MONDAY",
-        "TUESDAY",
-        "WEDNESDAY",
-        "THURSDAY",
-        "FRIDAY",
-        "SATURDAY",
-        "SUNDAY",
-      ]),
-    )
-    .nullable(),
-  breakStartTime: z.string().nullable(),
-  breakEndTime: z.string().nullable(),
-  departmentId: z.union([z.number(), z.string().transform(Number)]).nullable(),
-});
+export const TechnicianDetailsSchema = z
+  .object({
+    workStartTime: z.string().nullable(),
+    workEndTime: z.string().nullable(),
+    workDays: z
+      .array(
+        z.enum([
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY",
+          "SATURDAY",
+          "SUNDAY",
+        ]),
+      )
+      .nullable(),
+    breakStartTime: z.string().nullable(),
+    breakEndTime: z.string().nullable(),
+    departmentId: z
+      .union([z.number(), z.string().transform(Number)])
+      .nullable(),
+  })
+  .partial()
+  .refine((data) => Object.keys(data).length > 0, {
+    message: "Please provide at least one field to update.",
+  });
 
 export type TechnicianDetailsInput = z.infer<typeof TechnicianDetailsSchema>;

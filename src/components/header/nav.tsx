@@ -4,15 +4,16 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons/faBars";
 import MobileMenu from "./mobile-menu";
-import MotionButtonWrapper from "../buttons/motion-button-wrapper";
+import MotionButtonWrapper from "../ui/motion-button-wrapper";
 import { NavDataItem } from "./nav-items";
 import { NavLink } from "./nav-link";
 
 interface NavProps {
   navData: NavDataItem[];
+  authenticated?: boolean;
 }
 
-export default function Nav({ navData }: NavProps) {
+export default function Nav({ navData, authenticated }: NavProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleMenuClick = () => {
@@ -28,7 +29,6 @@ export default function Nav({ navData }: NavProps) {
             href={item.href}
             label={item.label}
             icon={item.icon}
-            roles={item.roles}
           />
         ))}
       </div>
@@ -50,6 +50,7 @@ export default function Nav({ navData }: NavProps) {
         handleMenuClick={handleMenuClick}
         isMenuOpen={isMenuOpen}
         navData={navData}
+        authenticated={authenticated}
       />
     </nav>
   );
