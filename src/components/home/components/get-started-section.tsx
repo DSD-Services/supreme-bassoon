@@ -1,4 +1,4 @@
-import Button from "@/components/buttons/button";
+import { Button } from "@/components/ui/button";
 
 export default function GetStartedSection() {
   return (
@@ -9,7 +9,8 @@ export default function GetStartedSection() {
         aliquid iste consequatur, non iusto dolorum eveniet dolor cumque
         ducimus! Necessitatibus eius autem adipisci harum.
       </p>
-      <Button size="lg" fontWeight="semibold">
+
+      <Button className="h-12 rounded-md px-10 font-semibold">
         Get started
       </Button>
     </div>

@@ -1,13 +1,31 @@
 import { createClient } from "@/utils/supabase/server";
-import { UserRole } from "@/utils/supabase/types";
+import {
+  Profile,
+  ProfileWithTechnicianDetails,
+  UserRole,
+} from "@/utils/supabase/types";
 import { protect } from "@/features/auth/queries";
+import { PostgrestError } from "@supabase/supabase-js";
 
-type Options = { role?: UserRole };
+type FindAllProfilesOptions<Role extends UserRole | undefined = undefined> = {
+  role?: Role;
+};
 
-export async function findAllProfiles(options: Options = {}) {
+type FindAllProfilesReturn<Role extends UserRole | undefined> =
+  Role extends "TECHNICIAN"
+    ? {
+        data: Array<ProfileWithTechnicianDetails> | null;
+        error: PostgrestError | null;
+      }
+    : { data: Array<Profile> | null; error: PostgrestError | null };
+
+export async function findAllProfiles<Role extends UserRole | undefined>(
+  options: FindAllProfilesOptions<Role> = {},
+): Promise<FindAllProfilesReturn<Role>> {
   await protect();
 
   const supabase = await createClient();
+
   const { role } = options;
 
   let query = supabase.from("profiles").select("*");
@@ -20,10 +38,17 @@ export async function findAllProfiles(options: Options = {}) {
 
   if (role) query = query.eq("role", role);
 
-  return await query.order("first_name", { ascending: true });
+  return (await query.order("last_name", {
+    ascending: true,
+  })) as FindAllProfilesReturn<Role>;
 }
 
-export async function findOneProfile(userId: string, options: Options = {}) {
+type FindOneProfileOptions = { role?: UserRole };
+
+export async function findOneProfile(
+  userId: string,
+  options: FindOneProfileOptions = {},
+) {
   await protect();
 
   const supabase = await createClient();

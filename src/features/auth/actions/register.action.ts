@@ -1,16 +1,9 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import type { UserRole } from "@/utils/supabase/types";
 import { RegisterInput, RegisterSchema } from "../schemas";
-import { reqRoles } from "../queries";
 
-export async function registerAction(
-  values: RegisterInput,
-  role: UserRole = "CLIENT",
-) {
-  if (role === "ADMIN") throw new Error("Forbidden");
-
+export async function registerAction(values: RegisterInput) {
   const parsedValues = RegisterSchema.safeParse(values);
 
   if (!parsedValues.success) {
@@ -37,7 +30,7 @@ export async function registerAction(
       data: {
         first_name: parsedValues.data.firstName,
         last_name: parsedValues.data.lastName,
-        role,
+        role: "CLIENT",
       },
     },
   });
@@ -48,10 +41,4 @@ export async function registerAction(
   }
 
   return { error: null };
-}
-
-export async function technicianRegisterAction(values: RegisterInput) {
-  const profile = await reqRoles(["ADMIN"]);
-  if (!profile) throw new Error("Unauthorized.");
-  return registerAction(values, "TECHNICIAN");
 }

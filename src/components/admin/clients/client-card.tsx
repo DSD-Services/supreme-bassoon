@@ -1,22 +1,20 @@
 import type { Profile } from "@/utils/supabase/types";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { UpdateProfileDialog } from "../../../features/profiles/components/update-profile-dialog";
+import { UpdateProfileDialog } from "@/features/profiles/components/update-profile-dialog";
+import { DeleteUserDialog } from "@/features/users/components/delete-user-dialog";
 
 type ClientCardProps = { profile: Profile };
 
 export const ClientCard = ({ profile }: ClientCardProps) => {
   return (
-    <div key={profile.id} className="space-y-2 rounded border p-4 shadow">
-      <details className="group">
+    <div key={profile.id} className="flex items-center gap-1">
+      <details className="group flex-1 rounded border p-4 shadow">
         <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
           <p>
             {profile.first_name} {profile.last_name}
           </p>
           <div className="flex items-center gap-4">
-            <p className="rounded border border-gray-300 bg-white px-4 py-2 text-sm font-bold shadow-sm">
-              {profile.role}
-            </p>
             <span className="flex size-6 items-center justify-center rounded-md bg-blue-500 px-2 text-xs text-white shadow group-open:rotate-180 hover:bg-blue-600">
               <FontAwesomeIcon icon={faAngleDown} />
             </span>
@@ -27,6 +25,9 @@ export const ClientCard = ({ profile }: ClientCardProps) => {
           <ProfileInformation profile={profile} />
         </div>
       </details>
+      <div className="self-start">
+        <DeleteUserDialog userId={profile.id} />
+      </div>
     </div>
   );
 };

@@ -1,7 +1,8 @@
-import { ClientCard } from "@/components/admin/clients/client-card";
+import { ClientList } from "@/components/admin/clients/client-list";
 import { Button } from "@/components/ui/button";
 import { reqRoles } from "@/features/auth/queries";
 import { findAllProfiles } from "@/features/profiles/queries";
+import { CreateUserDialog } from "@/features/users/components/create-user-dialog";
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { notFound } from "next/navigation";
@@ -23,9 +24,13 @@ export default async function Page() {
 
       <div className="bg-muted h-1" />
 
-      {profiles?.map((profile) => (
-        <ClientCard key={profile.id} profile={profile} />
-      ))}
+      <div className="flex justify-end">
+        <CreateUserDialog role={"CLIENT"} />
+      </div>
+
+      <div className="bg-muted h-1" />
+
+      <ClientList initialProfiles={profiles ?? []} />
     </div>
   );
 }

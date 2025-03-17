@@ -7,11 +7,11 @@ import { useDialog } from "@/components/ui/use-dialog";
 import { Dialog } from "@/components/ui/dialog";
 import { DeleteServiceTypeForm } from "@/components/admin/service-types/delete-service-type-form";
 
-type UpdateServiceTypeDialogProps = { serviceTypeId: string | number };
+type DeleteServiceTypeDialogProps = { serviceTypeId: string | number };
 
-export const UpdateServiceTypeDialog = ({
+export const DeleteServiceTypeDialog = ({
   serviceTypeId,
-}: UpdateServiceTypeDialogProps) => {
+}: DeleteServiceTypeDialogProps) => {
   const { isOpen, closeDialog, openDialog } = useDialog();
 
   return (
@@ -20,12 +20,16 @@ export const UpdateServiceTypeDialog = ({
         size="sm"
         variant="destructive"
         onClick={openDialog}
-        aria-label="Delete Part"
+        aria-label="Delete Service Type"
       >
         <FontAwesomeIcon icon={faTrash} />
       </Button>
 
-      <Dialog title="Delete Department?" isOpen={isOpen} onClose={closeDialog}>
+      <Dialog
+        title="Delete Service Type?"
+        isOpen={isOpen}
+        onClose={closeDialog}
+      >
         <DeleteServiceTypeForm
           serviceTypeId={serviceTypeId}
           onCancel={closeDialog}
