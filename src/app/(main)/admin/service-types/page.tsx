@@ -1,4 +1,4 @@
-import { UpdateServiceTypeDialog } from "@/components/admin/service-types/delete-service-type-dialog";
+import { DeleteServiceTypeDialog } from "@/components/admin/service-types/delete-service-type-dialog";
 import { UpdateServiceTypeDepartmentDialog } from "@/components/admin/service-types/update-service-type-department-dialog";
 import { UpdateServiceTypeForm } from "@/components/admin/service-types/update-service-type-form";
 import { ViewServiceTypePartsServer } from "@/components/admin/service-types/view-service-type-parts-server";
@@ -16,8 +16,13 @@ export default async function Page() {
   const profile = await reqRoles(["ADMIN"]);
   if (!profile) notFound();
 
-  const { data: serviceTypes } = await findAllServiceTypes();
-  const { data: departments } = await findAllDepartments();
+  const [serviceTypesData, departmentsData] = await Promise.all([
+    findAllServiceTypes(),
+    findAllDepartments(),
+  ]);
+
+  const serviceTypes = serviceTypesData.data;
+  const departments = departmentsData.data;
 
   return (
     <div className="container mx-auto space-y-4 px-4 py-8">
@@ -51,25 +56,20 @@ export default async function Page() {
       <table className="mt-4 table-auto divide-y">
         <thead>
           <tr className="divide-x">
-            <th className="bg-muted px-6 py-3 text-start">id</th>
             <th className="bg-muted px-6 py-3 text-start">name</th>
-            <th className="bg-muted px-6 py-3 text-start" />
             <th className="bg-muted px-6 py-3 text-start">department</th>
-            <th className="bg-muted px-6 py-3 text-start">
-              service type parts
+            <th className="bg-muted px-6 py-3 text-start whitespace-nowrap">
+              service parts
             </th>
+            <th className="bg-muted px-6 py-3 text-start" />
           </tr>
         </thead>
 
         <tbody>
           {serviceTypes?.map((serviceType) => (
             <tr key={serviceType.id} className="divide-x">
-              <td className="px-6 py-3">{serviceType.id}</td>
-              <td className="px-6 py-3">
+              <td className="w-full px-6 py-3">
                 <UpdateServiceTypeForm serviceType={serviceType} />
-              </td>
-              <td className="px-6 py-3">
-                <UpdateServiceTypeDialog serviceTypeId={serviceType.id} />
               </td>
               <td className="px-6 py-3">
                 <UpdateServiceTypeDepartmentDialog
@@ -79,6 +79,9 @@ export default async function Page() {
               </td>
               <td className="px-6 py-3">
                 <ViewServiceTypePartsServer serviceType={serviceType} />
+              </td>
+              <td className="px-6 py-3">
+                <DeleteServiceTypeDialog serviceTypeId={serviceType.id} />
               </td>
             </tr>
           ))}

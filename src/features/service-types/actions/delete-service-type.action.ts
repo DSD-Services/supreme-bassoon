@@ -15,7 +15,7 @@ export async function deleteServiceTypeAction(serviceTypeId: string | number) {
     .eq("id", +serviceTypeId);
 
   if (error) {
-    console.error("[errror]", error.message);
+    console.error("[DeleteServiceTypeError]", error.message);
   }
 
   revalidatePath("/");

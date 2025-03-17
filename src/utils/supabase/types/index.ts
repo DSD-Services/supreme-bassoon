@@ -29,3 +29,9 @@ export type HydratedWorkOrder = WorkOrder & {
     service_type_parts: Array<ServiceTypePart & { part: Part }>;
   };
 };
+
+export type ProfileWithTechnicianDetails = Profile & {
+  technician_details:
+    | (TechnicianDetail & { departments: Department | null })
+    | null;
+};

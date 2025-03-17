@@ -19,7 +19,7 @@ export async function deleteWorkOrderAction(workOrderId: string | number) {
     .eq("id", +workOrderId);
 
   if (error) {
-    console.error("[error]", error.message);
+    console.error("[DeleteWorkOrderError]", error.message);
   }
 
   revalidatePath("/");
