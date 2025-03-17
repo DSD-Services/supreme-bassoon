@@ -5,7 +5,7 @@ const steps = [
     id: 1,
     title: "Choose a Service",
     description:
-      "Select the type of service you need (plumbing, electrical, HVAC, etc.).",
+      "First, select a department (e.g., Plumbing). Then, choose a specific service within that department (e.g., Faucet Repair).",
     icon: (
       <svg
         width="40"
