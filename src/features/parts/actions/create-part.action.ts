@@ -9,12 +9,15 @@ export async function createPartAction(formData: FormData) {
 
   const name = formData.get("name") as string;
   const quantity = formData.get("quantity") as string;
+  const manufacturer = formData.get("manufacturer") as string;
 
   const supabase = await createClient();
 
-  const { error } = await supabase
-    .from("parts")
-    .insert({ name, quantity: +quantity });
+  const { error } = await supabase.from("parts").insert({
+    name,
+    quantity: +quantity,
+    ...(manufacturer ? { manufacturer } : {}),
+  });
 
   if (error) {
     console.error("[CreatePartError]", error.message);

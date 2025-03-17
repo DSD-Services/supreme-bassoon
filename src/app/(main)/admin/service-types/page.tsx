@@ -37,7 +37,10 @@ export default async function Page() {
 
       <div className="bg-muted h-1" />
 
-      <form action={createServiceTypeAction} className="flex gap-2">
+      <form
+        action={createServiceTypeAction}
+        className="flex flex-col gap-2 sm:flex-row"
+      >
         <div>
           <label htmlFor="name" className="sr-only">
             Name
@@ -45,7 +48,7 @@ export default async function Page() {
           <Input type="text" id="name" name="name" placeholder="Name" />
         </div>
 
-        <Button type="submit" variant="ghost">
+        <Button type="submit" variant="ghost" className="self-start">
           <FontAwesomeIcon icon={faAdd} />
           Insert
         </Button>
@@ -53,40 +56,42 @@ export default async function Page() {
 
       <div className="bg-muted h-1" />
 
-      <table className="mt-4 table-auto divide-y">
-        <thead>
-          <tr className="divide-x">
-            <th className="bg-muted px-6 py-3 text-start">name</th>
-            <th className="bg-muted px-6 py-3 text-start">department</th>
-            <th className="bg-muted px-6 py-3 text-start whitespace-nowrap">
-              service parts
-            </th>
-            <th className="bg-muted px-6 py-3 text-start" />
-          </tr>
-        </thead>
-
-        <tbody>
-          {serviceTypes?.map((serviceType) => (
-            <tr key={serviceType.id} className="divide-x">
-              <td className="w-full px-6 py-3">
-                <UpdateServiceTypeForm serviceType={serviceType} />
-              </td>
-              <td className="px-6 py-3">
-                <UpdateServiceTypeDepartmentDialog
-                  serviceType={serviceType}
-                  departments={departments ?? []}
-                />
-              </td>
-              <td className="px-6 py-3">
-                <ViewServiceTypePartsServer serviceType={serviceType} />
-              </td>
-              <td className="px-6 py-3">
-                <DeleteServiceTypeDialog serviceTypeId={serviceType.id} />
-              </td>
+      <div className="overflow-x-auto">
+        <table className="mt-4 table-auto divide-y">
+          <thead>
+            <tr className="divide-x">
+              <th className="bg-muted px-6 py-3 text-start">name</th>
+              <th className="bg-muted px-6 py-3 text-start">department</th>
+              <th className="bg-muted px-6 py-3 text-start whitespace-nowrap">
+                service parts
+              </th>
+              <th className="bg-muted px-6 py-3 text-start" />
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {serviceTypes?.map((serviceType) => (
+              <tr key={serviceType.id} className="divide-x">
+                <td className="w-full px-6 py-3">
+                  <UpdateServiceTypeForm serviceType={serviceType} />
+                </td>
+                <td className="px-6 py-3">
+                  <UpdateServiceTypeDepartmentDialog
+                    serviceType={serviceType}
+                    departments={departments ?? []}
+                  />
+                </td>
+                <td className="px-6 py-3">
+                  <ViewServiceTypePartsServer serviceType={serviceType} />
+                </td>
+                <td className="px-6 py-3">
+                  <DeleteServiceTypeDialog serviceTypeId={serviceType.id} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

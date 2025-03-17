@@ -93,16 +93,19 @@ export type Database = {
       parts: {
         Row: {
           id: number
+          manufacturer: string | null
           name: string
           quantity: number
         }
         Insert: {
           id?: never
+          manufacturer?: string | null
           name: string
           quantity?: number
         }
         Update: {
           id?: never
+          manufacturer?: string | null
           name?: string
           quantity?: number
         }

@@ -19,16 +19,18 @@ export const UpdateServiceTypeDepartmentDialog = ({
 }: UpdateServiceTypeDepartmentDialogProps) => {
   const { isOpen, closeDialog, openDialog } = useDialog();
 
+  const serviceTypeDepartment = serviceType.departments?.[0];
+
   return (
     <>
       <Button
         size="sm"
-        variant="warning"
+        variant={serviceTypeDepartment?.name ? "warning" : "destructive"}
         onClick={openDialog}
         className="w-full"
         aria-label="Update Department"
       >
-        {serviceType.departments[0].name}
+        {serviceTypeDepartment?.name ?? "No Department"}
         <FontAwesomeIcon icon={faPencil} />
       </Button>
 

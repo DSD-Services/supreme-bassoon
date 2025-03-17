@@ -26,7 +26,10 @@ export default async function Page() {
 
       <div className="bg-muted h-1" />
 
-      <form action={createPartAction} className="flex gap-2">
+      <form
+        action={createPartAction}
+        className="flex flex-col gap-2 sm:flex-row"
+      >
         <div>
           <label htmlFor="name" className="sr-only">
             Name
@@ -46,7 +49,19 @@ export default async function Page() {
           />
         </div>
 
-        <Button type="submit" variant="ghost">
+        <div>
+          <label htmlFor="manufacturer" className="sr-only">
+            Manufacturer
+          </label>
+          <Input
+            type="text"
+            id="manufacturer"
+            name="manufacturer"
+            placeholder="Manufacturer"
+          />
+        </div>
+
+        <Button type="submit" variant="ghost" className="self-start">
           <FontAwesomeIcon icon={faAdd} />
           Insert
         </Button>
@@ -54,29 +69,37 @@ export default async function Page() {
 
       <div className="bg-muted h-1" />
 
-      <table className="mt-4 table-auto divide-y">
-        <thead>
-          <tr className="divide-x">
-            <th className="bg-muted px-6 py-3 text-start">name</th>
-            <th className="bg-muted px-6 py-3 text-start">quantity</th>
-            <th className="bg-muted px-6 py-3 text-start" />
-          </tr>
-        </thead>
-
-        <tbody>
-          {parts?.map((part) => (
-            <tr key={part.id} className="divide-x">
-              <td className="px-6 py-3">{part.name}</td>
-              <td className="px-6 py-3">
-                <UpdatePartQuantityForm part={part} />
-              </td>
-              <td className="px-6 py-3">
-                <DeletePartDialog partId={part.id} />
-              </td>
+      <div className="overflow-x-auto">
+        <table className="mt-4 table-auto divide-y">
+          <thead>
+            <tr className="divide-x">
+              <th className="bg-muted px-6 py-3 text-start capitalize">name</th>
+              <th className="bg-muted px-6 py-3 text-start capitalize">
+                quantity
+              </th>
+              <th className="bg-muted px-6 py-3 text-start capitalize">
+                manufacturer
+              </th>
+              <th className="bg-muted px-6 py-3 text-start" />
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {parts?.map((part) => (
+              <tr key={part.id} className="divide-x">
+                <td className="px-6 py-3">{part.name}</td>
+                <td className="px-6 py-3">
+                  <UpdatePartQuantityForm part={part} />
+                </td>
+                <td className="px-6 py-3">{part.manufacturer}</td>
+                <td className="px-6 py-3">
+                  <DeletePartDialog partId={part.id} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

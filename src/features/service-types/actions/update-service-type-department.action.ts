@@ -11,10 +11,15 @@ export async function updateServiceTypeDepartmentAction(
 
   const supabase = await createClient();
 
-  const { error } = await supabase
+  await supabase
     .from("department_service_types")
-    .update({ service_type_id: serviceTypeId, department_id: departmentId })
+    .delete()
     .eq("service_type_id", serviceTypeId);
+
+  const { error } = await supabase.from("department_service_types").insert({
+    service_type_id: serviceTypeId,
+    department_id: departmentId,
+  });
 
   return { success: error ? false : true };
 }

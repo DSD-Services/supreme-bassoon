@@ -30,7 +30,7 @@ export const UpdateServiceTypeDepartmentForm = ({
   const handleSubmit = (evt: React.FormEvent) => {
     evt.preventDefault();
 
-    if (department.id === serviceType.departments[0].id) {
+    if (department.id === serviceType.departments[0]?.id) {
       onCancel();
       return;
     }
@@ -55,7 +55,7 @@ export const UpdateServiceTypeDepartmentForm = ({
   return (
     <form onSubmit={handleSubmit} className="flex items-center gap-2">
       <Select
-        value={department.id}
+        value={department?.id}
         onChange={(evt) => {
           const selectedDepartment = departments.find(
             (d) => d.id === +evt.target.value,
