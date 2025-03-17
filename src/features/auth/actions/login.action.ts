@@ -27,7 +27,7 @@ export async function loginAction(
   });
 
   if (error) {
-    console.error("[loginActionError]:", error.message);
+    console.error("[LoginError]:", error.message);
     if (error instanceof AuthApiError) {
       switch (error.code) {
         case "email_not_confirmed":

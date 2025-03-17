@@ -37,7 +37,7 @@ export const RegisterForm = () => {
       return;
     }
 
-    router.push("/login");
+    router.push("/register/success");
     toast.success(
       "Registration successful! Please check your email to verify your account.",
       { duration: 4000 },

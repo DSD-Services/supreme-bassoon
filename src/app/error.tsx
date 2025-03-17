@@ -15,7 +15,7 @@ export default function Error({ error }: ErrorProps) {
   const router = useRouter();
 
   useEffect(() => {
-    console.error("Error caught by error.tsx:", error);
+    console.error(error.message);
 
     if (error instanceof Error) {
       if (error.message.includes("Network request failed")) {

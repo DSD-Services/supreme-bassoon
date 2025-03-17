@@ -17,7 +17,7 @@ export async function createPartAction(formData: FormData) {
     .insert({ name, quantity: +quantity });
 
   if (error) {
-    console.error("[errror]", error.message);
+    console.error("[CreatePartError]", error.message);
   }
 
   revalidatePath("/");

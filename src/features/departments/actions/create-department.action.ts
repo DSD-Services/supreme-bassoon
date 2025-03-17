@@ -14,7 +14,7 @@ export async function createDepartmentAction(formData: FormData) {
   const { error } = await supabase.from("departments").insert({ name });
 
   if (error) {
-    console.error("[errror]", error.message);
+    console.error("[CreateDepartmentError]", error.message);
   }
 
   revalidatePath("/");
