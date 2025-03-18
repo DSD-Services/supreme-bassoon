@@ -5,21 +5,21 @@ export default function DepartmentSection() {
     {
       title: "Electrical",
       description:
-        "Cum modi veritatis dicta et deserunt dolores praesentium, harum laborum quibusdam ea.",
+        "Expert electrical solutions for residential and commercial needs. From wiring and lighting installations to troubleshooting and repairs, we ensure safe, efficient, and code-compliant electrical work.",
       imageSrc: "/images/electrical.jpg",
       altText: "DSD Services logo",
     },
     {
       title: "HVAC",
       description:
-        "Cum modi veritatis dicta et deserunt dolores praesentium, harum laborum quibusdam ea.",
+        "Reliable heating, ventilation, and air conditioning (HVAC) services to keep your home or business comfortable year-round. We provide installation, maintenance, and repairs for optimal indoor air quality and energy efficiency",
       imageSrc: "/images/hvac.jpg",
       altText: "DSD Services logo",
     },
     {
       title: "Plumbing",
       description:
-        "Cum modi veritatis dicta et deserunt dolores praesentium, harum laborum quibusdam ea.",
+        "Professional plumbing services for homes and businesses. Whether it’s leak detection, pipe repairs, drain cleaning, or full system installations, we deliver fast and effective solutions to keep your water flowing smoothly.",
       imageSrc: "/images/plumbing.jpg",
       altText: "DSD Services logo",
     },
