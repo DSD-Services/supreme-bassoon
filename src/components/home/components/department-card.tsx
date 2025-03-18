@@ -15,7 +15,6 @@ export default function DepartmentCard({
 }: DepartmentCardProps) {
   return (
         <div className="group h-80 w-76 [perspective:1000px] overflow-hidden">
-          {/* Flipping Container */}
           <div className="relative h-full w-full transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
             
             {/* Front Side */}
