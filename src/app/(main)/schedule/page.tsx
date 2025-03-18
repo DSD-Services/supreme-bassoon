@@ -18,9 +18,11 @@ export default async function Page() {
   );
 
   return (
-    <ScheduleWorkOrderForm
-      sortedDepartments={sortedDepartments}
-      userProfile={userProfile}
-    />
+    <section className="m-2 grid min-h-[calc(100vh-136px)] rounded-lg bg-blue-50">
+      <ScheduleWorkOrderForm
+        sortedDepartments={sortedDepartments}
+        userProfile={userProfile}
+      />
+    </section>
   );
 }

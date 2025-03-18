@@ -158,7 +158,7 @@ export default function ScheduleWorkOrderForm({
       onSubmit={handleSubmit(onSubmit)}
       className="flex min-h-[500px] justify-center"
     >
-      <div className="my-2 flex h-1/2 w-11/12 justify-center rounded-lg bg-blue-100 pt-3 pb-6">
+      <div className="flex w-full items-center justify-center">
         {step === 1 && (
           <Step1DepartmentService
             register={register}

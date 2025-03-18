@@ -6,21 +6,21 @@ export default function DepartmentSection() {
       title: "Electrical",
       description:
         "Cum modi veritatis dicta et deserunt dolores praesentium, harum laborum quibusdam ea.",
-      imageSrc: "/images/dsd-house-white.png",
+      imageSrc: "/images/electrical.jpg",
       altText: "DSD Services logo",
     },
     {
       title: "HVAC",
       description:
         "Cum modi veritatis dicta et deserunt dolores praesentium, harum laborum quibusdam ea.",
-      imageSrc: "/images/dsd-house-white.png",
+      imageSrc: "/images/hvac.jpg",
       altText: "DSD Services logo",
     },
     {
       title: "Plumbing",
       description:
         "Cum modi veritatis dicta et deserunt dolores praesentium, harum laborum quibusdam ea.",
-      imageSrc: "/images/dsd-house-white.png",
+      imageSrc: "/images/plumbing.jpg",
       altText: "DSD Services logo",
     },
   ];

@@ -80,7 +80,7 @@ export default function MobileMenu({
             }}
             ref={menuRef}
             aria-label="Mobile navigation menu"
-            className="bg-opacity-90 fixed top-0 right-0 z-20 h-full w-full max-w-[240px] bg-blue-500 sm:w-1/3"
+            className="bg-opacity-90 fixed top-0 right-0 z-20 h-full w-full max-w-[240px] bg-blue-600 shadow-lg sm:w-1/3"
           >
             <div className="flex justify-end">
               <MotionButtonWrapper>
@@ -94,7 +94,7 @@ export default function MobileMenu({
                 </div>
               </MotionButtonWrapper>
             </div>
-            <div className="flex h-full max-h-[calc(100dvh-4rem)] flex-col gap-8 p-6 font-semibold text-white transition">
+            <div className="ml-10 flex h-full max-h-[calc(100dvh-4rem)] flex-col items-start gap-8 p-6 font-semibold text-white transition">
               {navData.map((item) => (
                 <NavLink
                   key={item.label}

@@ -14,13 +14,13 @@ export default function Step3ConfirmDateTime({
   formValues,
 }: Step3ConfirmDateTimeProps) {
   return (
-    <div className="flex flex-col items-center justify-center px-2">
+    <div className="-mt-10 flex flex-col items-center justify-center px-2">
       <h2 className="flex pb-2 text-center text-lg font-semibold">
         Step 3: Confirm selected appointment time:
       </h2>
       {formValues.appointmentStart && formValues.appointmentEnd && (
         <div className="pb-6 text-center">
-          <div className="rounded-md bg-white p-4">
+          <div className="rounded-md bg-white p-4 shadow-lg">
             <span className="block font-semibold text-blue-800">
               Selected Time:
             </span>
