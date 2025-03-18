@@ -33,7 +33,7 @@ export type Database = {
           {
             foreignKeyName: "department_service_types_service_type_id_fkey"
             columns: ["service_type_id"]
-            isOneToOne: false
+            isOneToOne: true
             referencedRelation: "service_types"
             referencedColumns: ["id"]
           },

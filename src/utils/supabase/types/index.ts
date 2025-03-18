@@ -12,6 +12,8 @@ export type ReservedPart =
 export type MissingPart = Database["public"]["Tables"]["missing_parts"]["Row"];
 export type ServiceTypePart =
   Database["public"]["Tables"]["service_type_parts"]["Row"];
+export type DepartmentServiceType =
+  Database["public"]["Tables"]["department_service_types"]["Row"];
 
 export type UserRole = Database["public"]["Enums"]["userrole"];
 export type WorkDay = Database["public"]["Enums"]["workday"];

@@ -5,11 +5,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@/components/ui/button";
 import { useDialog } from "@/components/ui/use-dialog";
 import { Dialog } from "@/components/ui/dialog";
-import type { Department, ServiceType } from "@/utils/supabase/types";
+import type {
+  Department,
+  DepartmentServiceType,
+  ServiceType,
+} from "@/utils/supabase/types";
 import { UpdateServiceTypeDepartmentForm } from "./update-service-type-department-form";
 
 type UpdateServiceTypeDepartmentDialogProps = {
-  serviceType: ServiceType & { departments: Array<Department> };
+  serviceType: ServiceType & {
+    department_service_types:
+      | (DepartmentServiceType & {
+          departments: Department;
+        })
+      | null;
+  };
   departments: Array<Department>;
 };
 
@@ -19,18 +29,20 @@ export const UpdateServiceTypeDepartmentDialog = ({
 }: UpdateServiceTypeDepartmentDialogProps) => {
   const { isOpen, closeDialog, openDialog } = useDialog();
 
-  const serviceTypeDepartment = serviceType.departments?.[0];
-
   return (
     <>
       <Button
         size="sm"
-        variant={serviceTypeDepartment?.name ? "warning" : "destructive"}
+        variant={
+          serviceType.department_service_types?.departments.name
+            ? "warning"
+            : "destructive"
+        }
         onClick={openDialog}
         className="w-full"
         aria-label="Update Department"
       >
-        {serviceTypeDepartment?.name ?? "No Department"}
+        {serviceType.department_service_types?.departments.name ?? "Unassigned"}
         <FontAwesomeIcon icon={faPencil} />
       </Button>
 

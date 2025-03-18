@@ -7,8 +7,8 @@ export async function findAllServiceTypes() {
 
   return await supabase
     .from("service_types")
-    .select("*, departments(*)")
-    .order("id", { ascending: true });
+    .select("*, department_service_types(*, departments(*))")
+    .order("name", { ascending: true });
 }
 
 export async function findOneServiceType(serviceTypeId: number) {
