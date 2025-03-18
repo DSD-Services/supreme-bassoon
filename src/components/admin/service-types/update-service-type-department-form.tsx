@@ -3,7 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
 import { updateServiceTypeDepartmentAction } from "@/features/service-types/actions/update-service-type-department.action";
-import type { Department, ServiceType } from "@/utils/supabase/types";
+import type {
+  Department,
+  DepartmentServiceType,
+  ServiceType,
+} from "@/utils/supabase/types";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
@@ -12,7 +16,13 @@ import toast from "react-hot-toast";
 
 type UpdateServiceTypeDepartmentFormProps = {
   departments: Array<Department>;
-  serviceType: ServiceType & { departments: Array<Department> };
+  serviceType: ServiceType & {
+    department_service_types:
+      | (DepartmentServiceType & {
+          departments: Department;
+        })
+      | null;
+  };
   onCancel: () => void;
 };
 
@@ -21,8 +31,8 @@ export const UpdateServiceTypeDepartmentForm = ({
   serviceType,
   onCancel,
 }: UpdateServiceTypeDepartmentFormProps) => {
-  const [department, setDepartment] = useState<Department>(
-    serviceType.departments[0],
+  const [department, setDepartment] = useState<Department | null>(
+    serviceType.department_service_types?.departments ?? null,
   );
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -30,7 +40,10 @@ export const UpdateServiceTypeDepartmentForm = ({
   const handleSubmit = (evt: React.FormEvent) => {
     evt.preventDefault();
 
-    if (department.id === serviceType.departments[0].id) {
+    if (
+      !department ||
+      department?.id === serviceType.department_service_types?.departments.id
+    ) {
       onCancel();
       return;
     }
@@ -55,7 +68,7 @@ export const UpdateServiceTypeDepartmentForm = ({
   return (
     <form onSubmit={handleSubmit} className="flex items-center gap-2">
       <Select
-        value={department.id}
+        value={department?.id}
         onChange={(evt) => {
           const selectedDepartment = departments.find(
             (d) => d.id === +evt.target.value,
