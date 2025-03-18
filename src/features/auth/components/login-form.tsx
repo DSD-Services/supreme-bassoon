@@ -31,9 +31,9 @@ export const LoginForm = () => {
       <div>
         <label
           htmlFor="email"
-          className="block text-sm/6 font-medium text-gray-900"
+          className="block text-sm/6 font-medium text-blue-800"
         >
-          Email:
+          Email
         </label>
         <Input
           id="email"
@@ -45,23 +45,14 @@ export const LoginForm = () => {
         />
       </div>
 
-      {/* <div> */}
       <div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between pt-2">
           <label
             htmlFor="password"
-            className="block text-sm/6 font-medium text-gray-900"
+            className="block text-sm/6 font-medium text-blue-800"
           >
-            Password:
+            Password
           </label>
-          <div className="text-sm">
-            <a
-              href="#"
-              className="font-semibold text-indigo-600 hover:text-indigo-500"
-            >
-              Forgot password?
-            </a>
-          </div>
         </div>
         <PasswordInput
           id="password"
@@ -69,6 +60,14 @@ export const LoginForm = () => {
           className="bg-white"
           required
         />
+        <div className="flex justify-end pt-1 pb-2 text-sm">
+          <a
+            href="#"
+            className="self-end font-semibold text-blue-600 hover:text-blue-500"
+          >
+            Forgot password?
+          </a>
+        </div>
       </div>
 
       <Button type="submit" className="w-full" disabled={isPending}>

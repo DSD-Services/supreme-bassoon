@@ -78,9 +78,12 @@ export default function Step1DepartmentService({
   };
 
   return (
-    <div className="w-11/12 sm:w-3/4 md:w-3/5 lg:w-1/2">
+    <div className="-mt-10 w-11/12 self-center rounded-lg bg-white p-4 shadow-lg sm:w-3/4 sm:p-6 md:w-3/5 lg:w-1/2">
+      <h1 className="mb-6 text-center text-2xl font-medium lg:text-3xl">
+        Schedule an Appointment
+      </h1>
       <h2 className="text-center text-lg font-semibold">
-        Step 1: Select Department & Service
+        Step 1: Select Department & Service:
       </h2>
       <div className="flex flex-col pt-6">
         <label htmlFor="department" className="text-sm text-blue-800">
@@ -89,7 +92,7 @@ export default function Step1DepartmentService({
         <Select
           {...register("departmentId", { required: true })}
           onChange={handleDepartmentSelect}
-          className="rounded-lg border-r-10 border-transparent bg-white px-3 py-2 text-sm shadow-lg hover:cursor-pointer md:text-base"
+          className="rounded-lg border-r-10 border-transparent bg-blue-100 px-3 py-2 text-sm shadow-lg hover:cursor-pointer md:text-base"
         >
           <option value="">-- Please select a department --</option>
           {departments.map((department: Department) => (
@@ -106,7 +109,7 @@ export default function Step1DepartmentService({
         <Select
           {...register("serviceTypeId", { required: true })}
           className={cn(
-            "rounded-lg border-r-10 border-transparent bg-white px-3 py-2 text-sm shadow-lg hover:cursor-pointer md:text-base",
+            "rounded-lg border-r-10 border-transparent bg-blue-100 px-3 py-2 text-sm shadow-lg hover:cursor-pointer md:text-base",
             {
               "bg-slate-300 text-slate-600": isDisabled,
               "animate-pulse opacity-50": isLoading,
@@ -124,8 +127,8 @@ export default function Step1DepartmentService({
           ))}
         </Select>
       </div>
-      <div className="mt-4 flex justify-between gap-10">
-        <Button type="button" variant="destructive" onClick={handleReset}>
+      <div className="mt-6 flex justify-between gap-10">
+        <Button type="button" onClick={handleReset} className="bg-blue-800">
           Reset
         </Button>
         <StepButtons

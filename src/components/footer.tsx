@@ -1,15 +1,18 @@
 export default function Footer() {
   return (
-    <footer className="h-16 bg-blue-500 p-4 text-white md:px-12">
-      <div className="container mx-auto flex h-full items-center justify-between">
-        <div aria-label="Copyright notice" className="text-sm opacity-80">
+    <footer className="min-h-16 bg-blue-500 p-2 text-white md:h-14 md:p-4 md:px-12">
+      <div className="container mx-auto flex h-full flex-col-reverse items-center justify-between gap-2 md:flex-row">
+        <div
+          aria-label="Copyright notice"
+          className="text-xs opacity-80 md:text-sm"
+        >
           <span>
             &copy; {new Date().getFullYear()} DSD Services. All rights reserved.
           </span>
         </div>
 
         <nav aria-label="Footer navigation">
-          <ul className="flex gap-2 text-sm">
+          <ul className="flex gap-4 text-sm">
             <li>
               <a
                 href="#services"

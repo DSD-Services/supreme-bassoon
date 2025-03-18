@@ -34,7 +34,7 @@ export default async function Page() {
 
   return (
     <div className="mx-auto max-w-3xl md:py-8">
-      <div className="overflow-hidden bg-white shadow-lg md:rounded-xl">
+      <div className="overflow-hidden bg-white md:rounded-xl md:shadow-lg">
         <div className="bg-blue-500 px-6 py-6">
           <h1 className="text-center text-3xl font-bold text-white">
             My Account
