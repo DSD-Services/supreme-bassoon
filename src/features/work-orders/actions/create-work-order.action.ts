@@ -163,5 +163,47 @@ export async function createWorkOrderAction(values: CreateWorkOrderInput) {
     return { error: "Oops! Something went wrong." };
   }
 
+  // Send the order confirmation to the technician
+  const { data: technicianData, error: technicianError } = await supabase
+    .from("profiles")
+    .select("email")
+    .eq("id", technicianId)
+    .single();
+
+  if (technicianError || !technicianData) {
+    console.error("[CreateWorkOrderError]: Unable to fetch technician email.");
+    return {
+      error: "Oops! Something went wrong while fetching technician email.",
+    };
+  }
+
+  const technicianEmail = technicianData.email;
+
+  const missingPartsMessage = missingParts.length
+    ? `Missing Parts:\n${missingParts
+        .map((part) => `Part: ${part.partId}, Quantity: ${part.quantity}`)
+        .join("\n")}`
+    : "All required parts are available.";
+
+  const emailText = `
+    New Work Order Assigned
+    You have been assigned a new work order.
+
+    Appointment Time: ${appointmentStart} - ${appointmentEnd}
+    Service Address: ${serviceAddress.addressLine1}, ${serviceAddress.city}
+
+    ${missingPartsMessage}
+    `;
+
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/mailer`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      to: technicianEmail,
+      subject: "New Work Order Assigned",
+      text: emailText,
+    }),
+  });
+
   return { error: null };
 }
