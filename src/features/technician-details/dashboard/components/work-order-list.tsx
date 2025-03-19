@@ -199,7 +199,7 @@ export default async function WorkOrderList() {
             Past Appointments:
           </h3>
           <span className="-mt-2 text-slate-700 italic">
-            (Sorted most recent first)
+            (Sorted by most recent first)
           </span>
           <PaginationWrapper
             userRole={userRole}
