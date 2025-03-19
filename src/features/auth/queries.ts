@@ -37,3 +37,22 @@ export async function reqRoles(roles: UserRole[]) {
 
   return profile;
 }
+
+export async function getUserRole() {
+  const { userId } = await protect();
+
+  const supabase = await createClient();
+
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", userId)
+    .single();
+
+  if (error) {
+    console.error("Error fetching user role:", error.message);
+    return null;
+  }
+
+  return profile?.role || null;
+}

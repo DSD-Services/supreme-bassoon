@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { protect } from "@/features/auth/queries";
+import { HydratedWorkOrder } from "@/utils/supabase/types";
 
 export async function findAllWorkOrders() {
   await protect();
@@ -10,12 +11,16 @@ export async function findAllWorkOrders() {
   return { data, error };
 }
 
-export async function findAllWorkOrdersHydrated() {
+export async function findAllWorkOrdersHydrated(): Promise<{
+  data: HydratedWorkOrder[];
+}> {
   await protect();
   const supabase = await createClient();
 
-  const { data, error } = await supabase.from("work_orders").select(
-    `
+  const { data, error } = await supabase
+    .from("work_orders")
+    .select(
+      `
       *,
       client:profiles!client_id (*),
       technician:profiles!technician_id (*),
@@ -26,7 +31,8 @@ export async function findAllWorkOrdersHydrated() {
         service_type_parts (*, part:part_id (*))
       )
     `,
-  );
+    )
+    .overrideTypes<Array<HydratedWorkOrder>>();
 
   if (error) {
     throw new Error(error.message);
@@ -46,4 +52,22 @@ export async function findOneWorkOrders(workOrderId: number) {
     .single();
 
   return { data, error };
+}
+
+export async function hasMissingPartsForWorkOrder(
+  workOrderId: number,
+): Promise<boolean> {
+  await protect();
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("missing_parts")
+    .select("id")
+    .eq("work_order_id", workOrderId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data && data.length > 0;
 }

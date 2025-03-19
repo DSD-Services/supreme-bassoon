@@ -21,7 +21,15 @@ export type WorkOrderStatus = Database["public"]["Enums"]["workorderstatus"];
 
 //
 
-export type HydratedWorkOrder = WorkOrder & {
+export type HydratedWorkOrder = Omit<WorkOrder, "service_address"> & {
+  service_address: {
+    city: string | null;
+    state: string | null;
+    postal_code: string | null;
+    address_line1: string | null;
+    address_line2: string | null;
+  } | null;
+} & {
   client: Profile;
   technician: Profile;
   department: Department;
