@@ -150,7 +150,7 @@ export default function ScheduleWorkOrderForm({
     }
 
     toast.success("Work order created successfully!");
-    router.push("/dashboard");
+    router.push("/schedule/success");
   };
 
   return (
