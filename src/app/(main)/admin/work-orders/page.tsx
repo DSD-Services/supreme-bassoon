@@ -16,7 +16,7 @@ export default async function Page() {
 
   return (
     <div className="px-4 py-12">
-      <div className="mx-10 flex items-center justify-between gap-2">
+      <div className="mx-10 flex items-center justify-between gap-2 pb-2">
         <h1 className="text-3xl font-bold tracking-tight">
           Manage Work Orders
         </h1>
