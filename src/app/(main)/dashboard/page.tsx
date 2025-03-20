@@ -2,7 +2,7 @@ import { AdminDashboard } from "@/components/dashboard/admin-dashboard";
 import { ClientDashboard } from "@/components/dashboard/client-dashboard";
 import { protect } from "@/features/auth/queries";
 import { findOneProfile } from "@/features/profiles/queries";
-import TechnicianDashboard from "@/components/dashboard/tech-dashboard";
+import TechnicianDashboard from "@/components/dashboard/technician-dashboard";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
