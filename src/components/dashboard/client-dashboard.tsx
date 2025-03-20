@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 
 export const ClientDashboard = () => {
   return (
-    <div className="m-2 md:m-4">
+    <div className="m-2 py-12 md:m-4">
       <div className="px-10">
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
         <div className="bg-muted h-1" />

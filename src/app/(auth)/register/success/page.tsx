@@ -1,10 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Registration Successful",
+};
 
 export default function Page() {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-12">
       <div className="flex flex-col items-center justify-center gap-4 md:flex-row">
         <div className="flex-[1]">
           <Button asLink variant="ghost" href="/">

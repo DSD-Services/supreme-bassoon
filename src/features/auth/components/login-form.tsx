@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { ActionState, loginAction } from "@/features/auth/actions/login.action";
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export const LoginForm = () => {
@@ -14,20 +14,43 @@ export const LoginForm = () => {
     loginAction,
     undefined,
   );
+  const [banner, setBanner] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (state?.success) {
-      router.push("/account");
+      router.push("/dashboard");
       toast.success("Welcome back!");
     }
 
     if (state?.error) {
-      toast.error(state.error);
+      if (state.error.includes("confirm")) {
+        setBanner(true);
+      } else {
+        toast.error(state.error);
+        setBanner(false);
+      }
     }
   }, [state, router]);
 
   return (
     <form action={formAction} className="space-y-2.5">
+      {banner ? (
+        <div className="mt-2 rounded bg-red-600 px-2 py-0.5">
+          <span className="rounded text-sm text-white">
+            Please confirm your email address to log in. If you haven&apos;t
+            received a confirmation email,{" "}
+            <Button
+              asLink
+              href="/register/resend"
+              variant="link"
+              className="inline px-0 text-white"
+            >
+              click here
+            </Button>{" "}
+            to resend it.
+          </span>
+        </div>
+      ) : null}
       <div>
         <label
           htmlFor="email"

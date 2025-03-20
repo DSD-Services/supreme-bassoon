@@ -4,6 +4,11 @@ import { protect } from "@/features/auth/queries";
 import { findOneProfile } from "@/features/profiles/queries";
 import TechnicianDashboardPageComponent from "@/features/technician-details/components/tech-dashboard-page-component";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+};
 
 export default async function Page() {
   const { userId } = await protect({ action: "redirect" });

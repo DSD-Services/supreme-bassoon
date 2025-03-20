@@ -16,6 +16,11 @@ import {
   faBuilding,
 } from "@fortawesome/free-solid-svg-icons";
 import { SignOutButton } from "@/features/auth/components/sign-out-button";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Account",
+};
 
 export default async function Page() {
   const { userId } = await protect({ action: "redirect" });
@@ -33,7 +38,7 @@ export default async function Page() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl md:py-8">
+    <div className="mx-auto max-w-3xl md:py-12">
       <div className="overflow-hidden bg-white md:rounded-xl md:shadow-lg">
         <div className="bg-blue-500 px-6 py-6">
           <h1 className="text-center text-3xl font-bold text-white">

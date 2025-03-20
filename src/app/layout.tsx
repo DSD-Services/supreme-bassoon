@@ -11,8 +11,11 @@ const sofiaSans = Sofia_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "DSD Services",
-  description: "Electrical, HVAC & Plumbing",
+  title: {
+    template: "%s | DSD Services",
+    default: "DSD Services",
+  },
+  description: "Booking system for plumbing, electrical work and HVAC repairs.",
 };
 
 export default function RootLayout({

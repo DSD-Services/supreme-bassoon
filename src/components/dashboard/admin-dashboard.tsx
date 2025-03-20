@@ -56,7 +56,7 @@ const links = [
 ];
 export const AdminDashboard = () => {
   return (
-    <div className="container mx-auto space-y-4 px-4 py-8">
+    <div className="container mx-auto space-y-4 px-4 py-12">
       <h1 className="text-3xl font-bold tracking-tight">Admin Dashboard</h1>
       <div className="bg-muted h-1" />
 

@@ -2,10 +2,15 @@ import { Button } from "@/components/ui/button";
 import { RegisterForm } from "@/features/auth/components/register-form";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Register",
+};
 
 export default function Page() {
   return (
-    <div className="container mx-auto px-4 py-4">
+    <div className="container mx-auto px-4 py-12">
       <div className="grid place-items-center md:flex-row">
         <h1 className="my-2 text-center text-2xl font-bold whitespace-nowrap sm:text-4xl md:w-2/4 md:text-3xl">
           Welcome to DSD Services!

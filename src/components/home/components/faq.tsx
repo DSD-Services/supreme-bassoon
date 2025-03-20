@@ -38,28 +38,30 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="mx-auto my-10 max-w-3xl rounded-lg bg-white p-6 shadow-lg">
-      <h2 className="mb-4 text-2xl font-semibold">
-        Frequently Asked Questions
-      </h2>
+    <div className="pt-8 pb-20" id="faqs">
+      <section className="mx-auto my-10 max-w-3xl rounded-lg bg-white p-6 shadow-lg">
+        <h2 className="mb-4 text-2xl font-semibold">
+          Frequently Asked Questions
+        </h2>
 
-      <div className="space-y-4">
-        {faqData.map((faq, index) => (
-          <div key={index} className="border-b">
-            <button
-              className="flex w-full items-center justify-between py-3 text-left font-medium focus:outline-none"
-              onClick={() => toggleQuestion(index)}
-            >
-              <span>{faq.question}</span>
-              <span>{openQuestion === index ? "-" : "+"}</span>
-            </button>
-            {openQuestion === index && (
-              <p className="px-4 pb-3 text-gray-600">{faq.answer}</p>
-            )}
-          </div>
-        ))}
-      </div>
-    </section>
+        <div className="space-y-4">
+          {faqData.map((faq, index) => (
+            <div key={index} className="border-b">
+              <button
+                className="flex w-full items-center justify-between py-3 text-left font-medium focus:outline-none"
+                onClick={() => toggleQuestion(index)}
+              >
+                <span>{faq.question}</span>
+                <span>{openQuestion === index ? "-" : "+"}</span>
+              </button>
+              {openQuestion === index && (
+                <p className="px-4 pb-3 text-gray-600">{faq.answer}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 };
 
