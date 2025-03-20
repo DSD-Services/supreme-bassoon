@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { reqRoles } from "@/features/auth/queries";
-import WorkOrderList from "@/features/technician-details/dashboard/components/work-order-list";
+import WorkOrderList from "@/features/dashboard/components/work-order-list";
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { notFound } from "next/navigation";

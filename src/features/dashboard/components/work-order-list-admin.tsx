@@ -17,14 +17,12 @@ interface WorkOrderListAdminProps {
   workOrdersGroupedByTechnician: WorkOrdersGroupedByTechnician;
   userRole: "CLIENT" | "TECHNICIAN" | "ADMIN" | null;
   todayAppointments: HydratedWorkOrder[];
-  hasMissingParts: boolean;
 }
 
 export default function WorkOrderListAdmin({
   workOrdersGroupedByTechnician,
   userRole,
   todayAppointments,
-  hasMissingParts,
 }: WorkOrderListAdminProps) {
   const [selectedTechnician, setSelectedTechnician] = useState("ALL");
 
@@ -54,9 +52,6 @@ export default function WorkOrderListAdmin({
         })()
       : workOrdersGroupedByTechnician[selectedTechnician]?.workOrders || [];
 
-  console.log("Selected Technician:", selectedTechnician);
-  console.log("Filtered work orders:", filteredWorkOrders);
-
   return (
     <>
       {userRole === "ADMIN" && (
@@ -71,7 +66,6 @@ export default function WorkOrderListAdmin({
                   key={workOrder.id}
                   workOrder={workOrder}
                   userRole={userRole}
-                  hasMissingParts={hasMissingParts}
                 />
               </>
             ))

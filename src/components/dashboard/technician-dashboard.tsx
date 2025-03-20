@@ -1,7 +1,7 @@
-import WorkOrderList from "@/features/technician-details/dashboard/components/work-order-list";
-import TechnicianCalendar from "./tech-calendar";
+import WorkOrderList from "@/features/dashboard/components/work-order-list";
+import TechnicianCalendar from "@/features/technician-details/components/tech-calendar";
 
-export default function TechnicianDashboardPageComponent() {
+export default function TechnicianDashboard() {
   return (
     <div className="m-2 md:m-4">
       <div className="px-10">

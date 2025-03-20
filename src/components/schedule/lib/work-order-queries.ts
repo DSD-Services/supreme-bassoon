@@ -41,9 +41,6 @@ export const fetchTimeslots = async (departmentId: string) => {
   const appointmentLeadTime = new Date(today.getDate());
   appointmentLeadTime.setDate(tomorrow.getDate() + APPOINTMENT_LEAD_TIME);
 
-  // const todayStr = today.toISOString();
-  // const thirtyDaysAheadStr = thirtyDaysAhead.toISOString();
-
   const { data: workOrders, error: workOrderError } = await supabase
     .from("work_orders")
     .select("id, technician_id, appointment_start, appointment_end")

@@ -14,7 +14,7 @@ export default function HomeHero() {
       </div>
       <div className="w-2/5 max-w-[350px] md:w-1/3">
         <Image
-          src="/images/dsd-house-blue.png"
+          src="/images/blue-500-house.png"
           alt="DSD Services logo shaped like a house. Under the roof are four circles with a lightning bolt, flame, snowflake, and water droplet."
           width={403}
           height={451}

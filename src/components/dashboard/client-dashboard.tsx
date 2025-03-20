@@ -1,4 +1,4 @@
-import WorkOrderList from "@/features/technician-details/dashboard/components/work-order-list";
+import WorkOrderList from "@/features/dashboard/components/work-order-list";
 import { Button } from "../ui/button";
 
 export const ClientDashboard = () => {

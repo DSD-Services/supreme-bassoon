@@ -7,7 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { ApptNotesInput, ApptNotesSchema } from "../components/schemas";
+import {
+  ApptNotesInput,
+  ApptNotesSchema,
+} from "../technician-details/components/schemas";
 import { updateApptNotes } from "@/features/work-orders/actions/update-appt-notes.action";
 
 type UpdateApptNotesFormProps = {

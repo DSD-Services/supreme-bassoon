@@ -2,7 +2,7 @@ import { AdminDashboard } from "@/components/dashboard/admin-dashboard";
 import { ClientDashboard } from "@/components/dashboard/client-dashboard";
 import { protect } from "@/features/auth/queries";
 import { findOneProfile } from "@/features/profiles/queries";
-import TechnicianDashboardPageComponent from "@/features/technician-details/components/tech-dashboard-page-component";
+import TechnicianDashboard from "@/components/dashboard/technician-dashboard";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
@@ -20,7 +20,7 @@ export default async function Page() {
     case "CLIENT":
       return <ClientDashboard />;
     case "TECHNICIAN":
-      return <TechnicianDashboardPageComponent />;
+      return <TechnicianDashboard />;
     case "ADMIN":
       return <AdminDashboard />;
     default:

@@ -60,8 +60,6 @@ export default function TechnicianCalendar() {
     }
     setSelectedAppointment(appointment);
     setShowModal(true);
-
-    console.log("Event clicked:", info.event.start);
   };
 
   return (

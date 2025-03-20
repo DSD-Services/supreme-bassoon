@@ -34,6 +34,7 @@ export type HydratedWorkOrder = Omit<WorkOrder, "service_address"> & {
   technician: Profile;
   department: Department;
   reserved_parts: Array<ReservedPart & { part: Part }>;
+  missing_parts: Array<MissingPart & { part: Part }>;
   service_type: ServiceType;
   service_type_parts: {
     service_type_parts: Array<ServiceTypePart & { part: Part }>;

@@ -13,7 +13,7 @@ export default function PaginationWrapper({
   appointments,
   userRole,
 }: {
-  appointments: (HydratedWorkOrder & { hasMissingParts?: boolean })[]; // Adjust type to include hasMissingParts
+  appointments: HydratedWorkOrder[];
   userRole: "CLIENT" | "TECHNICIAN" | "ADMIN" | null;
 }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,7 +34,6 @@ export default function PaginationWrapper({
               key={workOrder.id}
               workOrder={workOrder}
               userRole={userRole}
-              hasMissingParts={workOrder.hasMissingParts ?? false}
             />
           ))}
           <div className="mt-4 flex items-center justify-center gap-4">

@@ -1,8 +1,5 @@
-import {
-  findAllWorkOrdersHydrated,
-  hasMissingPartsForWorkOrder,
-} from "@/features/work-orders/queries";
-import WorkOrderCard from "@/features/technician-details/dashboard/components/work-order-card";
+import { findAllWorkOrdersHydrated } from "@/features/work-orders/queries";
+import WorkOrderCard from "./work-order-card";
 import { getUserRole } from "@/features/auth/queries";
 import { DateTime } from "luxon";
 import { HydratedWorkOrder } from "@/utils/supabase/types";
@@ -12,15 +9,6 @@ import WorkOrderListAdmin from "./work-order-list-admin";
 export default async function WorkOrderList() {
   const { data: workOrders } = await findAllWorkOrdersHydrated();
   const userRole = await getUserRole();
-
-  const workOrdersWithMissingParts = await Promise.all(
-    workOrders.map(async (workOrder) => {
-      const hasMissingParts = await hasMissingPartsForWorkOrder(workOrder.id);
-      return { ...workOrder, hasMissingParts } as HydratedWorkOrder & {
-        hasMissingParts: boolean;
-      };
-    }),
-  );
 
   const today = DateTime.local().startOf("day");
   const endOfDay = today.endOf("day");
@@ -33,8 +21,8 @@ export default async function WorkOrderList() {
     return startA < startB ? -1 : startA > startB ? 1 : 0;
   };
 
-  const todayAppointments = workOrdersWithMissingParts
-    ? workOrdersWithMissingParts
+  const todayAppointments = workOrders
+    ? workOrders
         .filter((workOrder) => {
           if (!workOrder.appointment_start) return false;
           if (workOrder.appointment_start) {
@@ -48,8 +36,8 @@ export default async function WorkOrderList() {
         .sort(sortByAppointment)
     : [];
 
-  const upcomingAppointments = workOrdersWithMissingParts
-    ? workOrdersWithMissingParts
+  const upcomingAppointments = workOrders
+    ? workOrders
         .filter((workOrder) => {
           if (!workOrder.appointment_start) return false;
           if (workOrder.appointment_start) {
@@ -89,12 +77,12 @@ export default async function WorkOrderList() {
     string,
     {
       technicianName: string;
-      workOrders: (HydratedWorkOrder & { hasMissingParts: boolean })[];
+      workOrders: HydratedWorkOrder[];
     }
   > = {};
 
-  if (userRole === "ADMIN" && workOrdersWithMissingParts.length) {
-    workOrdersWithMissingParts.forEach((workOrder) => {
+  if (userRole === "ADMIN" && workOrders.length) {
+    workOrders.forEach((workOrder) => {
       if (!workOrder.technician) return;
 
       const technicianId = workOrder.technician.id;
@@ -120,14 +108,6 @@ export default async function WorkOrderList() {
     });
   });
 
-  const hasMissingPartsForAny = Object.values(
-    workOrdersGroupedByTechnician,
-  ).some((technician) =>
-    technician.workOrders.some((workOrder) => workOrder.hasMissingParts),
-  );
-
-  console.log("Past appointments:", pastAppointments);
-
   return (
     <div className="m-0 flex flex-col items-center gap-2 rounded-none bg-blue-50 p-2 text-xs md:m-2 md:mx-2 md:mb-3 md:gap-3 md:rounded-lg md:p-3 lg:mx-10 lg:mb-4 lg:p-4">
       {userRole === "ADMIN" && (
@@ -135,7 +115,6 @@ export default async function WorkOrderList() {
           todayAppointments={todayAppointments}
           workOrdersGroupedByTechnician={workOrdersGroupedByTechnician}
           userRole={userRole}
-          hasMissingParts={hasMissingPartsForAny}
         />
       )}
       {(userRole === "TECHNICIAN" || userRole === "CLIENT") && (
@@ -149,7 +128,6 @@ export default async function WorkOrderList() {
                 key={workOrder.id}
                 workOrder={workOrder}
                 userRole={userRole}
-                hasMissingParts={workOrder.hasMissingParts ?? false}
               />
             ))
           ) : userRole === "TECHNICIAN" ? (
