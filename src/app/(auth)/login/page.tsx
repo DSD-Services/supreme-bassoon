@@ -2,10 +2,15 @@ import { Button } from "@/components/ui/button";
 import { LoginForm } from "@/features/auth/components/login-form";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Login",
+};
 
 export default function LoginPage() {
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="container mx-auto px-4 py-12">
       <div className="grid place-items-center md:flex-row">
         <h1 className="text-center text-2xl font-bold whitespace-nowrap sm:text-4xl md:w-2/4 md:text-3xl">
           Welcome to DSD Services!

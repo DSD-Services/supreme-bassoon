@@ -4,14 +4,19 @@ import WorkOrderList from "@/features/technician-details/dashboard/components/wo
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Manage Work Orders",
+};
 
 export default async function Page() {
   const profile = await reqRoles(["ADMIN"]);
   if (!profile) notFound();
 
   return (
-    <div className="px-4">
-      <div className="flex items-center justify-between gap-2 px-4 pt-8 pb-2">
+    <div className="container mx-auto space-y-4 px-4 py-12">
+      <div className="flex items-center justify-between gap-2">
         <h1 className="text-3xl font-bold tracking-tight">
           Manage Work Orders
         </h1>

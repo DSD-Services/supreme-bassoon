@@ -3,6 +3,11 @@ import { findAllDepartments } from "@/features/departments/queries";
 import { protect } from "@/features/auth/queries";
 import { findOneProfile } from "@/features/profiles/queries";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Schedule",
+};
 
 export default async function Page() {
   const { userId } = await protect();

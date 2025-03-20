@@ -76,7 +76,10 @@ const steps = [
 
 const HowItWorks: React.FC = () => {
   return (
-    <section className="mx-auto max-w-4xl px-6 py-12 text-center">
+    <section
+      className="mx-auto max-w-4xl px-6 py-12 text-center"
+      id="how-it-works"
+    >
       <h2 className="mb-8 text-3xl font-bold">How It Works</h2>
       <div className="grid gap-6 md:grid-cols-3">
         {steps.map((step) => (
