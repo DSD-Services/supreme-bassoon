@@ -1,5 +1,5 @@
 import { findAllWorkOrdersHydrated } from "@/features/work-orders/queries";
-import WorkOrderCard from "@/features/technician-details/dashboard/components/work-order-card";
+import WorkOrderCard from "./work-order-card";
 import { getUserRole } from "@/features/auth/queries";
 import { DateTime } from "luxon";
 import { HydratedWorkOrder } from "@/utils/supabase/types";
