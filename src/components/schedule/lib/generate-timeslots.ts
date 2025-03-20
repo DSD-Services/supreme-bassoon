@@ -7,15 +7,15 @@ import type {
   Timeslot,
 } from "@/lib/types/work-order-types";
 
-const dayOfWeekMap: { [key: number]: WorkDay } = {
-  0: "SUNDAY",
-  1: "MONDAY",
-  2: "TUESDAY",
-  3: "WEDNESDAY",
-  4: "THURSDAY",
-  5: "FRIDAY",
-  6: "SATURDAY",
-};
+// const dayOfWeekMap: { [key: number]: WorkDay } = {
+//   0: "SUNDAY",
+//   1: "MONDAY",
+//   2: "TUESDAY",
+//   3: "WEDNESDAY",
+//   4: "THURSDAY",
+//   5: "FRIDAY",
+//   6: "SATURDAY",
+// };
 
 export function generateTimeslots(
   technicians: Technician[],
@@ -77,7 +77,7 @@ export function generateTimeslots(
       const currentDate = DateTime.now().plus({ days: i }).startOf("day");
       if (i === 0) continue;
 
-      const workDay = dayOfWeekMap[currentDate.weekday % 7];
+      const workDay = currentDate.weekdayLong.toUpperCase() as WorkDay;
       if (!work_days?.includes(workDay)) continue;
 
       let startTime = DateTime.fromISO(
