@@ -31,7 +31,7 @@ interface Step1DepartmentServiceProps {
 
 export default function Step1DepartmentService({
   register,
-  reset,
+  // reset,
   departments,
   setIsLoading,
   isLoading,
@@ -72,7 +72,9 @@ export default function Step1DepartmentService({
   };
 
   const handleReset = () => {
-    reset({ departmentId: undefined, serviceTypeId: undefined });
+    setValue("departmentId", "" as unknown as number);
+    setValue("serviceTypeId", "" as unknown as number);
+    setValue("technicianId", "");
     setIsDisabled(true);
     setServiceTypes([]);
   };
