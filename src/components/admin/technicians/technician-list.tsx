@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProfileWithTechnicianDetails } from "@/utils/supabase/types";
 import { Input } from "@/components/ui/input";
 import { TechnicianCard } from "./technician-card";
@@ -13,6 +13,10 @@ export const TechnicianList = ({ initialProfiles }: TechnicianListProps) => {
   const [profiles, setProfiles] =
     useState<Array<ProfileWithTechnicianDetails>>(initialProfiles);
   const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    setProfiles(initialProfiles);
+  }, [initialProfiles]);
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const q = evt.target.value.trim();

@@ -152,10 +152,15 @@ export const UpdateTechnicianForm = ({
             "SATURDAY",
             "SUNDAY",
           ].map((day) => (
-            <label key={day}>
-              <Input type="checkbox" value={day} {...register("workDays")} />
-              {day.substring(0, 2)}
-            </label>
+            <div key={day}>
+              <label className="block text-center">{day.substring(0, 2)}</label>
+              <Input
+                className="size-6 shadow-none"
+                type="checkbox"
+                value={day}
+                {...register("workDays")}
+              />
+            </div>
           ))}
         </div>
       </div>
