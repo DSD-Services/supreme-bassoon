@@ -7,7 +7,7 @@ export default function MainLayout({
   return (
     <>
       <Header />
-      <main className="min-h-[calc(100vh-4rem)]">{children}</main>
+      <main className="min-h-[calc(100vh-4rem-10rem)]">{children}</main>
       <Footer />
     </>
   );
