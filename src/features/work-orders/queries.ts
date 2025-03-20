@@ -27,6 +27,7 @@ export async function findAllWorkOrdersHydrated(): Promise<{
       department:departments!department_id (*),
       service_type:service_types!service_type_id (*),
       reserved_parts (*, part:part_id (*)),
+      missing_parts (*, part:part_id (*)),
       service_type_parts:service_type_id!inner (
         service_type_parts (*, part:part_id (*))
       )
@@ -52,22 +53,4 @@ export async function findOneWorkOrders(workOrderId: number) {
     .single();
 
   return { data, error };
-}
-
-export async function hasMissingPartsForWorkOrder(
-  workOrderId: number,
-): Promise<boolean> {
-  await protect();
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
-    .from("missing_parts")
-    .select("id")
-    .eq("work_order_id", workOrderId);
-
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  return data && data.length > 0;
 }

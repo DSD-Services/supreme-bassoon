@@ -21,7 +21,6 @@ import { UpdateApptNotesDialog } from "./update-appt-notes-dialog";
 interface WorkOrderCardProps {
   workOrder: HydratedWorkOrder;
   userRole: string | null;
-  hasMissingParts: boolean;
 }
 
 const statusIcons = {
@@ -34,7 +33,6 @@ const statusIcons = {
 export default function WorkOrderCard({
   workOrder,
   userRole,
-  hasMissingParts,
 }: WorkOrderCardProps) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
@@ -81,6 +79,10 @@ export default function WorkOrderCard({
     }
   });
 
+  const hasMissingParts =
+    Array.isArray(workOrder.missing_parts) &&
+    workOrder.missing_parts.length > 0;
+
   return (
     <div className="bg-background w-full gap-2 rounded-md p-2 shadow-lg md:gap-3 md:p-3 lg:p-4 lg:pb-2">
       <div className="flex flex-row justify-between">
@@ -118,7 +120,7 @@ export default function WorkOrderCard({
               {(userRole === "CLIENT" || userRole === "ADMIN") && (
                 <WorkOrderGroup labelText="Technician">
                   <div className="flex items-center">
-                    {userRole === "ADMIN" && (
+                    {userRole === "ADMIN" && hasMissingParts && (
                       <FontAwesomeIcon
                         icon={faWrench}
                         className="mr-2 text-red-500"
@@ -133,10 +135,12 @@ export default function WorkOrderCard({
               )}
               {userRole === "TECHNICIAN" && (
                 <WorkOrderGroup labelText="Missing parts?">
-                  <FontAwesomeIcon
-                    icon={faWrench}
-                    className="mr-2 text-red-500"
-                  />
+                  {hasMissingParts && (
+                    <FontAwesomeIcon
+                      icon={faWrench}
+                      className="mr-2 text-red-500"
+                    />
+                  )}
                   {hasMissingParts ? "Yes" : "No"}
                 </WorkOrderGroup>
               )}
