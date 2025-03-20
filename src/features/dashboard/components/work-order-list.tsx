@@ -120,7 +120,9 @@ export default async function WorkOrderList() {
       {(userRole === "TECHNICIAN" || userRole === "CLIENT") && (
         <>
           <h3 className="text-lg font-bold text-blue-800">
-            Today&apos;s Appointments - {today.toLocaleString()}:
+            Today&apos;s{" "}
+            {userRole === "CLIENT" ? "Appointments" : "Work Orders"} -{" "}
+            {today.toLocaleString()}:
           </h3>
           {todayAppointments.length > 0 ? (
             todayAppointments.map((workOrder) => (

@@ -5,6 +5,7 @@ import { Select } from "@/components/ui/select";
 import { HydratedWorkOrder } from "@/utils/supabase/types";
 import WorkOrderCard from "./work-order-card";
 import PaginationWrapper from "./pagination-wrapper";
+import { DateTime } from "luxon";
 
 interface WorkOrdersGroupedByTechnician {
   [technicianId: string]: {
@@ -25,6 +26,8 @@ export default function WorkOrderListAdmin({
   todayAppointments,
 }: WorkOrderListAdminProps) {
   const [selectedTechnician, setSelectedTechnician] = useState("ALL");
+
+  const today = DateTime.local().startOf("day");
 
   const technicianOptions = Object.keys(workOrdersGroupedByTechnician).map(
     (technicianId) => {
@@ -57,7 +60,7 @@ export default function WorkOrderListAdmin({
       {userRole === "ADMIN" && (
         <>
           <h3 className="text-lg font-bold text-blue-800">
-            Today&apos;s Work Orders:
+            Today&apos;s Appointments - {today.toLocaleString()}:
           </h3>
           {todayAppointments.length > 0 ? (
             todayAppointments.map((workOrder) => (

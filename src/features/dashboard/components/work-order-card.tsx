@@ -17,6 +17,7 @@ import ServicePartsTable from "./service-parts-table";
 import { WorkOrderActionButtons } from "./work-order-action-buttons";
 import { AnimatePresence, motion } from "framer-motion";
 import { UpdateApptNotesDialog } from "./update-appt-notes-dialog";
+import Tooltip from "@/components/ui/tooltip";
 
 interface WorkOrderCardProps {
   workOrder: HydratedWorkOrder;
@@ -117,33 +118,14 @@ export default function WorkOrderCard({
           </div>
           <div className="mt-3 mr-4 flex flex-grow flex-row md:mt-0 md:mr-4 md:flex-wrap lg:flex-row">
             <div className="mr-4 w-1/2 md:mr-0 md:mb-3 md:w-full md:max-w-[100px] lg:mr-16">
-              {(userRole === "CLIENT" || userRole === "ADMIN") && (
-                <WorkOrderGroup labelText="Technician">
-                  <div className="flex items-center">
-                    {userRole === "ADMIN" && hasMissingParts && (
-                      <FontAwesomeIcon
-                        icon={faWrench}
-                        className="mr-2 text-red-500"
-                      />
-                    )}
-                    <span>
-                      {workOrder.technician.first_name}{" "}
-                      {workOrder.technician.last_name.slice(0, 1)}.
-                    </span>
-                  </div>
-                </WorkOrderGroup>
-              )}
-              {userRole === "TECHNICIAN" && (
-                <WorkOrderGroup labelText="Missing parts?">
-                  {hasMissingParts && (
-                    <FontAwesomeIcon
-                      icon={faWrench}
-                      className="mr-2 text-red-500"
-                    />
-                  )}
-                  {hasMissingParts ? "Yes" : "No"}
-                </WorkOrderGroup>
-              )}
+              <WorkOrderGroup labelText="Technician">
+                <div className="flex items-center">
+                  <span>
+                    {workOrder.technician.first_name}{" "}
+                    {workOrder.technician.last_name.slice(0, 1)}.
+                  </span>
+                </div>
+              </WorkOrderGroup>
             </div>
             <div className="flex w-1/2">
               <WorkOrderGroup labelText="Status">
@@ -161,6 +143,15 @@ export default function WorkOrderCard({
           </div>
         </div>
         <div className="flex items-center">
+          {(userRole === "ADMIN" || userRole === "TECHNICIAN") &&
+            hasMissingParts && (
+              <Tooltip infoText="Missing parts">
+                <FontAwesomeIcon
+                  icon={faWrench}
+                  className="tooltip-item mr-4 text-lg text-blue-900"
+                />
+              </Tooltip>
+            )}
           <span
             className="ml-auto cursor-pointer pr-2 text-right text-xl font-medium text-blue-500"
             onClick={() => setIsExpanded(!isExpanded)}

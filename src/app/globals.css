@@ -123,3 +123,7 @@ body.modal-open {
   scrollbar-width: thin;
   scrollbar-color: hsl(var(--border)) transparent;
 }
+
+.tooltip-item {
+  cursor: pointer;
+}

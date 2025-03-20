@@ -15,8 +15,8 @@ export default async function Page() {
   if (!profile) notFound();
 
   return (
-    <div className="container mx-auto space-y-4 px-4 py-12">
-      <div className="flex items-center justify-between gap-2">
+    <div className="px-4 py-12">
+      <div className="mx-10 flex items-center justify-between gap-2">
         <h1 className="text-3xl font-bold tracking-tight">
           Manage Work Orders
         </h1>
@@ -24,7 +24,7 @@ export default async function Page() {
           <FontAwesomeIcon icon={faLeftLong} />
         </Button>
       </div>
-      <div className="bg-muted h-1" />
+      <div className="bg-muted mx-10 h-1" />
       <WorkOrderList />
     </div>
   );
