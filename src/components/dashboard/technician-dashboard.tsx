@@ -9,11 +9,11 @@ export default function TechnicianDashboard() {
         <div className="bg-muted h-1" />
       </div>
       <h2 className="pt-4 pl-10 text-xl font-semibold text-blue-800">
-        Your Schedule
+        Your Work Orders
       </h2>
       <WorkOrderList />
       <h2 className="pt-2 pl-10 text-xl font-semibold text-blue-800">
-        Your Calendar
+        Your Schedule
       </h2>
       <TechnicianCalendar />
     </div>
