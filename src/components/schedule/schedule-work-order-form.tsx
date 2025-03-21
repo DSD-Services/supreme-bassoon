@@ -1,10 +1,4 @@
 "use client";
-// TODO -- onSubmit will need to be typed like the form data
-// <WorkOrderFormData>
-// TODO -- verify that required fields are filled out and validated
-//    before moving to next step of form
-// TODO -- render errors beneath inputs with error
-//    message using React hook form
 // TODO -- display dates in user timezone
 
 import { useEffect, useState } from "react";
@@ -15,11 +9,6 @@ import type { BackgroundEvent } from "./types/calendar.types";
 import type { Timeslot } from "@/lib/types/work-order-types";
 import { groupTimeslotsByDay } from "./lib/generate-timeslots";
 import { Profile } from "@/utils/supabase/types";
-import Step2SelectDateTime from "./step-2-work-order-form";
-import Step3ConfirmDateTime from "./step-3-work-order-form";
-import Step4ContactInformation from "./step-4-work-order-form";
-import Step5ConfirmAppointment from "./step-5-work-order-form";
-import Step1DepartmentService from "./step-1-work-order-form";
 import { createWorkOrderAction } from "@/features/work-orders/actions/create-work-order.action";
 import {
   type CreateWorkOrderInput,
@@ -27,6 +16,14 @@ import {
 } from "@/features/work-orders/schemas";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Step1DepartmentService from "./step-1-work-order-form";
+import Step2SelectDateTime from "./step-2-work-order-form";
+import Step3ConfirmDateTime from "./step-3-work-order-form";
+import Step4SelectAddress from "./step-4-work-order-form";
+import Step5ContactInformation from "./step-5-work-order-form";
+import Step6ConfirmAppointment from "./step-6-work-order-form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
 
 type ScheduleWorkOrderFormProps = {
   sortedDepartments: Department[];
@@ -42,9 +39,7 @@ export default function ScheduleWorkOrderForm({
   const [isLoading, setIsLoading] = useState(false);
   const [serviceTypes, setServiceTypes] = useState<ServiceType[]>([]);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [isNextDisabled] = useState(false);
-  // const [isNextDisabled, setIsNextDisabled] = useState(false);
-  // const [isBackDisabled, setIsBackDisabled] = useState(false);
+  const [isNextDisabled, setIsNextDisabled] = useState(false);
   const [backgroundEvents, setBackgroundEvents] = useState<BackgroundEvent[]>(
     [],
   );
@@ -52,12 +47,14 @@ export default function ScheduleWorkOrderForm({
   const [allTimeslots, setAllTimeslots] = useState<Timeslot[]>([]);
   const [filteredSlots, setFilteredSlots] = useState<Timeslot[]>([]);
   const [isTimeslotModalOpen, setIsTimeslotModalOpen] = useState(false);
-  // const [selectedSlot, setSelectedSlot] = useState<Timeslot | null>(null);
+  const [hasAddressOnFile, setHasAddressOnFile] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState<"onFile" | "new">(
+    "onFile",
+  );
 
   const {
     register,
     handleSubmit,
-    reset,
     trigger,
     watch,
     getValues,
@@ -71,7 +68,10 @@ export default function ScheduleWorkOrderForm({
       serviceTypeId: undefined,
       appointmentStart: undefined,
       appointmentEnd: undefined,
-      appointmentNotes: `Scheduled by ${userProfile.first_name} ${userProfile.last_name}`,
+      jobDetails: "",
+      appointmentNotes: "",
+      primaryPhone: undefined,
+      secondaryPhone: undefined,
       serviceAddress: {
         addressLine1: userProfile.address_line1 ?? "",
         addressLine2: userProfile.address_line2 ?? "",
@@ -87,29 +87,56 @@ export default function ScheduleWorkOrderForm({
     setBackgroundEvents(backgroundEvents);
   }, [allTimeslots]);
 
+  useEffect(() => {
+    if (
+      !!userProfile.address_line1 &&
+      !!userProfile.city &&
+      !!userProfile.state &&
+      !!userProfile.postal_code
+    ) {
+      setHasAddressOnFile(true);
+    }
+  }, [
+    userProfile.address_line1,
+    userProfile.city,
+    userProfile.state,
+    userProfile.postal_code,
+  ]);
+
   const nextStep = async () => {
     if (step === 1) {
       const isValid = await trigger(["departmentId", "serviceTypeId"]);
       if (!isValid) {
         toast.error("Please fill out all fields.");
+        setIsNextDisabled(true);
       } else {
+        setIsNextDisabled(false);
         setStep(2);
       }
     }
+    if (step === 2) {
+      if (getValues("appointmentStart") && getValues("appointmentEnd")) {
+        setStep(3);
+      } else {
+        toast.error("Please select a date and timeslot.");
+      }
+    }
     if (step === 3) {
-      const isValid = await trigger(["serviceAddress"]);
-      if (!isValid) {
+      if (hasAddressOnFile) {
         setStep(4);
       } else {
         setStep(5);
       }
     }
     if (step === 4) {
+      setStep(5);
+    }
+    if (step === 5) {
       const isValid = await trigger(["serviceAddress"]);
       if (!isValid) {
         toast.error("Please fill out all required fields.");
       } else {
-        setStep(5);
+        setStep(6);
       }
     }
   };
@@ -118,6 +145,17 @@ export default function ScheduleWorkOrderForm({
     if (step === 3) {
       setValue("appointmentStart", "");
       setValue("appointmentEnd", "");
+    }
+    if (step === 4) {
+      if (selectedAddress === "onFile") {
+        setValue("serviceAddress", {
+          addressLine1: userProfile.address_line1 ?? "",
+          addressLine2: userProfile.address_line2 ?? "",
+          city: userProfile.city ?? "",
+          state: userProfile.state ?? "",
+          postalCode: userProfile.postal_code ?? "",
+        });
+      }
     }
     setStep((prev) => prev - 1);
   };
@@ -142,15 +180,37 @@ export default function ScheduleWorkOrderForm({
   const departmentName = selectedDepartment?.name ?? "";
   const serviceTypeName = selectedServiceType?.name ?? "";
 
+  if (selectedAddress === "onFile") {
+    setValue("serviceAddress", {
+      addressLine1: userProfile.address_line1 ?? "",
+      addressLine2: userProfile.address_line2 ?? null,
+      city: userProfile.city ?? "",
+      state: userProfile.state ?? "",
+      postalCode: userProfile.postal_code ?? "",
+    });
+  } else {
+    setValue("serviceAddress", {
+      addressLine1: "",
+      addressLine2: null,
+      city: "",
+      state: "",
+      postalCode: "",
+    });
+  }
+
   const onSubmit = async (values: CreateWorkOrderInput) => {
-    const res = await createWorkOrderAction(values);
-
-    if (res?.error) {
-      toast.error(res?.error);
+    try {
+      const res = await createWorkOrderAction(values);
+      if (res?.error) {
+        toast.error(res?.error);
+        return;
+      }
+      toast.success("Work order created successfully!");
+      router.push("/schedule/success");
+    } catch (error) {
+      console.error("Error submitting appointment request:", error);
+      toast.error("Something went wrong, please try again.");
     }
-
-    toast.success("Work order created successfully!");
-    router.push("/schedule/success");
   };
 
   return (
@@ -158,11 +218,24 @@ export default function ScheduleWorkOrderForm({
       onSubmit={handleSubmit(onSubmit)}
       className="flex min-h-[500px] justify-center"
     >
+      {isSubmitting && (
+        <div className="bg-opacity-80 fixed inset-0 z-10 flex flex-col items-center justify-center backdrop-blur-sm">
+          <div>
+            <FontAwesomeIcon
+              icon={faCog}
+              spin
+              className="text-2xl text-blue-500"
+            />
+          </div>
+          <p className="text-xl font-bold text-blue-800">
+            Submitting your request...
+          </p>
+        </div>
+      )}
       <div className="flex w-full items-center justify-center">
         {step === 1 && (
           <Step1DepartmentService
             register={register}
-            reset={reset}
             departments={departments}
             setIsLoading={setIsLoading}
             isLoading={isLoading}
@@ -198,19 +271,32 @@ export default function ScheduleWorkOrderForm({
             nextStep={nextStep}
           />
         )}
-        {/* Client does not have address on file */}
+        {/* Client has address on file and can use it or add new */}
         {step === 4 && (
-          <Step4ContactInformation
+          <Step4SelectAddress
+            setValue={setValue}
+            userProfile={userProfile}
+            setSelectedAddress={setSelectedAddress}
+            selectedAddress={selectedAddress}
+            isNextDisabled={isNextDisabled}
+            prevStep={prevStep}
+            nextStep={nextStep}
+          />
+        )}
+        {/* Client adds new address or confirms address */}
+        {step === 5 && (
+          <Step5ContactInformation
             register={register}
+            watch={watch}
+            selectedAddress={selectedAddress}
             userProfile={userProfile}
             prevStep={prevStep}
             nextStep={nextStep}
             isNextDisabled={isNextDisabled}
           />
         )}
-        {/* Client has address on file */}
-        {step === 5 && (
-          <Step5ConfirmAppointment
+        {step === 6 && (
+          <Step6ConfirmAppointment
             userProfile={userProfile}
             formValues={getValues()}
             departmentName={departmentName}

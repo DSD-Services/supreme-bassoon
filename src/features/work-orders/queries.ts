@@ -1,5 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
-import { protect } from "@/features/auth/queries";
+import { protect, reqRoles } from "@/features/auth/queries";
 import { HydratedWorkOrder } from "@/utils/supabase/types";
 
 export async function findAllWorkOrders() {
@@ -11,14 +11,17 @@ export async function findAllWorkOrders() {
   return { data, error };
 }
 
-export async function findAllWorkOrdersHydrated() {
-  await protect();
+export async function findAllWorkOrdersHydrated(): Promise<{
+  data: HydratedWorkOrder[];
+}> {
+  const profile = await reqRoles(["CLIENT", "TECHNICIAN", "ADMIN"]);
+  if (!profile) {
+    throw new Error("Unauthorized");
+  }
   const supabase = await createClient();
 
-  const { data, error } = await supabase
-    .from("work_orders")
-    .select(
-      `
+  let query = supabase.from("work_orders").select(
+    `
       *,
       client:profiles!client_id (*),
       technician:profiles!technician_id (*),
@@ -30,8 +33,15 @@ export async function findAllWorkOrdersHydrated() {
         service_type_parts (*, part:part_id (*))
       )
     `,
-    )
-    .overrideTypes<Array<HydratedWorkOrder>>();
+  );
+
+  if (profile.role === "CLIENT") {
+    query = query.eq("client_id", profile.id);
+  } else if (profile.role === "TECHNICIAN") {
+    query = query.eq("technician_id", profile.id);
+  }
+
+  const { data, error } = await query.overrideTypes<Array<HydratedWorkOrder>>();
 
   if (error) {
     throw new Error(error.message);
