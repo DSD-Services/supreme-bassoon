@@ -1,6 +1,8 @@
-import { Input } from "../ui/input";
+"use client";
+
+import { useEffect } from "react";
 import StepButtons from "./step-buttons";
-import { UseFormRegister } from "react-hook-form";
+import { UseFormSetValue } from "react-hook-form";
 import { CreateWorkOrderInput } from "@/features/work-orders/schemas";
 import { Profile } from "@/utils/supabase/types";
 
@@ -9,126 +11,87 @@ type PartialProfile = Omit<
   "id" | "created_at" | "updated_at" | "role"
 >;
 
-interface Step4ContactInformationProps {
-  register: UseFormRegister<CreateWorkOrderInput>;
+interface Step4SelectAddressProps {
+  setValue: UseFormSetValue<CreateWorkOrderInput>;
+  setSelectedAddress: React.Dispatch<React.SetStateAction<"onFile" | "new">>;
+  selectedAddress: "onFile" | "new";
   prevStep: () => void;
   nextStep: () => void;
   isNextDisabled: boolean;
   userProfile: PartialProfile;
 }
 
-export default function Step4ContactInformation({
-  register,
+export default function Step4SelectAddress({
+  setValue,
+  setSelectedAddress,
+  selectedAddress,
   prevStep,
   nextStep,
   userProfile,
   isNextDisabled,
-}: Step4ContactInformationProps) {
+}: Step4SelectAddressProps) {
+  useEffect(() => {
+    if (selectedAddress === "onFile") {
+      setValue("serviceAddress", {
+        addressLine1: userProfile.address_line1 ?? "",
+        addressLine2: userProfile.address_line2 ?? "",
+        city: userProfile.city ?? "",
+        state: userProfile.state ?? "",
+        postalCode: userProfile.postal_code ?? "",
+      });
+    }
+  }, [selectedAddress, setValue, userProfile]);
+
   return (
     <div className="flex flex-col items-center">
-      <h2 className="flex pb-2 text-center text-lg font-semibold">
-        Step 4: Enter your contact information:
+      <h2 className="flex pb-2 text-center text-base font-semibold md:text-lg">
+        Select your service address:
       </h2>
-      <div className="rounded-md bg-white px-6 pt-4 pb-6">
+      <div className="rounded-md bg-white px-6 pt-4 pb-6 shadow-lg">
         <div className="mb-6 space-y-2">
-          <div className="flex gap-2">
-            <div className="flex w-1/2 flex-col">
-              <label htmlFor="firstName" className="text-sm">
-                First Name *
-              </label>
-              <Input
-                type="text"
-                id="firstName"
-                value={userProfile.first_name}
-                readOnly
-              />
+          <fieldset>
+            <legend className="p-2 text-center text-base text-blue-800 md:text-lg">
+              Please select your preferred address for the service:
+            </legend>
+            <div>
+              <div className="mt-4 flex items-center">
+                <input
+                  type="radio"
+                  id="useOnFileAddress"
+                  value="onFile"
+                  name="selectServiceAddress"
+                  checked={selectedAddress === "onFile"}
+                  onChange={() => setSelectedAddress("onFile")}
+                />
+                <label
+                  htmlFor="useOnFileAddress"
+                  className="pl-3 font-semibold"
+                >
+                  Use address on file:
+                </label>
+              </div>
+              <div className="mx-10 mt-2 rounded-md bg-blue-50 p-3 text-sm shadow-md md:text-base">
+                <span className="block">{userProfile.address_line1}</span>
+                <span className="block">{userProfile.address_line2 ?? ""}</span>
+                <span className="">{userProfile.city},</span>{" "}
+                <span className="">{userProfile.state}</span>{" "}
+                <span className="">{userProfile.postal_code}</span>
+              </div>
             </div>
-            <div className="flex w-1/2 flex-col">
-              <label htmlFor="lastName" className="text-sm">
-                Last Name *
-              </label>
-              <Input
-                type="text"
-                id="lastName"
-                value={userProfile.last_name}
-                readOnly
+            <div className="mt-4 mb-2 flex items-center">
+              <input
+                type="radio"
+                id="addNewAddress"
+                name="selectServiceAddress"
+                value="new"
+                checked={selectedAddress === "new"}
+                onChange={() => setSelectedAddress("new")}
               />
-            </div>
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="addressLine1" className="text-sm">
-              Address Line 1 *
-            </label>
-            <Input
-              type="text"
-              id="addressLine1"
-              {...register("serviceAddress.addressLine1", { required: true })}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="addressLine2" className="text-sm">
-              Address Line 2
-            </label>
-            <Input
-              type="text"
-              id="addressLine2"
-              {...register("serviceAddress.addressLine2")}
-            />
-          </div>
-          <div className="flex gap-2">
-            <div className="flex w-1/2 flex-col">
-              <label htmlFor="city" className="text-sm">
-                City *
+              <label htmlFor="useOnFileAddress" className="pl-3 font-semibold">
+                Add a new service address
               </label>
-              <Input
-                type="text"
-                id="city"
-                {...register("serviceAddress.city", { required: true })}
-              />
             </div>
-            <div className="flex w-1/2 flex-col">
-              <label htmlFor="state" className="text-sm">
-                State *
-              </label>
-              <Input
-                type="text"
-                id="state"
-                {...register("serviceAddress.state", { required: true })}
-              />
-            </div>
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="postalCode" className="text-sm">
-              Postal Code *
-            </label>
-            <Input
-              type="text"
-              id="postalCode"
-              {...register("serviceAddress.state", { required: true })}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="primaryPhone" className="text-sm">
-              Primary Phone *
-            </label>
-            <Input
-              type="text"
-              id="primaryPhone"
-              defaultValue={userProfile.primary_phone ?? ""}
-              required
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="secondaryPhone" className="text-sm">
-              Secondary Phone
-            </label>
-            <Input
-              type="text"
-              id="secondaryPhone"
-              value={userProfile.secondary_phone ?? ""}
-              readOnly
-            />
-          </div>
+          </fieldset>
         </div>
         <div className="flex justify-center gap-10">
           <StepButtons

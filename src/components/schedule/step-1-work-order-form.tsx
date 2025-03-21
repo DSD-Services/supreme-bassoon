@@ -5,17 +5,12 @@ import { fetchServiceTypes, fetchTimeslots } from "./lib/work-order-queries";
 import toast from "react-hot-toast";
 import { Department, ServiceType } from "@/utils/supabase/types";
 import { cn } from "@/lib/utils";
-import {
-  UseFormRegister,
-  UseFormReset,
-  UseFormSetValue,
-} from "react-hook-form";
+import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { Timeslot } from "@/lib/types/work-order-types";
 import { CreateWorkOrderInput } from "@/features/work-orders/schemas";
 
 interface Step1DepartmentServiceProps {
   register: UseFormRegister<CreateWorkOrderInput>;
-  reset: UseFormReset<CreateWorkOrderInput>;
   departments: Department[];
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   isLoading: boolean;
@@ -31,7 +26,6 @@ interface Step1DepartmentServiceProps {
 
 export default function Step1DepartmentService({
   register,
-  // reset,
   departments,
   setIsLoading,
   isLoading,
@@ -84,8 +78,8 @@ export default function Step1DepartmentService({
       <h1 className="mb-6 text-center text-2xl font-medium lg:text-3xl">
         Schedule an Appointment
       </h1>
-      <h2 className="text-center text-lg font-semibold">
-        Step 1: Select Department & Service:
+      <h2 className="text-center text-base font-semibold md:text-lg">
+        Select Department & Service:
       </h2>
       <div className="flex flex-col pt-6">
         <label htmlFor="department" className="text-sm text-blue-800">

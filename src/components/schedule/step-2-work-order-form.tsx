@@ -103,8 +103,8 @@ export default function Step2SelectDateTime({
   return (
     <>
       <div className="flex flex-col items-center justify-center px-2 pb-2">
-        <h2 className="pb-1 text-center text-lg font-semibold">
-          Step 2: Click on an available date highlighted in green
+        <h2 className="pb-1 text-center text-base font-semibold md:text-lg">
+          Click on an available date highlighted in green:
         </h2>
         <div className="mb-2 w-full max-w-[400px] rounded-lg bg-white p-2 shadow-lg md:mx-4 lg:mx-10">
           <ScheduleWorkOrderCalendar
