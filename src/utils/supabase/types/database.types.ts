@@ -308,6 +308,8 @@ export type Database = {
           client_id: string
           department_id: number
           id: number
+          job_details: string | null
+          primary_phone: string
           service_address: Json
           service_type_id: number
           status: Database["public"]["Enums"]["workorderstatus"]
@@ -320,6 +322,8 @@ export type Database = {
           client_id: string
           department_id: number
           id?: never
+          job_details?: string | null
+          primary_phone: string
           service_address: Json
           service_type_id: number
           status?: Database["public"]["Enums"]["workorderstatus"]
@@ -332,6 +336,8 @@ export type Database = {
           client_id?: string
           department_id?: number
           id?: never
+          job_details?: string | null
+          primary_phone?: string
           service_address?: Json
           service_type_id?: number
           status?: Database["public"]["Enums"]["workorderstatus"]
@@ -373,7 +379,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
     }
     Enums: {
       userrole: "CLIENT" | "TECHNICIAN" | "ADMIN"

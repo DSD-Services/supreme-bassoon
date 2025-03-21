@@ -11,9 +11,7 @@ export async function findAllWorkOrders() {
   return { data, error };
 }
 
-export async function findAllWorkOrdersHydrated(): Promise<{
-  data: HydratedWorkOrder[];
-}> {
+export async function findAllWorkOrdersHydrated() {
   await protect();
   const supabase = await createClient();
 
