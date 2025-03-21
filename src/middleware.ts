@@ -2,14 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "./utils/supabase/types/database.types.ts";
 
-const AUTH_PAGES = [
-  "/login",
-  "/register",
-  "/register/resend",
-  "/register/success",
-  "/forgot-password",
-];
-const PUBLIC_PAGES = ["/", ...AUTH_PAGES];
+const PROTECTED_PAGES = ["/account", "/dashboard", "/schedule"];
 
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
@@ -30,18 +23,15 @@ export async function middleware(request: NextRequest) {
     },
   );
 
-  const isPublicPage = PUBLIC_PAGES.includes(request.nextUrl.pathname);
-  const isAuthPage = AUTH_PAGES.includes(request.nextUrl.pathname);
+  const isProtectedPage = PROTECTED_PAGES.some((page) =>
+    request.nextUrl.pathname.startsWith(page),
+  );
 
   const { data, error } = await supabase.auth.getUser();
   const isAuthenticated = !error && data?.user;
 
-  if (isAuthenticated && isAuthPage) {
-    return NextResponse.redirect(new URL("/account", request.url));
-  }
-
-  if (!isAuthenticated && !isPublicPage) {
-    return NextResponse.redirect(new URL("/", request.url));
+  if (!isAuthenticated && isProtectedPage) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   return response;

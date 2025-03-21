@@ -85,7 +85,7 @@ export const LoginForm = () => {
         />
         <div className="flex justify-end pt-1 pb-2 text-sm">
           <a
-            href="#"
+            href="/forgot-password"
             className="self-end font-semibold text-blue-600 hover:text-blue-500"
           >
             Forgot password?
