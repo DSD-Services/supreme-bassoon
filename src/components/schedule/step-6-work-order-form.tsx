@@ -75,12 +75,14 @@ export default function Step6ConfirmAppointment({
           </WorkOrderGroup>
 
           <WorkOrderGroup labelText="Primary Phone">
-            {userProfile.primary_phone ?? ""}
+            {formValues.primaryPhone ?? ""}
           </WorkOrderGroup>
 
-          <WorkOrderGroup labelText="Secondary Phone">
-            {userProfile.secondary_phone ?? ""}
-          </WorkOrderGroup>
+          {formValues.secondaryPhone && (
+            <WorkOrderGroup labelText="Secondary Phone">
+              {formValues.secondaryPhone ?? ""}
+            </WorkOrderGroup>
+          )}
         </div>
       </div>
       <div className="flex justify-center gap-10">
