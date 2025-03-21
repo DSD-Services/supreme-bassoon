@@ -1,92 +1,165 @@
-import WorkOrderGroup from "../dashboard/work-order-group";
-import { formatDateLong } from "@/lib/utils";
+import { Input } from "../ui/input";
 import StepButtons from "./step-buttons";
+import { UseFormRegister, UseFormWatch } from "react-hook-form";
 import { CreateWorkOrderInput } from "@/features/work-orders/schemas";
-import { Button } from "../ui/button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
-import type { Profile } from "@/utils/supabase/types";
+import { Profile } from "@/utils/supabase/types";
 
-interface Step5ConfirmAppointmentProps {
-  userProfile: Profile;
-  formValues: CreateWorkOrderInput;
-  departmentName: string;
-  serviceTypeName: string;
-  selectedDate: Date | null;
+type PartialProfile = Omit<
+  Profile,
+  "id" | "created_at" | "updated_at" | "role"
+>;
+
+interface Step5ContactInformationProps {
+  register: UseFormRegister<CreateWorkOrderInput>;
+  watch: UseFormWatch<CreateWorkOrderInput>;
+  selectedAddress: "onFile" | "new";
   prevStep: () => void;
-  isSubmitting: boolean;
+  nextStep: () => void;
+  isNextDisabled: boolean;
+  userProfile: PartialProfile;
 }
 
-export default function Step5ConfirmAppointment({
-  userProfile,
-  formValues,
-  departmentName,
-  serviceTypeName,
+export default function Step5ContactInformation({
+  register,
+  selectedAddress,
   prevStep,
-  isSubmitting,
-}: Step5ConfirmAppointmentProps) {
+  nextStep,
+  userProfile,
+  isNextDisabled,
+}: Step5ContactInformationProps) {
   return (
-    <div>
-      <h2 className="flex pb-2 text-center text-lg font-semibold">
-        Step 5: Confirm your appointment information:
+    <div className="flex flex-col items-center">
+      <h2 className="flex pb-2 text-center text-base font-semibold md:text-lg">
+        {selectedAddress === "onFile" ? "Confirm" : "Enter"} your contact
+        information:
       </h2>
-      <div className="mb-6 rounded-lg bg-white px-6 py-4 shadow-lg">
-        {formValues.appointmentStart && formValues.appointmentEnd && (
-          <>
-            <span className="block text-center text-sm font-bold text-blue-800 sm:text-base md:text-lg">
-              {formatDateLong(new Date(formValues.appointmentStart))}
+      <div className="rounded-md bg-white px-6 pt-4 pb-6">
+        <div className="mb-4 space-y-2">
+          <div className="flex gap-2">
+            <div className="flex w-1/2 flex-col">
+              <label htmlFor="firstName" className="text-sm">
+                First Name *
+              </label>
+              <Input
+                type="text"
+                id="firstName"
+                value={userProfile.first_name}
+                readOnly
+              />
+            </div>
+            <div className="flex w-1/2 flex-col">
+              <label htmlFor="lastName" className="text-sm">
+                Last Name *
+              </label>
+              <Input
+                type="text"
+                id="lastName"
+                value={userProfile.last_name}
+                readOnly
+              />
+            </div>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="addressLine1" className="text-sm">
+              Address Line 1 *
+            </label>
+            <Input
+              type="text"
+              id="addressLine1"
+              defaultValue={userProfile.address_line1 ?? ""}
+              {...register("serviceAddress.addressLine1", { required: true })}
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="addressLine2" className="text-sm">
+              Address Line 2
+            </label>
+            <Input
+              type="text"
+              id="addressLine2"
+              defaultValue={userProfile.address_line2 ?? ""}
+              {...register("serviceAddress.addressLine2")}
+            />
+          </div>
+          <div className="flex gap-2">
+            <div className="flex w-1/2 flex-col">
+              <label htmlFor="city" className="text-sm">
+                City *
+              </label>
+              <Input
+                type="text"
+                id="city"
+                defaultValue={userProfile.city ?? ""}
+                {...register("serviceAddress.city", { required: true })}
+              />
+            </div>
+            <div className="flex w-1/2 flex-col">
+              <label htmlFor="state" className="text-sm">
+                State *{" "}
+              </label>
+              <Input
+                type="text"
+                id="state"
+                defaultValue={userProfile.state ?? ""}
+                {...register("serviceAddress.state", { required: true })}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="postalCode" className="text-sm">
+              Postal Code *
+            </label>
+            <Input
+              type="text"
+              id="postalCode"
+              defaultValue={userProfile.postal_code ?? ""}
+              {...register("serviceAddress.state", { required: true })}
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="primaryPhone" className="text-sm">
+              Primary Phone *{" "}
+              <span className="text-xs text-slate-700 italic">
+                (include area code)
+              </span>
+            </label>
+            <Input
+              type="text"
+              id="primaryPhone"
+              defaultValue={userProfile.primary_phone ?? ""}
+              {...register("primaryPhone", { required: true })}
+              required
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="secondaryPhone" className="text-sm">
+              Secondary Phone{" "}
+              <span className="text-xs text-slate-700 italic">
+                (include area code)
+              </span>
+            </label>
+            <Input
+              type="text"
+              id="secondaryPhone"
+              defaultValue={userProfile.secondary_phone ?? ""}
+              {...register("secondaryPhone")}
+            />
+          </div>
+          <div className="flex justify-center">
+            <span>*</span>
+            <span className="pl-2 text-center text-xs text-slate-700 italic">
+              Required field
             </span>
-            <span className="block text-center text-sm font-bold text-blue-800 sm:text-base md:text-base md:text-lg">
-              {new Date(formValues.appointmentStart).toLocaleTimeString([], {
-                hour: "numeric",
-                minute: "2-digit",
-                hour12: true,
-              })}{" "}
-              -{" "}
-              {new Date(formValues.appointmentEnd).toLocaleTimeString([], {
-                hour: "numeric",
-                minute: "2-digit",
-                hour12: true,
-              })}
-            </span>
-          </>
-        )}
-        <span className="my-2 block text-center text-sm text-blue-800 sm:text-base md:text-lg">
-          {departmentName}: {serviceTypeName}
-        </span>
-        <div className="bg-muted h-1" />
-        <div className="mt-4 flex flex-col gap-3">
-          <WorkOrderGroup labelText="Name">
-            {userProfile.first_name} {userProfile.last_name}
-          </WorkOrderGroup>
-          <WorkOrderGroup labelText="Service Address">
-            <span>{formValues.serviceAddress.addressLine1}</span>
-            {formValues.serviceAddress.addressLine2 && (
-              <span>, {formValues.serviceAddress.addressLine2}</span>
-            )}
-            <p>
-              {formValues.serviceAddress.city}
-              {", "}
-              {formValues.serviceAddress.state}
-              {", "}
-              {formValues.serviceAddress.postalCode}
-            </p>
-          </WorkOrderGroup>
-
-          <WorkOrderGroup labelText="Primary Phone">
-            {userProfile.primary_phone ?? ""}
-          </WorkOrderGroup>
-
-          <WorkOrderGroup labelText="Secondary Phone">
-            {userProfile.secondary_phone ?? ""}
-          </WorkOrderGroup>
+          </div>
         </div>
-      </div>
-      <div className="flex justify-center gap-10">
-        <StepButtons variant="prevOnly" prevStep={prevStep} />
-        <Button type="submit" disabled={isSubmitting}>
-          Submit <FontAwesomeIcon icon={faCircleCheck} />
-        </Button>
+        <div className="flex justify-center gap-10">
+          <StepButtons
+            variant="prevNext"
+            prevStep={prevStep}
+            nextStep={nextStep}
+            isNextDisabled={isNextDisabled}
+          />
+        </div>
       </div>
     </div>
   );

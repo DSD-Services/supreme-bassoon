@@ -11,13 +11,16 @@ const WorkOrderSchema = z.object({
     .pipe(z.coerce.number().int().positive()),
   appointmentStart: z.string().datetime(),
   appointmentEnd: z.string().datetime(),
+  jobDetails: z.string().nullable(),
   appointmentNotes: z.string().nullable(),
+  primaryPhone: z.string().min(9).max(14),
+  secondaryPhone: z.string().min(9).max(14).nullable(),
   serviceAddress: z.object({
-    addressLine1: z.string(),
-    addressLine2: z.string().nullable(),
-    city: z.string(),
-    state: z.string(),
-    postalCode: z.string(),
+    addressLine1: z.string().min(1),
+    addressLine2: z.string().min(1).nullable(),
+    city: z.string().min(1),
+    state: z.string().min(1),
+    postalCode: z.string().min(1),
   }),
 });
 
