@@ -74,7 +74,7 @@ export default function Step1DepartmentService({
   };
 
   return (
-    <div className="-mt-10 w-11/12 self-center rounded-lg bg-white p-4 shadow-lg sm:w-3/4 sm:p-6 md:w-3/5 lg:w-1/2">
+    <div className="-mt-10 w-11/12 max-w-[500px] self-center rounded-lg bg-white p-4 shadow-lg sm:w-3/4 sm:p-6 md:w-3/5 lg:w-1/2">
       <h1 className="mb-6 text-center text-2xl font-medium lg:text-3xl">
         Schedule an Appointment
       </h1>

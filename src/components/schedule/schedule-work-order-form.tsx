@@ -103,6 +103,28 @@ export default function ScheduleWorkOrderForm({
     userProfile.postal_code,
   ]);
 
+  useEffect(() => {
+    if (step === 5) {
+      if (selectedAddress === "onFile") {
+        setValue("serviceAddress", {
+          addressLine1: userProfile.address_line1 ?? "",
+          addressLine2: userProfile.address_line2 ?? null,
+          city: userProfile.city ?? "",
+          state: userProfile.state ?? "",
+          postalCode: userProfile.postal_code ?? "",
+        });
+      } else {
+        setValue("serviceAddress", {
+          addressLine1: "",
+          addressLine2: null,
+          city: "",
+          state: "",
+          postalCode: "",
+        });
+      }
+    }
+  }, [step, selectedAddress, setValue, userProfile]);
+
   const nextStep = async () => {
     if (step === 1) {
       const isValid = await trigger(["departmentId", "serviceTypeId"]);
@@ -132,11 +154,18 @@ export default function ScheduleWorkOrderForm({
       setStep(5);
     }
     if (step === 5) {
-      const isValid = await trigger(["serviceAddress"]);
-      if (!isValid) {
-        toast.error("Please fill out all required fields.");
-      } else {
+      const isValid = await trigger([
+        "serviceAddress.addressLine1",
+        "serviceAddress.city",
+        "serviceAddress.state",
+        "serviceAddress.postalCode",
+        "primaryPhone",
+      ]);
+
+      if (isValid) {
         setStep(6);
+      } else {
+        toast.error("Please fill out all required fields.");
       }
     }
   };
@@ -179,24 +208,6 @@ export default function ScheduleWorkOrderForm({
   );
   const departmentName = selectedDepartment?.name ?? "";
   const serviceTypeName = selectedServiceType?.name ?? "";
-
-  if (selectedAddress === "onFile") {
-    setValue("serviceAddress", {
-      addressLine1: userProfile.address_line1 ?? "",
-      addressLine2: userProfile.address_line2 ?? null,
-      city: userProfile.city ?? "",
-      state: userProfile.state ?? "",
-      postalCode: userProfile.postal_code ?? "",
-    });
-  } else {
-    setValue("serviceAddress", {
-      addressLine1: "",
-      addressLine2: null,
-      city: "",
-      state: "",
-      postalCode: "",
-    });
-  }
 
   const onSubmit = async (values: CreateWorkOrderInput) => {
     try {
@@ -274,7 +285,6 @@ export default function ScheduleWorkOrderForm({
         {/* Client has address on file and can use it or add new */}
         {step === 4 && (
           <Step4SelectAddress
-            setValue={setValue}
             userProfile={userProfile}
             setSelectedAddress={setSelectedAddress}
             selectedAddress={selectedAddress}
@@ -287,7 +297,8 @@ export default function ScheduleWorkOrderForm({
         {step === 5 && (
           <Step5ContactInformation
             register={register}
-            watch={watch}
+            setValue={setValue}
+            formValues={getValues()}
             selectedAddress={selectedAddress}
             userProfile={userProfile}
             prevStep={prevStep}
