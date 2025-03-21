@@ -64,7 +64,8 @@ export async function createWorkOrderAction(values: CreateWorkOrderInput) {
     }
   });
 
-  const jobDetails = "REPLACE_ME";
+  const jobDetails = "REPLACE_ME"; // TODO: Replace with actual value
+  const secondaryPhone = "REPLACE_ME"; // TODO: Replace with actual value
 
   const { data, error } = await supabase
     .from("work_orders")
@@ -76,6 +77,7 @@ export async function createWorkOrderAction(values: CreateWorkOrderInput) {
       appointment_start: appointmentStart,
       appointment_end: appointmentEnd,
       primary_phone: "REPLACE_ME",
+      ...(secondaryPhone ? { secondary_phone: "REPLACE_ME" } : {}),
       status: "IN_PROGRESS", // FOR MVP
       ...(appointmentNotes ? { appointment_notes: appointmentNotes } : {}),
       ...(jobDetails ? { job_details: jobDetails } : {}),

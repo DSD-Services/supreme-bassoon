@@ -310,6 +310,7 @@ export type Database = {
           id: number
           job_details: string | null
           primary_phone: string
+          secondary_phone: string | null
           service_address: Json
           service_type_id: number
           status: Database["public"]["Enums"]["workorderstatus"]
@@ -324,6 +325,7 @@ export type Database = {
           id?: never
           job_details?: string | null
           primary_phone: string
+          secondary_phone?: string | null
           service_address: Json
           service_type_id: number
           status?: Database["public"]["Enums"]["workorderstatus"]
@@ -338,6 +340,7 @@ export type Database = {
           id?: never
           job_details?: string | null
           primary_phone?: string
+          secondary_phone?: string | null
           service_address?: Json
           service_type_id?: number
           status?: Database["public"]["Enums"]["workorderstatus"]
