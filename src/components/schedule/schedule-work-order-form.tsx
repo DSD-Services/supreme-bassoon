@@ -297,7 +297,6 @@ export default function ScheduleWorkOrderForm({
         {step === 5 && (
           <Step5ContactInformation
             register={register}
-            setValue={setValue}
             formValues={getValues()}
             selectedAddress={selectedAddress}
             userProfile={userProfile}

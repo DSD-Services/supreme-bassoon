@@ -1,7 +1,6 @@
-import { useEffect } from "react";
 import { Input } from "../ui/input";
 import StepButtons from "./step-buttons";
-import { UseFormRegister, UseFormSetValue } from "react-hook-form";
+import { UseFormRegister } from "react-hook-form";
 import { CreateWorkOrderInput } from "@/features/work-orders/schemas";
 import { Profile } from "@/utils/supabase/types";
 
@@ -12,7 +11,6 @@ type PartialProfile = Omit<
 
 interface Step5ContactInformationProps {
   register: UseFormRegister<CreateWorkOrderInput>;
-  setValue: UseFormSetValue<CreateWorkOrderInput>;
   formValues: CreateWorkOrderInput;
   selectedAddress: "onFile" | "new";
   prevStep: () => void;
@@ -23,7 +21,6 @@ interface Step5ContactInformationProps {
 
 export default function Step5ContactInformation({
   register,
-  setValue,
   formValues,
   selectedAddress,
   prevStep,
@@ -31,18 +28,6 @@ export default function Step5ContactInformation({
   userProfile,
   isNextDisabled,
 }: Step5ContactInformationProps) {
-  useEffect(() => {
-    if (selectedAddress === "onFile") {
-      setValue("serviceAddress.addressLine1", userProfile.address_line1 ?? "");
-      setValue("serviceAddress.addressLine2", userProfile.address_line2 ?? "");
-      setValue("serviceAddress.city", userProfile.city ?? "");
-      setValue("serviceAddress.state", userProfile.state ?? "");
-      setValue("serviceAddress.postalCode", userProfile.postal_code ?? "");
-      setValue("primaryPhone", userProfile.primary_phone ?? "");
-      setValue("secondaryPhone", userProfile.secondary_phone ?? "");
-    }
-  }, [selectedAddress, setValue, userProfile]);
-
   return (
     <div className="flex flex-col items-center">
       <h2 className="flex pb-2 text-center text-base font-semibold md:text-lg">
