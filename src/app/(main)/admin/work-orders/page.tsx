@@ -15,17 +15,19 @@ export default async function Page() {
   if (!profile) notFound();
 
   return (
-    <div className="px-4 py-12">
-      <div className="mx-10 flex items-center justify-between gap-2 pb-4">
-        <h1 className="text-3xl font-bold tracking-tight">
-          Manage Work Orders
-        </h1>
-        <Button asLink href="/dashboard">
-          <FontAwesomeIcon icon={faLeftLong} />
-        </Button>
+    <div className="container mx-auto space-y-4 px-2 py-12">
+      <div className="px-2 md:px-4 lg:px-10">
+        <div className="flex items-center justify-between gap-2 pb-4">
+          <h1 className="text-3xl font-bold tracking-tight">
+            Manage Work Orders
+          </h1>
+          <Button asLink href="/dashboard">
+            <FontAwesomeIcon icon={faLeftLong} />
+          </Button>
+        </div>
+        <div className="bg-muted mb-4 h-1" />
+        <WorkOrderList />
       </div>
-      <div className="bg-muted mx-10 h-1" />
-      <WorkOrderList />
     </div>
   );
 }

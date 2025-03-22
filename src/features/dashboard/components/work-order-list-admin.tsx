@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { Select } from "@/components/ui/select";
 import { HydratedWorkOrder } from "@/utils/supabase/types";
 import WorkOrderCard from "./work-order-card";
@@ -64,13 +64,11 @@ export default function WorkOrderListAdmin({
           </h3>
           {todayAppointments.length > 0 ? (
             todayAppointments.map((workOrder) => (
-              <>
-                <WorkOrderCard
-                  key={workOrder.id}
-                  workOrder={workOrder}
-                  userRole={userRole}
-                />
-              </>
+              <WorkOrderCard
+                key={workOrder.id}
+                workOrder={workOrder}
+                userRole={userRole}
+              />
             ))
           ) : (
             <div>
