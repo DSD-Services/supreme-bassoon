@@ -187,6 +187,14 @@ export default function ScheduleWorkOrderForm({
         });
       }
     }
+    if (step === 5) {
+      if (!selectedAddress || !hasAddressOnFile) {
+        setStep(3);
+      } else {
+        setStep(4);
+      }
+      return;
+    }
     setStep((prev) => prev - 1);
   };
 
