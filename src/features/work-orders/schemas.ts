@@ -14,10 +14,19 @@ const WorkOrderSchema = z.object({
   jobDetails: z.string().nullable(),
   appointmentNotes: z.string().nullable(),
   primaryPhone: z.string().min(9).max(14),
-  secondaryPhone: z.string().min(9).max(14).nullable(),
+  secondaryPhone: z
+    .string()
+    .min(9)
+    .max(14)
+    .or(z.literal("").transform(() => null))
+    .nullable(),
   serviceAddress: z.object({
     addressLine1: z.string().min(1),
-    addressLine2: z.string().min(1).nullable(),
+    addressLine2: z
+      .string()
+      .trim()
+      .transform((val) => (val === "" ? null : val))
+      .nullable(),
     city: z.string().min(1),
     state: z.string().min(1),
     postalCode: z.string().min(1),

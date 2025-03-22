@@ -51,6 +51,7 @@ export default function ScheduleWorkOrderForm({
   const [selectedAddress, setSelectedAddress] = useState<"onFile" | "new">(
     "onFile",
   );
+  const [finalizing, setFinalizing] = useState(false);
 
   const {
     register,
@@ -210,10 +211,12 @@ export default function ScheduleWorkOrderForm({
   const serviceTypeName = selectedServiceType?.name ?? "";
 
   const onSubmit = async (values: CreateWorkOrderInput) => {
+    setFinalizing(true);
     try {
       const res = await createWorkOrderAction(values);
       if (res?.error) {
         toast.error(res?.error);
+        setFinalizing(false);
         return;
       }
       toast.success("Work order created successfully!");
@@ -221,6 +224,7 @@ export default function ScheduleWorkOrderForm({
     } catch (error) {
       console.error("Error submitting appointment request:", error);
       toast.error("Something went wrong, please try again.");
+      setFinalizing(false);
     }
   };
 
@@ -229,7 +233,7 @@ export default function ScheduleWorkOrderForm({
       onSubmit={handleSubmit(onSubmit)}
       className="flex min-h-[500px] justify-center"
     >
-      {isSubmitting && (
+      {(isSubmitting || finalizing) && (
         <div className="bg-opacity-80 fixed inset-0 z-10 flex flex-col items-center justify-center backdrop-blur-sm">
           <div>
             <FontAwesomeIcon
