@@ -153,21 +153,45 @@ export default async function WorkOrderList() {
           ))}
         </>
       )}
-      {(userRole === "CLIENT" || userRole === "TECHNICIAN") && (
+      {userRole === "CLIENT" && (
         <>
-          {userRole === "CLIENT" ? (
-            <h3 className="text-lg font-bold text-blue-800">
-              Upcoming Appointments:
-            </h3>
+          <h3 className="mt-6 text-lg font-bold text-blue-800">
+            Upcoming Appointments:
+          </h3>
+          {upcomingAppointments?.length > 0 ? (
+            <PaginationWrapper
+              userRole={userRole}
+              appointments={upcomingAppointments}
+            />
           ) : (
-            <h3 className="mt-6 text-lg font-bold text-blue-800">
-              Upcoming Work Orders:
-            </h3>
+            <div className="flex flex-col">
+              <span className="text-center text-base text-slate-700 lg:text-lg">
+                You don&apos;t have any upcoming appointments.
+              </span>
+              <span className="text-center text-base text-slate-700 lg:text-lg">
+                Schedule a new appointment above!
+              </span>
+            </div>
           )}
-          <PaginationWrapper
-            userRole={userRole}
-            appointments={upcomingAppointments}
-          />
+        </>
+      )}
+      {userRole === "TECHNICIAN" && (
+        <>
+          <h3 className="mt-6 text-lg font-bold text-blue-800">
+            Upcoming Work Orders:
+          </h3>
+          {upcomingAppointments?.length > 0 ? (
+            <PaginationWrapper
+              userRole={userRole}
+              appointments={upcomingAppointments}
+            />
+          ) : (
+            <div>
+              <span className="text-center text-base text-slate-700 lg:text-lg">
+                You have no upcoming work orders.
+              </span>
+            </div>
+          )}
         </>
       )}
       {userRole === "CLIENT" && pastAppointments.length > 0 && (
