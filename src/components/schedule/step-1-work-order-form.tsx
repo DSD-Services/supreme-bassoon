@@ -20,7 +20,6 @@ interface Step1DepartmentServiceProps {
   isDisabled: boolean;
   setAllTimeslots: React.Dispatch<React.SetStateAction<Timeslot[]>>;
   nextStep: () => void;
-  isNextDisabled: boolean;
   setValue: UseFormSetValue<CreateWorkOrderInput>;
 }
 
@@ -35,7 +34,6 @@ export default function Step1DepartmentService({
   isDisabled,
   setAllTimeslots,
   nextStep,
-  isNextDisabled,
   setValue,
 }: Step1DepartmentServiceProps) {
   const handleDepartmentSelect = async (
@@ -127,11 +125,7 @@ export default function Step1DepartmentService({
         <Button type="button" onClick={handleReset} className="bg-blue-800">
           Reset
         </Button>
-        <StepButtons
-          variant="nextOnly"
-          nextStep={nextStep}
-          isNextDisabled={isNextDisabled}
-        />
+        <StepButtons variant="nextOnly" nextStep={nextStep} />
       </div>
     </div>
   );
