@@ -45,7 +45,7 @@ export default function Footer() {
                 Services
               </Link>
               <Link
-                href="#how-it-works"
+                href="/#how-it-works"
                 className="text-blue-200 transition-colors hover:text-white"
               >
                 How It Works
