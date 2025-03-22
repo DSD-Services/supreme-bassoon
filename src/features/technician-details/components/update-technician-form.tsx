@@ -71,7 +71,8 @@ export const UpdateTechnicianForm = ({
     );
 
     if (error) {
-      toast.error(error);
+      const e = typeof error === "string" ? error : error.message;
+      toast.error(e);
       return;
     }
 

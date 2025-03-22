@@ -5,18 +5,17 @@ import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
 export async function deleteServiceTypeAction(serviceTypeId: string | number) {
-  await reqRoles(["ADMIN"]);
+  const profile = await reqRoles(["ADMIN"]);
+  if (!profile) throw new Error("Forbidden");
 
   const supabase = await createClient();
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("service_types")
     .delete()
     .eq("id", +serviceTypeId);
 
-  if (error) {
-    console.error("[DeleteServiceTypeError]", error.message);
-  }
+  return { data, error };
 
   revalidatePath("/");
 }

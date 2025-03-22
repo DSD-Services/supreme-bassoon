@@ -7,9 +7,15 @@ export async function updateDepartmentAction(
   departmentId: number,
   name: string,
 ) {
-  await reqRoles(["ADMIN"]);
+  const profile = await reqRoles(["ADMIN"]);
+  if (!profile) throw new Error("Forbidden");
+
+  if (!name || name.length < 3) {
+    return { error: "Department name must be at least 3 characters long." };
+  }
 
   const supabase = await createClient();
+
   const { error } = await supabase
     .from("departments")
     .update({ name })

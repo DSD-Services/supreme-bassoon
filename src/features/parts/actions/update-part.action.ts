@@ -1,25 +1,57 @@
 "use server";
 
-import { protect } from "@/features/auth/queries";
-import { findOneProfile } from "@/features/profiles/queries";
+import { reqRoles } from "@/features/auth/queries";
 import { createClient } from "@/utils/supabase/server";
+import { revalidatePath } from "next/cache";
 
-export async function updatePartAction(partId: number, quantity: number) {
-  const { userId } = await protect();
+type FormState = { error: string | null; success: boolean } | undefined;
 
-  const { data: profile } = await findOneProfile(userId);
-  if (!profile) return { error: "Unauthenticated" };
+export async function updatePartAction(
+  partId: number,
+  prevState: FormState,
+  formData: FormData,
+) {
+  const profile = reqRoles(["ADMIN"]);
+  if (!profile) throw new Error("Forbidden");
 
-  if (!["TECHNICIAN", "ADMIN"].includes(profile.role)) {
-    return { error: "Unauthorized" };
+  const name = formData.get("name") as string;
+  const quantity = formData.get("quantity") as string;
+  const manufacturer = formData.get("manufacturer") as string;
+
+  if (!name || name.length < 3) {
+    return { error: "Name must be at least 3 characters long", success: false };
+  }
+
+  if (!quantity || isNaN(+quantity) || +quantity < 0) {
+    return { error: "Quantity must be a non-negative number", success: false };
+  }
+
+  if (manufacturer && manufacturer.length < 3) {
+    return {
+      error: "Manufacturer must be at least 3 characters long",
+      success: false,
+    };
   }
 
   const supabase = await createClient();
+
   const { error } = await supabase
     .from("parts")
-    .update({ quantity })
+    .update({
+      name,
+      quantity: +quantity,
+      ...(manufacturer ? { manufacturer } : {}),
+    })
     .eq("id", partId)
     .single();
 
-  return { success: error ? false : true };
+  if (error) {
+    return {
+      error: "Oops! Something went wrong while updating.",
+      success: false,
+    };
+  }
+
+  revalidatePath("/");
+  return { error: null, success: true };
 }

@@ -1,10 +1,9 @@
 import { createClient } from "@/utils/supabase/server";
-import {
+import type {
   Profile,
   ProfileWithTechnicianDetails,
   UserRole,
 } from "@/utils/supabase/types";
-import { protect } from "@/features/auth/queries";
 import { PostgrestError } from "@supabase/supabase-js";
 
 type FindAllProfilesOptions<Role extends UserRole | undefined = undefined> = {
@@ -22,8 +21,6 @@ type FindAllProfilesReturn<Role extends UserRole | undefined> =
 export async function findAllProfiles<Role extends UserRole | undefined>(
   options: FindAllProfilesOptions<Role> = {},
 ): Promise<FindAllProfilesReturn<Role>> {
-  await protect();
-
   const supabase = await createClient();
 
   const { role } = options;
@@ -49,8 +46,6 @@ export async function findOneProfile(
   userId: string,
   options: FindOneProfileOptions = {},
 ) {
-  await protect();
-
   const supabase = await createClient();
   const { role } = options;
 

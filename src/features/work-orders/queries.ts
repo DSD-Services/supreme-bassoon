@@ -1,23 +1,18 @@
 import { createClient } from "@/utils/supabase/server";
-import { protect, reqRoles } from "@/features/auth/queries";
+import { reqRoles } from "@/features/auth/queries";
 import { HydratedWorkOrder } from "@/utils/supabase/types";
 
 export async function findAllWorkOrders() {
-  await protect();
   const supabase = await createClient();
-
-  const { data, error } = await supabase.from("work_orders").select("*");
-
-  return { data, error };
+  return await supabase.from("work_orders").select("*");
 }
 
 export async function findAllWorkOrdersHydrated(): Promise<{
   data: HydratedWorkOrder[];
 }> {
   const profile = await reqRoles(["CLIENT", "TECHNICIAN", "ADMIN"]);
-  if (!profile) {
-    throw new Error("Unauthorized");
-  }
+  if (!profile) throw new Error("Unauthorized");
+
   const supabase = await createClient();
 
   let query = supabase.from("work_orders").select(
@@ -51,14 +46,11 @@ export async function findAllWorkOrdersHydrated(): Promise<{
 }
 
 export async function findOneWorkOrders(workOrderId: number) {
-  await protect();
   const supabase = await createClient();
 
-  const { data, error } = await supabase
+  return await supabase
     .from("work_orders")
     .select("*")
     .eq("id", workOrderId)
     .single();
-
-  return { data, error };
 }

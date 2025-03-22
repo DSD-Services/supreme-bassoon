@@ -1,24 +1,28 @@
-import { DeletePartDialog } from "@/components/admin/inventory/delete-part-dialog";
-import { UpdatePartQuantityForm } from "@/components/admin/inventory/update-part-quantity-form";
+import { DeletePartDialog } from "@/features/parts/components/delete-part-dialog";
+import { UpdatePartDialog } from "@/features/parts/components/update-part-quantity-form";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { reqRoles } from "@/features/auth/queries";
-import { createPartAction } from "@/features/parts/actions/create-part.action";
 import { findAllParts } from "@/features/parts/queries";
-import { faAdd, faLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import { CreatePartForm } from "@/features/parts/components/create-part-form";
+import { SearchPartsForm } from "@/features/parts/components/search-parts-form";
 
 export const metadata: Metadata = {
   title: "Manage Inventory",
 };
 
-export default async function Page() {
+type PageProps = { searchParams: Promise<{ q: string }> };
+
+export default async function Page({ searchParams }: PageProps) {
   const profile = await reqRoles(["ADMIN"]);
   if (!profile) notFound();
 
-  const { data: parts } = await findAllParts();
+  const initialQuery = (await searchParams).q || "";
+
+  const { data: parts } = await findAllParts({ query: initialQuery });
 
   return (
     <div className="container mx-auto space-y-4 px-4 py-12">
@@ -31,79 +35,55 @@ export default async function Page() {
 
       <div className="bg-muted h-1" />
 
-      <form
-        action={createPartAction}
-        className="flex flex-col gap-2 sm:flex-row"
-      >
-        <div>
-          <label htmlFor="name" className="sr-only">
-            Name
-          </label>
-          <Input type="text" id="name" name="name" placeholder="Name" />
-        </div>
-
-        <div>
-          <label htmlFor="quantity" className="sr-only">
-            Quantity
-          </label>
-          <Input
-            type="number"
-            id="quantity"
-            name="quantity"
-            placeholder="Quantity"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="manufacturer" className="sr-only">
-            Manufacturer
-          </label>
-          <Input
-            type="text"
-            id="manufacturer"
-            name="manufacturer"
-            placeholder="Manufacturer"
-          />
-        </div>
-
-        <Button type="submit" variant="ghost" className="self-start">
-          <FontAwesomeIcon icon={faAdd} />
-          Insert
-        </Button>
-      </form>
+      <CreatePartForm />
 
       <div className="bg-muted h-1" />
 
-      <div className="overflow-x-auto">
-        <table className="mt-4 table-auto divide-y">
-          <thead>
-            <tr className="divide-x">
-              <th className="bg-muted px-6 py-3 text-start capitalize">name</th>
-              <th className="bg-muted px-6 py-3 text-start capitalize">
-                quantity
-              </th>
-              <th className="bg-muted px-6 py-3 text-start capitalize">
-                manufacturer
-              </th>
-              <th className="bg-muted px-6 py-3 text-start" />
-            </tr>
-          </thead>
+      <SearchPartsForm initialQuery={initialQuery} />
 
-          <tbody>
-            {parts?.map((part) => (
-              <tr key={part.id} className="divide-x">
-                <td className="px-6 py-3">{part.name}</td>
-                <td className="px-6 py-3">
-                  <UpdatePartQuantityForm part={part} />
-                </td>
-                <td className="px-6 py-3">{part.manufacturer}</td>
-                <td className="px-6 py-3">
-                  <DeletePartDialog partId={part.id} />
-                </td>
+      <div className="bg-muted h-1" />
+
+      <div className="rounded-md border">
+        <div className="max-h-[60vh] overflow-auto">
+          <table className="min-w-full divide-y">
+            <thead className="bg-muted sticky top-0 z-10">
+              <tr className="divide-x">
+                <th className="px-3 py-1.5 text-start text-sm whitespace-nowrap capitalize sm:text-base">
+                  name
+                </th>
+                <th className="px-3 py-1.5 text-start text-sm whitespace-nowrap capitalize sm:text-base">
+                  quantity
+                </th>
+                <th className="px-3 py-1.5 text-start text-sm whitespace-nowrap capitalize sm:text-base">
+                  manufacturer
+                </th>
+                <th className="px-3 py-1.5 text-start text-sm whitespace-nowrap sm:text-base"></th>
+                <th className="px-3 py-1.5 text-start text-sm whitespace-nowrap sm:text-base"></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y">
+              {parts?.map((part) => (
+                <tr key={part.id} className="divide-x">
+                  <td className="px-3 py-1.5 text-sm whitespace-nowrap sm:text-base">
+                    {part.name}
+                  </td>
+                  <td className="px-3 py-1.5 text-sm whitespace-nowrap tabular-nums sm:text-base">
+                    {part.quantity}
+                  </td>
+                  <td className="px-3 py-1.5 text-sm whitespace-nowrap sm:text-base">
+                    {part.manufacturer}
+                  </td>
+                  <td className="px-3 py-1.5 text-sm whitespace-nowrap sm:text-base">
+                    <UpdatePartDialog part={part} />
+                  </td>
+                  <td className="px-3 py-1.5 text-sm whitespace-nowrap sm:text-base">
+                    <DeletePartDialog partId={part.id} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

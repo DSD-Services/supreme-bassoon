@@ -1,10 +1,8 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { protect } from "../auth/queries";
 
 export async function findAllDepartments() {
-  protect();
   const supabase = await createClient();
 
   return await supabase
@@ -14,7 +12,6 @@ export async function findAllDepartments() {
 }
 
 export async function findOneDepartment(departmentId: string | number) {
-  protect();
   const supabase = await createClient();
 
   return await supabase

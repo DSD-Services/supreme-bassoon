@@ -1,8 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
-import { protect } from "@/features/auth/queries";
 
 export async function findAllServiceTypes() {
-  await protect();
   const supabase = await createClient();
 
   return await supabase
@@ -12,7 +10,6 @@ export async function findAllServiceTypes() {
 }
 
 export async function findOneServiceType(serviceTypeId: number) {
-  await protect();
   const supabase = await createClient();
 
   return await supabase
@@ -23,7 +20,6 @@ export async function findOneServiceType(serviceTypeId: number) {
 }
 
 export async function findAllServiceTypeParts(serviceTypeId: number) {
-  await protect();
   const supabase = await createClient();
 
   return await supabase
