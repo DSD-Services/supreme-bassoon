@@ -1,6 +1,6 @@
 import { Input } from "../ui/input";
 import StepButtons from "./step-buttons";
-import { UseFormRegister, UseFormWatch } from "react-hook-form";
+import { UseFormRegister } from "react-hook-form";
 import { CreateWorkOrderInput } from "@/features/work-orders/schemas";
 import { Profile } from "@/utils/supabase/types";
 
@@ -11,21 +11,20 @@ type PartialProfile = Omit<
 
 interface Step5ContactInformationProps {
   register: UseFormRegister<CreateWorkOrderInput>;
-  watch: UseFormWatch<CreateWorkOrderInput>;
+  formValues: CreateWorkOrderInput;
   selectedAddress: "onFile" | "new";
   prevStep: () => void;
   nextStep: () => void;
-  isNextDisabled: boolean;
   userProfile: PartialProfile;
 }
 
 export default function Step5ContactInformation({
   register,
+  formValues,
   selectedAddress,
   prevStep,
   nextStep,
   userProfile,
-  isNextDisabled,
 }: Step5ContactInformationProps) {
   return (
     <div className="flex flex-col items-center">
@@ -37,26 +36,20 @@ export default function Step5ContactInformation({
         <div className="mb-4 space-y-2">
           <div className="flex gap-2">
             <div className="flex w-1/2 flex-col">
-              <label htmlFor="firstName" className="text-sm">
-                First Name *
+              <label htmlFor="firstName" className="text-sm text-blue-800">
+                First Name
               </label>
-              <Input
-                type="text"
-                id="firstName"
-                value={userProfile.first_name}
-                readOnly
-              />
+              <span id="firstName" className="block text-sm font-semibold">
+                {userProfile.first_name}
+              </span>
             </div>
             <div className="flex w-1/2 flex-col">
-              <label htmlFor="lastName" className="text-sm">
-                Last Name *
+              <label htmlFor="lastName" className="text-sm text-blue-800">
+                Last Name
               </label>
-              <Input
-                type="text"
-                id="lastName"
-                value={userProfile.last_name}
-                readOnly
-              />
+              <span id="lastName" className="block text-sm font-semibold">
+                {userProfile.last_name}
+              </span>
             </div>
           </div>
           <div className="flex flex-col">
@@ -66,7 +59,7 @@ export default function Step5ContactInformation({
             <Input
               type="text"
               id="addressLine1"
-              defaultValue={userProfile.address_line1 ?? ""}
+              defaultValue={formValues.serviceAddress.addressLine1}
               {...register("serviceAddress.addressLine1", { required: true })}
             />
           </div>
@@ -77,7 +70,7 @@ export default function Step5ContactInformation({
             <Input
               type="text"
               id="addressLine2"
-              defaultValue={userProfile.address_line2 ?? ""}
+              defaultValue={formValues.serviceAddress.addressLine2 ?? ""}
               {...register("serviceAddress.addressLine2")}
             />
           </div>
@@ -89,7 +82,7 @@ export default function Step5ContactInformation({
               <Input
                 type="text"
                 id="city"
-                defaultValue={userProfile.city ?? ""}
+                defaultValue={formValues.serviceAddress.city}
                 {...register("serviceAddress.city", { required: true })}
               />
             </div>
@@ -100,7 +93,7 @@ export default function Step5ContactInformation({
               <Input
                 type="text"
                 id="state"
-                defaultValue={userProfile.state ?? ""}
+                defaultValue={formValues.serviceAddress.state}
                 {...register("serviceAddress.state", { required: true })}
               />
             </div>
@@ -112,8 +105,8 @@ export default function Step5ContactInformation({
             <Input
               type="text"
               id="postalCode"
-              defaultValue={userProfile.postal_code ?? ""}
-              {...register("serviceAddress.state", { required: true })}
+              defaultValue={formValues.serviceAddress.postalCode}
+              {...register("serviceAddress.postalCode", { required: true })}
             />
           </div>
           <div className="flex flex-col">
@@ -157,7 +150,6 @@ export default function Step5ContactInformation({
             variant="prevNext"
             prevStep={prevStep}
             nextStep={nextStep}
-            isNextDisabled={isNextDisabled}
           />
         </div>
       </div>

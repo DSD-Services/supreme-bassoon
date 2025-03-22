@@ -39,7 +39,7 @@ const FAQSection = () => {
 
   return (
     <div className="pt-8 pb-20" id="faqs">
-      <section className="mx-auto my-10 max-w-3xl rounded-lg bg-white p-6 shadow-lg">
+      <section className="mx-auto my-10 max-w-3xl rounded-lg bg-white p-6 shadow-none md:shadow-lg">
         <h2 className="mb-4 text-2xl font-semibold">
           Frequently Asked Questions
         </h2>

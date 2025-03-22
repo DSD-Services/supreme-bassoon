@@ -6,37 +6,23 @@ interface StepButtonProps {
   variant: "prevOnly" | "prevNext" | "nextOnly";
   prevStep?: () => void;
   nextStep?: () => void;
-  isBackDisabled?: boolean;
-  isNextDisabled?: boolean;
 }
 
 export default function StepButtons({
   variant,
   prevStep,
   nextStep,
-  isBackDisabled,
-  isNextDisabled,
 }: StepButtonProps) {
   return (
     <div className="flex justify-between gap-10">
       {(variant === "prevOnly" || variant === "prevNext") && (
-        <Button
-          type="button"
-          onClick={prevStep}
-          variant="default"
-          disabled={isBackDisabled}
-        >
+        <Button type="button" onClick={prevStep} variant="default">
           <FontAwesomeIcon icon={faArrowLeft} />
           Back
         </Button>
       )}
       {(variant === "nextOnly" || variant === "prevNext") && (
-        <Button
-          type="button"
-          onClick={nextStep}
-          variant="default"
-          disabled={isNextDisabled}
-        >
+        <Button type="button" onClick={nextStep} variant="default">
           Next
           <FontAwesomeIcon icon={faArrowRight} />
         </Button>

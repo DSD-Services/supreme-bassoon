@@ -85,11 +85,11 @@ export default function WorkOrderCard({
     workOrder.missing_parts.length > 0;
 
   return (
-    <div className="bg-background w-full gap-2 rounded-md p-2 shadow-lg md:gap-3 md:p-3 lg:p-4 lg:pb-2">
+    <div className="bg-background w-full max-w-[1050px] gap-2 rounded-md p-4 shadow-lg sm:pr-10 md:pr-4">
       <div className="flex flex-row justify-between">
         <div className="flex w-full flex-col md:flex-row">
           <div className="mr-4 flex md:mr-0">
-            <div className="mr-4 w-1/2 md:mr-10 md:min-w-[180px] lg:min-w-[220px]">
+            <div className="mr-2 w-1/2 md:mr-4 md:w-1/3 md:min-w-[150px] lg:mr-10 lg:w-1/2 lg:min-w-[180px] lg:min-w-[220px]">
               <WorkOrderGroup labelText="Date &amp; Time">
                 {workOrder.appointment_start ? (
                   <>
@@ -107,7 +107,7 @@ export default function WorkOrderCard({
                 ) : null}
               </WorkOrderGroup>
             </div>
-            <div className="w-1/2 flex-grow md:mr-10 md:min-w-[270px] lg:min-w-[290px]">
+            <div className="w-1/2 flex-grow md:mr-2 md:w-1/3 md:min-w-[220px] lg:mr-10 lg:w-1/2 lg:min-w-[290px]">
               <WorkOrderGroup labelText="Service Dept. &amp; Type">
                 <span>{workOrder.department.name}:</span>{" "}
                 <span className="block lg:inline">
@@ -117,7 +117,7 @@ export default function WorkOrderCard({
             </div>
           </div>
           <div className="mt-3 mr-4 flex flex-grow flex-row md:mt-0 md:mr-4 md:flex-wrap lg:flex-row">
-            <div className="mr-4 w-1/2 md:mr-0 md:mb-3 md:w-full md:max-w-[100px] lg:mr-16">
+            <div className="mr-1 w-1/2 md:mr-4 md:mb-3 md:w-full md:max-w-[100px] lg:mr-16">
               <WorkOrderGroup labelText="Technician">
                 <div className="flex items-center">
                   <span>
@@ -127,7 +127,7 @@ export default function WorkOrderCard({
                 </div>
               </WorkOrderGroup>
             </div>
-            <div className="flex w-1/2">
+            <div className="flex w-1/2 sm:w-1/3 md:w-1/2">
               <WorkOrderGroup labelText="Status">
                 {" "}
                 {workOrder.status.toLocaleUpperCase()}
@@ -153,7 +153,7 @@ export default function WorkOrderCard({
               </Tooltip>
             )}
           <span
-            className="ml-auto cursor-pointer pr-2 text-right text-xl font-medium text-blue-500"
+            className="ml-auto cursor-pointer pr-2 text-right text-xl font-medium text-blue-500 sm:pl-4"
             onClick={() => setIsExpanded(!isExpanded)}
           >
             <motion.span

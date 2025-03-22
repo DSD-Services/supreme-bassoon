@@ -39,7 +39,6 @@ export default function ScheduleWorkOrderForm({
   const [isLoading, setIsLoading] = useState(false);
   const [serviceTypes, setServiceTypes] = useState<ServiceType[]>([]);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [isNextDisabled, setIsNextDisabled] = useState(false);
   const [backgroundEvents, setBackgroundEvents] = useState<BackgroundEvent[]>(
     [],
   );
@@ -51,6 +50,7 @@ export default function ScheduleWorkOrderForm({
   const [selectedAddress, setSelectedAddress] = useState<"onFile" | "new">(
     "onFile",
   );
+  const [finalizing, setFinalizing] = useState(false);
 
   const {
     register,
@@ -103,16 +103,36 @@ export default function ScheduleWorkOrderForm({
     userProfile.postal_code,
   ]);
 
+  useEffect(() => {
+    if (step === 5) {
+      if (selectedAddress === "onFile") {
+        setValue("serviceAddress", {
+          addressLine1: userProfile.address_line1 ?? "",
+          addressLine2: userProfile.address_line2 ?? null,
+          city: userProfile.city ?? "",
+          state: userProfile.state ?? "",
+          postalCode: userProfile.postal_code ?? "",
+        });
+      } else {
+        setValue("serviceAddress", {
+          addressLine1: "",
+          addressLine2: null,
+          city: "",
+          state: "",
+          postalCode: "",
+        });
+      }
+    }
+  }, [step, selectedAddress, setValue, userProfile]);
+
   const nextStep = async () => {
     if (step === 1) {
-      const isValid = await trigger(["departmentId", "serviceTypeId"]);
-      if (!isValid) {
+      const isValidStep = await trigger(["departmentId", "serviceTypeId"]);
+      if (!isValidStep) {
         toast.error("Please fill out all fields.");
-        setIsNextDisabled(true);
-      } else {
-        setIsNextDisabled(false);
-        setStep(2);
+        return;
       }
+      setStep(2);
     }
     if (step === 2) {
       if (getValues("appointmentStart") && getValues("appointmentEnd")) {
@@ -132,11 +152,18 @@ export default function ScheduleWorkOrderForm({
       setStep(5);
     }
     if (step === 5) {
-      const isValid = await trigger(["serviceAddress"]);
-      if (!isValid) {
-        toast.error("Please fill out all required fields.");
-      } else {
+      const isValid = await trigger([
+        "serviceAddress.addressLine1",
+        "serviceAddress.city",
+        "serviceAddress.state",
+        "serviceAddress.postalCode",
+        "primaryPhone",
+      ]);
+
+      if (isValid) {
         setStep(6);
+      } else {
+        toast.error("Please fill out all required fields.");
       }
     }
   };
@@ -156,6 +183,14 @@ export default function ScheduleWorkOrderForm({
           postalCode: userProfile.postal_code ?? "",
         });
       }
+    }
+    if (step === 5) {
+      if (!selectedAddress || !hasAddressOnFile) {
+        setStep(3);
+      } else {
+        setStep(4);
+      }
+      return;
     }
     setStep((prev) => prev - 1);
   };
@@ -180,29 +215,13 @@ export default function ScheduleWorkOrderForm({
   const departmentName = selectedDepartment?.name ?? "";
   const serviceTypeName = selectedServiceType?.name ?? "";
 
-  if (selectedAddress === "onFile") {
-    setValue("serviceAddress", {
-      addressLine1: userProfile.address_line1 ?? "",
-      addressLine2: userProfile.address_line2 ?? null,
-      city: userProfile.city ?? "",
-      state: userProfile.state ?? "",
-      postalCode: userProfile.postal_code ?? "",
-    });
-  } else {
-    setValue("serviceAddress", {
-      addressLine1: "",
-      addressLine2: null,
-      city: "",
-      state: "",
-      postalCode: "",
-    });
-  }
-
   const onSubmit = async (values: CreateWorkOrderInput) => {
+    setFinalizing(true);
     try {
       const res = await createWorkOrderAction(values);
       if (res?.error) {
         toast.error(res?.error);
+        setFinalizing(false);
         return;
       }
       toast.success("Work order created successfully!");
@@ -210,6 +229,7 @@ export default function ScheduleWorkOrderForm({
     } catch (error) {
       console.error("Error submitting appointment request:", error);
       toast.error("Something went wrong, please try again.");
+      setFinalizing(false);
     }
   };
 
@@ -218,7 +238,7 @@ export default function ScheduleWorkOrderForm({
       onSubmit={handleSubmit(onSubmit)}
       className="flex min-h-[500px] justify-center"
     >
-      {isSubmitting && (
+      {(isSubmitting || finalizing) && (
         <div className="bg-opacity-80 fixed inset-0 z-10 flex flex-col items-center justify-center backdrop-blur-sm">
           <div>
             <FontAwesomeIcon
@@ -245,7 +265,6 @@ export default function ScheduleWorkOrderForm({
             isDisabled={isDisabled}
             setAllTimeslots={setAllTimeslots}
             nextStep={nextStep}
-            isNextDisabled={isNextDisabled}
             setValue={setValue}
           />
         )}
@@ -274,11 +293,9 @@ export default function ScheduleWorkOrderForm({
         {/* Client has address on file and can use it or add new */}
         {step === 4 && (
           <Step4SelectAddress
-            setValue={setValue}
             userProfile={userProfile}
             setSelectedAddress={setSelectedAddress}
             selectedAddress={selectedAddress}
-            isNextDisabled={isNextDisabled}
             prevStep={prevStep}
             nextStep={nextStep}
           />
@@ -287,12 +304,11 @@ export default function ScheduleWorkOrderForm({
         {step === 5 && (
           <Step5ContactInformation
             register={register}
-            watch={watch}
+            formValues={getValues()}
             selectedAddress={selectedAddress}
             userProfile={userProfile}
             prevStep={prevStep}
             nextStep={nextStep}
-            isNextDisabled={isNextDisabled}
           />
         )}
         {step === 6 && (

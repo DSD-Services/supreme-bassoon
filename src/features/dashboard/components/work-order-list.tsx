@@ -109,7 +109,7 @@ export default async function WorkOrderList() {
   });
 
   return (
-    <div className="m-0 flex flex-col items-center gap-2 rounded-none bg-blue-50 p-2 text-xs md:m-2 md:mx-2 md:mb-3 md:gap-3 md:rounded-lg md:p-3 lg:mx-10 lg:mb-4 lg:p-4">
+    <div className="m-0 flex flex-col items-center gap-2 rounded-none bg-blue-50 p-3 text-xs sm:gap-3 md:rounded-lg">
       {userRole === "ADMIN" && (
         <WorkOrderListAdmin
           todayAppointments={todayAppointments}
@@ -117,12 +117,10 @@ export default async function WorkOrderList() {
           userRole={userRole}
         />
       )}
-      {(userRole === "TECHNICIAN" || userRole === "CLIENT") && (
+      {userRole === "TECHNICIAN" && (
         <>
           <h3 className="text-lg font-bold text-blue-800">
-            Today&apos;s{" "}
-            {userRole === "CLIENT" ? "Appointments" : "Work Orders"} -{" "}
-            {today.toLocaleString()}:
+            Today&apos;s Work Orders - {today.toLocaleString()}:
           </h3>
           {todayAppointments.length > 0 ? (
             todayAppointments.map((workOrder) => (
@@ -132,13 +130,40 @@ export default async function WorkOrderList() {
                 userRole={userRole}
               />
             ))
-          ) : userRole === "TECHNICIAN" ? (
+          ) : (
             <div>
               <span className="text-center text-base text-slate-700 lg:text-lg">
                 You have no work orders scheduled today.
               </span>
             </div>
-          ) : userRole === "CLIENT" ? (
+          )}
+        </>
+      )}
+      {userRole === "CLIENT" && todayAppointments?.length > 0 && (
+        <>
+          <h3 className="text-lg font-bold text-blue-800">
+            Today&apos;s Appointments - {today.toLocaleString()}:
+          </h3>
+          {todayAppointments.map((appointment) => (
+            <WorkOrderCard
+              key={appointment.id}
+              workOrder={appointment}
+              userRole={userRole}
+            />
+          ))}
+        </>
+      )}
+      {userRole === "CLIENT" && (
+        <>
+          <h3 className="mt-6 text-lg font-bold text-blue-800">
+            Upcoming Appointments:
+          </h3>
+          {upcomingAppointments?.length > 0 ? (
+            <PaginationWrapper
+              userRole={userRole}
+              appointments={upcomingAppointments}
+            />
+          ) : (
             <div className="flex flex-col">
               <span className="text-center text-base text-slate-700 lg:text-lg">
                 You don&apos;t have any upcoming appointments.
@@ -147,30 +172,26 @@ export default async function WorkOrderList() {
                 Schedule a new appointment above!
               </span>
             </div>
-          ) : (
-            <div>
-              <span className="text-center text-base text-slate-700 lg:text-lg">
-                No work orders are scheduled today.
-              </span>
-            </div>
           )}
         </>
       )}
-      {(userRole === "CLIENT" || userRole === "TECHNICIAN") && (
+      {userRole === "TECHNICIAN" && (
         <>
-          {userRole === "CLIENT" ? (
-            <h3 className="mt-6 text-lg font-bold text-blue-800">
-              Upcoming Appointments:
-            </h3>
+          <h3 className="mt-6 text-lg font-bold text-blue-800">
+            Upcoming Work Orders:
+          </h3>
+          {upcomingAppointments?.length > 0 ? (
+            <PaginationWrapper
+              userRole={userRole}
+              appointments={upcomingAppointments}
+            />
           ) : (
-            <h3 className="mt-6 text-lg font-bold text-blue-800">
-              Upcoming Work Orders:
-            </h3>
+            <div>
+              <span className="text-center text-base text-slate-700 lg:text-lg">
+                You have no upcoming work orders.
+              </span>
+            </div>
           )}
-          <PaginationWrapper
-            userRole={userRole}
-            appointments={upcomingAppointments}
-          />
         </>
       )}
       {userRole === "CLIENT" && pastAppointments.length > 0 && (

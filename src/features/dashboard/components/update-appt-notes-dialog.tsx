@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@/components/ui/button";
 import { useDialog } from "@/components/ui/use-dialog";
 import { Dialog } from "@/components/ui/dialog";
-import { UpdateApptNotesForm } from "../update-appt-notes-form";
+import { UpdateApptNotesForm } from "./update-appt-notes-form";
 
 type UpdateApptNotesDialogProps = { workOrder: HydratedWorkOrder };
 

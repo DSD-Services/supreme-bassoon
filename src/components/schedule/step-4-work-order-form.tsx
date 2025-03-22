@@ -1,9 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
 import StepButtons from "./step-buttons";
-import { UseFormSetValue } from "react-hook-form";
-import { CreateWorkOrderInput } from "@/features/work-orders/schemas";
 import { Profile } from "@/utils/supabase/types";
 
 type PartialProfile = Omit<
@@ -12,36 +9,20 @@ type PartialProfile = Omit<
 >;
 
 interface Step4SelectAddressProps {
-  setValue: UseFormSetValue<CreateWorkOrderInput>;
   setSelectedAddress: React.Dispatch<React.SetStateAction<"onFile" | "new">>;
   selectedAddress: "onFile" | "new";
   prevStep: () => void;
   nextStep: () => void;
-  isNextDisabled: boolean;
   userProfile: PartialProfile;
 }
 
 export default function Step4SelectAddress({
-  setValue,
   setSelectedAddress,
   selectedAddress,
   prevStep,
   nextStep,
   userProfile,
-  isNextDisabled,
 }: Step4SelectAddressProps) {
-  useEffect(() => {
-    if (selectedAddress === "onFile") {
-      setValue("serviceAddress", {
-        addressLine1: userProfile.address_line1 ?? "",
-        addressLine2: userProfile.address_line2 ?? "",
-        city: userProfile.city ?? "",
-        state: userProfile.state ?? "",
-        postalCode: userProfile.postal_code ?? "",
-      });
-    }
-  }, [selectedAddress, setValue, userProfile]);
-
   return (
     <div className="flex flex-col items-center">
       <h2 className="flex pb-2 text-center text-base font-semibold md:text-lg">
@@ -98,7 +79,6 @@ export default function Step4SelectAddress({
             variant="prevNext"
             prevStep={prevStep}
             nextStep={nextStep}
-            isNextDisabled={isNextDisabled}
           />
         </div>
       </div>

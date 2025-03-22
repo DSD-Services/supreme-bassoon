@@ -91,8 +91,8 @@ Technologies used in the project:
 <a href=""target="_blank">Katie H.</a> &nbsp
 </p>
 <p align="center">
-<a href=""target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
-<a href=""target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
+<a href="https://github.com/katiehom"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
+<a href="https://www.linkedin.com/in/katiehom/"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
 </p>
 <p align="center">
 <a href=""target="_blank">Maye J.</a> &nbsp
