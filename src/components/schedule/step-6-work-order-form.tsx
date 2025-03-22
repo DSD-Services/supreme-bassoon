@@ -31,7 +31,7 @@ export default function Step6ConfirmAppointment({
         Confirm &amp; submit your
         <span className="block"> appointment information:</span>
       </h2>
-      <div className="mb-6 rounded-lg bg-white px-6 py-4 shadow-lg">
+      <div className="mb-6 rounded-lg bg-white px-6 py-4 shadow-lg md:min-w-96">
         {formValues.appointmentStart && formValues.appointmentEnd && (
           <>
             <span className="block text-center text-sm font-bold text-blue-800 sm:text-base md:text-lg">

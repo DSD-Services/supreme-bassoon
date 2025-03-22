@@ -7,15 +7,19 @@ export const fetchServiceTypes = async (departmentId: string) => {
   const { data, error } = await supabase
     .from("department_service_types")
     .select("service_types(*)")
-    .eq("department_id", +departmentId)
-    .order("service_types->name", { ascending: true });
+    .eq("department_id", +departmentId);
 
   if (error) {
     return { data: null, error: "Failed to find service types" };
   }
 
   const serviceTypes = data?.map((x) => x.service_types || []);
-  return { data: serviceTypes, error: null };
+
+  const sortedServiceTypes = serviceTypes.sort((a, b) => {
+    return a.name.localeCompare(b.name);
+  });
+
+  return { data: sortedServiceTypes, error: null };
 };
 
 export const fetchTimeslots = async (departmentId: string) => {
