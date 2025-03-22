@@ -13,7 +13,6 @@ interface Step4SelectAddressProps {
   selectedAddress: "onFile" | "new";
   prevStep: () => void;
   nextStep: () => void;
-  isNextDisabled: boolean;
   userProfile: PartialProfile;
 }
 
@@ -23,7 +22,6 @@ export default function Step4SelectAddress({
   prevStep,
   nextStep,
   userProfile,
-  isNextDisabled,
 }: Step4SelectAddressProps) {
   return (
     <div className="flex flex-col items-center">
@@ -81,7 +79,6 @@ export default function Step4SelectAddress({
             variant="prevNext"
             prevStep={prevStep}
             nextStep={nextStep}
-            isNextDisabled={isNextDisabled}
           />
         </div>
       </div>

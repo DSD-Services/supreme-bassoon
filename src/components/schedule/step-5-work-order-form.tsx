@@ -15,7 +15,6 @@ interface Step5ContactInformationProps {
   selectedAddress: "onFile" | "new";
   prevStep: () => void;
   nextStep: () => void;
-  isNextDisabled: boolean;
   userProfile: PartialProfile;
 }
 
@@ -26,7 +25,6 @@ export default function Step5ContactInformation({
   prevStep,
   nextStep,
   userProfile,
-  isNextDisabled,
 }: Step5ContactInformationProps) {
   return (
     <div className="flex flex-col items-center">
@@ -152,7 +150,6 @@ export default function Step5ContactInformation({
             variant="prevNext"
             prevStep={prevStep}
             nextStep={nextStep}
-            isNextDisabled={isNextDisabled}
           />
         </div>
       </div>

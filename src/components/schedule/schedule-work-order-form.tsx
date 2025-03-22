@@ -39,7 +39,6 @@ export default function ScheduleWorkOrderForm({
   const [isLoading, setIsLoading] = useState(false);
   const [serviceTypes, setServiceTypes] = useState<ServiceType[]>([]);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [isNextDisabled, setIsNextDisabled] = useState(false);
   const [backgroundEvents, setBackgroundEvents] = useState<BackgroundEvent[]>(
     [],
   );
@@ -128,14 +127,12 @@ export default function ScheduleWorkOrderForm({
 
   const nextStep = async () => {
     if (step === 1) {
-      const isValid = await trigger(["departmentId", "serviceTypeId"]);
-      if (!isValid) {
+      const isValidStep = await trigger(["departmentId", "serviceTypeId"]);
+      if (!isValidStep) {
         toast.error("Please fill out all fields.");
-        setIsNextDisabled(true);
-      } else {
-        setIsNextDisabled(false);
-        setStep(2);
+        return;
       }
+      setStep(2);
     }
     if (step === 2) {
       if (getValues("appointmentStart") && getValues("appointmentEnd")) {
@@ -268,7 +265,6 @@ export default function ScheduleWorkOrderForm({
             isDisabled={isDisabled}
             setAllTimeslots={setAllTimeslots}
             nextStep={nextStep}
-            isNextDisabled={isNextDisabled}
             setValue={setValue}
           />
         )}
@@ -300,7 +296,6 @@ export default function ScheduleWorkOrderForm({
             userProfile={userProfile}
             setSelectedAddress={setSelectedAddress}
             selectedAddress={selectedAddress}
-            isNextDisabled={isNextDisabled}
             prevStep={prevStep}
             nextStep={nextStep}
           />
@@ -314,7 +309,6 @@ export default function ScheduleWorkOrderForm({
             userProfile={userProfile}
             prevStep={prevStep}
             nextStep={nextStep}
-            isNextDisabled={isNextDisabled}
           />
         )}
         {step === 6 && (
