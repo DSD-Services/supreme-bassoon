@@ -67,8 +67,6 @@ export default function Step2SelectDateTime({
     }).toISODate();
     const todayDate = DateTime.now().setZone("America/Denver").toISODate();
 
-    console.log("Clicked Date:", clickedDate);
-
     setTodaySelected(clickedDate === todayDate);
 
     const slots = allTimeslots.filter((slot: Timeslot) => {
