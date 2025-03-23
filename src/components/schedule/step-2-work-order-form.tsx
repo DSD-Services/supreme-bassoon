@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { DateTime } from "luxon";
 import ScheduleWorkOrderCalendar from "./schedule-work-order-calendar";
 import StepButtons from "./step-buttons";
 import { Dialog } from "../ui/dialog";
 import { formatDateLong } from "@/lib/utils";
 import { EventClickArg } from "@fullcalendar/core/index.js";
-import { Timeslot } from "@/lib/types/work-order-types";
+import type { Timeslot } from "@/lib/types/work-order-types";
 import TodaySelected from "./today-selected";
 import TimeslotList from "./timeslot-list";
 import NoTimesAvailable from "./no-times-avail";
-import { BackgroundEvent } from "./types/calendar.types";
+import type { BackgroundEvent } from "./types/calendar.types";
 import { UseFormSetValue } from "react-hook-form";
 import { CreateWorkOrderInput } from "@/features/work-orders/schemas";
 
@@ -43,6 +44,7 @@ export default function Step2SelectDateTime({
 }: Step2SelectDateTimeProps) {
   const [todaySelected, setTodaySelected] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const timeslotListRef = useRef<HTMLUListElement>(null);
 
@@ -56,31 +58,43 @@ export default function Step2SelectDateTime({
   }, [filteredSlots]);
 
   const handleDateClick = (arg: { date: Date }) => {
-    const clickedDate = arg.date.toISOString().split("T")[0];
-    const todayDate = new Date().toISOString().split("T")[0];
+    if (isProcessing) return;
 
-    if (clickedDate === todayDate) {
-      setTodaySelected(true);
-    } else {
-      setTodaySelected(false);
-    }
+    setIsProcessing(true);
+
+    const clickedDate = DateTime.fromJSDate(arg.date, {
+      zone: "America/Denver",
+    }).toISODate();
+    const todayDate = DateTime.now().setZone("America/Denver").toISODate();
+
+    console.log("Clicked Date:", clickedDate);
+
+    setTodaySelected(clickedDate === todayDate);
 
     const slots = allTimeslots.filter((slot: Timeslot) => {
       if (!slot.start) return false;
-      const slotDate = new Date(slot.start);
-      return (
-        !isNaN(slotDate.getTime()) &&
-        slotDate.toISOString().startsWith(clickedDate)
-      );
+
+      const slotDate = DateTime.fromISO(slot.start, {
+        zone: "America/Denver",
+      }).toISODate();
+
+      setTodaySelected(clickedDate === todayDate);
+
+      return slotDate === clickedDate;
     });
 
     const sortedSlots = slots.sort((a, b) => {
       return new Date(a.start).getTime() - new Date(b.start).getTime();
     });
 
-    setSelectedDate(arg.date);
+    setSelectedDate(
+      DateTime.fromJSDate(arg.date, { zone: "America/Denver" }).toJSDate(),
+    );
     setFilteredSlots(sortedSlots);
-    setIsTimeslotModalOpen(true);
+    setTimeout(() => {
+      setIsTimeslotModalOpen(true);
+      setIsProcessing(false);
+    }, 100);
   };
 
   const handleEventClick = (info: EventClickArg) => {
@@ -94,9 +108,17 @@ export default function Step2SelectDateTime({
   };
 
   const handleSelectSlot = (slot: Timeslot) => {
+    if (isProcessing) return;
+
+    setIsProcessing(true);
+
     setValue("appointmentStart", slot.start);
     setValue("appointmentEnd", slot.end);
+    console.log("Appointment Start", slot.start);
+    console.log("Appintment end:", slot.end);
+
     setIsTimeslotModalOpen(false);
+    setIsProcessing(false);
     setStep(3);
   };
 

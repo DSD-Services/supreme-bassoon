@@ -20,7 +20,10 @@ export default function TimeslotList({
         <li
           key={slot.id}
           className="mx-4 my-2 cursor-pointer rounded bg-blue-100 p-2 text-black hover:bg-blue-300"
-          onClick={() => handleSelectSlot(slot)}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleSelectSlot(slot);
+          }}
         >
           {new Date(slot.start).toLocaleTimeString([], {
             hour: "2-digit",
