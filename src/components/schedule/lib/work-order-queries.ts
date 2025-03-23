@@ -15,7 +15,12 @@ export const fetchServiceTypes = async (departmentId: string) => {
   }
 
   const serviceTypes = data?.map((x) => x.service_types || []);
-  return { data: serviceTypes, error: null };
+
+  const sortedServiceTypes = serviceTypes.sort((a, b) => {
+    return a.name.localeCompare(b.name);
+  });
+
+  return { data: sortedServiceTypes, error: null };
 };
 
 export const fetchTimeslots = async (departmentId: string) => {
