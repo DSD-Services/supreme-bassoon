@@ -7,12 +7,13 @@ import type {
   Timeslot,
 } from "@/lib/types/work-order-types";
 
+const timeZone = "America/Denver";
+
 export function generateTimeslots(
   technicians: Technician[],
   appointments: Appointment[],
   existingIds: number[],
 ) {
-  const timeZone = "America/Denver";
   const timeslots: Timeslot[] = [];
   let maxId = existingIds.length > 0 ? Math.max(...existingIds) : 0;
 
@@ -64,10 +65,13 @@ export function generateTimeslots(
     );
 
     for (let i = 0; i < APPOINTMENT_LEAD_TIME; i++) {
-      const currentDate = DateTime.now().plus({ days: i }).startOf("day");
+      const currentDate = DateTime.now()
+        .setZone(timeZone)
+        .plus({ days: i })
+        .startOf("day");
       if (i === 0) continue;
 
-      const workDay = currentDate.weekdayLong.toUpperCase() as WorkDay;
+      const workDay = currentDate.toFormat("cccc").toUpperCase() as WorkDay;
       if (!work_days?.includes(workDay)) continue;
 
       let startTime = DateTime.fromISO(
@@ -147,14 +151,25 @@ export function groupTimeslotsByDay(timeslots: Timeslot[]) {
     {};
 
   timeslots.forEach(({ start }) => {
-    const date = start.slice(0, 10);
+    const dateTime = DateTime.fromISO(start, { zone: timeZone });
+
+    if (!dateTime.isValid) {
+      console.error(`Invalid start date: ${start}`);
+      return;
+    }
+
+    const date = dateTime.toISODate();
+
+    if (!date) {
+      console.error(`Failed to convert date to ISO string: ${start}`);
+      return;
+    }
+
     if (!grouped[date]) {
       grouped[date] = {
         id: `bg-${date}`,
         start: date,
-        end: new Date(new Date(date).getTime() + 24 * 60 * 60 * 1000)
-          .toISOString()
-          .slice(0, 10),
+        end: dateTime.plus({ days: 1 }).toISODate()!,
       };
     }
   });

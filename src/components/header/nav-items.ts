@@ -13,14 +13,14 @@ export interface NavDataItem {
 
 export const navItems: NavDataItem[] = [
   {
-    label: "Account",
-    href: "/account",
-    icon: faUser,
-  },
-  {
     label: "Dashboard",
     href: "/dashboard",
     icon: faDashboard,
+  },
+  {
+    label: "Account",
+    href: "/account",
+    icon: faUser,
   },
 ];
 

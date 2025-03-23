@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import WorkOrderGroup from "../dashboard/work-order-group";
 import { formatDateLong } from "@/lib/utils";
 import StepButtons from "./step-buttons";
@@ -25,6 +26,16 @@ export default function Step6ConfirmAppointment({
   prevStep,
   isSubmitting,
 }: Step6ConfirmAppointmentProps) {
+  const timeZone = "America/Denver";
+
+  const convertToTimeZone = (date: Date) => {
+    return DateTime.fromJSDate(date).setZone(timeZone);
+  };
+
+  const formatTime = (date: Date) => {
+    return DateTime.fromJSDate(date).setZone(timeZone).toFormat("h:mm a");
+  };
+
   return (
     <div>
       <h2 className="pb-2 text-center text-base font-semibold md:text-lg">
@@ -35,20 +46,15 @@ export default function Step6ConfirmAppointment({
         {formValues.appointmentStart && formValues.appointmentEnd && (
           <>
             <span className="block text-center text-sm font-bold text-blue-800 sm:text-base md:text-lg">
-              {formatDateLong(new Date(formValues.appointmentStart))}
+              {formatDateLong(
+                convertToTimeZone(
+                  new Date(formValues.appointmentStart),
+                ).toJSDate(),
+              )}
             </span>
             <span className="block text-center text-sm font-bold text-blue-800 sm:text-base md:text-base md:text-lg">
-              {new Date(formValues.appointmentStart).toLocaleTimeString([], {
-                hour: "numeric",
-                minute: "2-digit",
-                hour12: true,
-              })}{" "}
-              -{" "}
-              {new Date(formValues.appointmentEnd).toLocaleTimeString([], {
-                hour: "numeric",
-                minute: "2-digit",
-                hour12: true,
-              })}
+              {formatTime(new Date(formValues.appointmentStart))} -{" "}
+              {formatTime(new Date(formValues.appointmentEnd))}
             </span>
           </>
         )}

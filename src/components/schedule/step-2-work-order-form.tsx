@@ -67,6 +67,8 @@ export default function Step2SelectDateTime({
     }).toISODate();
     const todayDate = DateTime.now().setZone("America/Denver").toISODate();
 
+    console.log("Clicked Date:", clickedDate);
+
     setTodaySelected(clickedDate === todayDate);
 
     const slots = allTimeslots.filter((slot: Timeslot) => {
@@ -82,7 +84,10 @@ export default function Step2SelectDateTime({
     });
 
     const sortedSlots = slots.sort((a, b) => {
-      return new Date(a.start).getTime() - new Date(b.start).getTime();
+      return (
+        DateTime.fromISO(a.start).setZone("America/Denver").toMillis() -
+        DateTime.fromISO(b.start).setZone("America/Denver").toMillis()
+      );
     });
 
     setSelectedDate(
@@ -110,8 +115,26 @@ export default function Step2SelectDateTime({
 
     setIsProcessing(true);
 
-    setValue("appointmentStart", slot.start);
-    setValue("appointmentEnd", slot.end);
+    const startDateTime = DateTime.fromISO(slot.start).setZone(
+      "America/Denver",
+    );
+    const endDateTime = DateTime.fromISO(slot.end).setZone("America/Denver");
+
+    if (!startDateTime.isValid || !endDateTime.isValid) {
+      console.error(
+        "Invalid datetime selected:",
+        startDateTime.invalidExplanation,
+        endDateTime.invalidExplanation,
+      );
+      setIsProcessing(false);
+      return;
+    }
+
+    const formattedStartUTC = startDateTime.toUTC().toISO();
+    const formattedEndUTC = endDateTime.toUTC().toISO();
+
+    setValue("appointmentStart", formattedStartUTC);
+    setValue("appointmentEnd", formattedEndUTC);
 
     setIsTimeslotModalOpen(false);
     setIsProcessing(false);

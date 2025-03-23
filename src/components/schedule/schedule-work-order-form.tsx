@@ -1,5 +1,4 @@
 "use client";
-// TODO -- display dates in user timezone
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -81,7 +80,6 @@ export default function ScheduleWorkOrderForm({
       },
     },
   });
-
   useEffect(() => {
     const backgroundEvents = groupTimeslotsByDay(allTimeslots);
     setBackgroundEvents(backgroundEvents);

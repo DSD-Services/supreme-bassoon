@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -21,24 +22,25 @@ export function formatTime(time: string) {
   });
 }
 
-export function formatDateTime(dateTime: string) {
-  const date = new Date(dateTime);
+export const formatDateTime = (dateTime: string | null) => {
+  if (!dateTime) return { date: "", startTime: "", endTime: "" };
 
-  return date.toLocaleString("en-US", {
-    month: "2-digit",
-    day: "2-digit",
-    year: "2-digit",
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  });
-}
+  const dt = DateTime.fromISO(dateTime, { zone: "utc" }).setZone(
+    "America/Denver",
+  );
+
+  const dateFormat = dt.toLocaleString(DateTime.DATE_MED);
+  const timeFormat = dt.toLocaleString(DateTime.TIME_SIMPLE);
+  const startTime = timeFormat;
+  const endTime = dt.plus({ hours: 1 }).toLocaleString(DateTime.TIME_SIMPLE);
+
+  return {
+    date: dateFormat,
+    startTime,
+    endTime,
+  };
+};
 
 export function formatDateLong(date: Date): string {
-  return date.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  return DateTime.fromJSDate(date).toFormat("MMMM d, yyyy");
 }

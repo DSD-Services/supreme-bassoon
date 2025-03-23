@@ -10,10 +10,10 @@ export default async function WorkOrderList() {
   const { data: workOrders } = await findAllWorkOrdersHydrated();
   const userRole = await getUserRole();
 
-  const today = DateTime.local().startOf("day");
+  const today = DateTime.local().setZone("America/Denver").startOf("day");
   const endOfDay = today.endOf("day");
   const upcomingStart = today.plus({ days: 1 });
-  const upcomingEnd = DateTime.local().plus({ months: 1 });
+  const upcomingEnd = today.plus({ months: 1 });
 
   const sortByAppointment = (a: HydratedWorkOrder, b: HydratedWorkOrder) => {
     const startA = DateTime.fromISO(a.appointment_start || "");
@@ -28,6 +28,9 @@ export default async function WorkOrderList() {
           if (workOrder.appointment_start) {
             const appointmentStart = DateTime.fromISO(
               workOrder.appointment_start,
+              {
+                zone: "America/Denver",
+              },
             );
             return appointmentStart >= today && appointmentStart <= endOfDay;
           }
@@ -61,6 +64,9 @@ export default async function WorkOrderList() {
           if (workOrder.appointment_start) {
             const appointmentStart = DateTime.fromISO(
               workOrder.appointment_start,
+              {
+                zone: "America/Denver",
+              },
             );
             return appointmentStart < today;
           }
@@ -102,8 +108,12 @@ export default async function WorkOrderList() {
   Object.keys(workOrdersGroupedByTechnician).forEach((technicianId) => {
     const technician = workOrdersGroupedByTechnician[technicianId];
     technician.workOrders.sort((a, b) => {
-      const startA = DateTime.fromISO(a.appointment_start || "");
-      const startB = DateTime.fromISO(b.appointment_start || "");
+      const startA = DateTime.fromISO(a.appointment_start || "").setZone(
+        "America/Denver",
+      );
+      const startB = DateTime.fromISO(b.appointment_start || "").setZone(
+        "America/Denver",
+      );
       return startA < startB ? -1 : startA > startB ? 1 : 0;
     });
   });
@@ -120,7 +130,7 @@ export default async function WorkOrderList() {
       {userRole === "TECHNICIAN" && (
         <>
           <h3 className="text-lg font-bold text-blue-800">
-            Today&apos;s Work Orders - {today.toLocaleString()}:
+            Today&apos;s Work Orders - {today.toFormat("MM/dd/yy")}
           </h3>
           {todayAppointments.length > 0 ? (
             todayAppointments.map((workOrder) => (
