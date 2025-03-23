@@ -4,10 +4,10 @@ import { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { toast } from "react-hot-toast";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
   const supabase = createClient();
 
   const handleForgotPassword = async (e: React.FormEvent) => {
@@ -18,9 +18,9 @@ export default function ForgotPassword() {
     });
 
     if (error) {
-      setMessage(error.message);
+      toast.error(error.message);
     } else {
-      setMessage(
+      toast.success(
         "If this email is registered, check your inbox for the reset link.",
       );
     }
@@ -52,7 +52,6 @@ export default function ForgotPassword() {
               Send Reset Link
             </Button>
           </form>
-          {message && <p className="mt-2 text-center text-sm">{message}</p>}
         </div>
       </div>
     </div>

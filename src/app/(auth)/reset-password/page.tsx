@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { resetPassword } from "@/features/auth/actions/reset-password";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { toast } from "react-hot-toast";
 
 export default function ResetPassword() {
   const [password, setPassword] = useState("");
@@ -13,9 +14,18 @@ export default function ResetPassword() {
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
-    await resetPassword(password);
-    router.push("/login");
-    window.location.reload();
+
+    const response = await resetPassword(password);
+
+    if (response.error) {
+      toast.error(response.error);
+    } else {
+      toast.success("Password updated successfully!");
+
+      setTimeout(() => {
+        router.push("/login?resetSuccess=true");
+      }, 2000);
+    }
   };
 
   return (
