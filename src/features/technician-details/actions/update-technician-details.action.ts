@@ -1,20 +1,20 @@
 "use server";
 
-import { protect } from "@/features/auth/queries";
-import { TechnicianDetailsInput, TechnicianDetailsSchema } from "../schemas";
-import { findOneProfile } from "@/features/profiles/queries";
+import { reqRoles } from "@/features/auth/queries";
+import {
+  TechnicianDetailsInput,
+  TechnicianDetailsSchema,
+} from "@/features/technician-details/schemas";
 import { createClient } from "@/utils/supabase/server";
 
 export async function updateTechnicianDetails(
   technicianId: string,
   values: TechnicianDetailsInput,
 ) {
-  const { userId } = await protect();
+  const profile = await reqRoles(["ADMIN", "CLIENT", "TECHNICIAN"]);
+  if (!profile) throw new Error("Forbidden");
 
-  const { data: profile } = await findOneProfile(userId);
-  if (!profile) return { error: "Unauthenticated" };
-
-  if (profile.role !== "ADMIN" && userId !== technicianId) {
+  if (profile.role !== "ADMIN" && profile.id !== technicianId) {
     return { error: "Unauthorized" };
   }
 
@@ -36,7 +36,7 @@ export async function updateTechnicianDetails(
     workStartTime,
   } = parsedValues.data;
 
-  const { error } = await supabase.from("technician_details").upsert({
+  return await supabase.from("technician_details").upsert({
     id: technicianId,
     ...(breakEndTime ? { break_end_time: breakEndTime } : {}),
     ...(breakStartTime ? { break_start_time: breakStartTime } : {}),
@@ -45,6 +45,4 @@ export async function updateTechnicianDetails(
     ...(workEndTime ? { work_end_time: workEndTime } : {}),
     ...(workStartTime ? { work_start_time: workStartTime } : {}),
   });
-
-  return { error: error ? error.message : null };
 }

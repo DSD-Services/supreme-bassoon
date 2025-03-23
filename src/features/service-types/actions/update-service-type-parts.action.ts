@@ -12,15 +12,16 @@ export async function updateServiceTypePartsAction({
   partId: number;
   quantity: number;
 }) {
-  await reqRoles(["ADMIN"]);
+  const profile = await reqRoles(["ADMIN"]);
+  if (!profile) throw new Error("Forbidden");
 
   const supabase = await createClient();
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("service_type_parts")
     .update({ quantity })
     .eq("service_type_id", serviceTypeId)
     .eq("part_id", partId);
 
-  return { success: error ? false : true };
+  return { data, error, success: error ? false : true };
 }

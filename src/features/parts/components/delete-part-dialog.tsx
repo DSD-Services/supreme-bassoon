@@ -15,7 +15,7 @@ export const DeletePartDialog = ({ partId }: DeletePartDialogProps) => {
   return (
     <>
       <Button
-        size="sm"
+        size="icon"
         variant="destructive"
         onClick={openDialog}
         aria-label="Delete Part"
