@@ -10,7 +10,7 @@ import {
 
 export async function createUserAdminAction(values: AdminCreateUserInput) {
   const profile = await reqRoles(["ADMIN"]);
-  if (!profile?.id) throw new Error("Unauthorized");
+  if (!profile) throw new Error("Forbidden");
 
   const parsedValues = AdminCreateUserSchema.safeParse(values);
 
@@ -24,8 +24,9 @@ export async function createUserAdminAction(values: AdminCreateUserInput) {
       .substring(0, 8)
       .toUpperCase();
 
-  // Replace With Nodemailer
+  // Replace With Nodemailer =========================
   console.info("[TEMP_PASSWORD]:", TEMP_PASSWORD);
+  // ==================================================
 
   const supabase = createAdminClient();
 

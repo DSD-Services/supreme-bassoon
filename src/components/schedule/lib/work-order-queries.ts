@@ -7,7 +7,8 @@ export const fetchServiceTypes = async (departmentId: string) => {
   const { data, error } = await supabase
     .from("department_service_types")
     .select("service_types(*)")
-    .eq("department_id", +departmentId);
+    .eq("department_id", +departmentId)
+    .order("service_types->name", { ascending: true });
 
   if (error) {
     return { data: null, error: "Failed to find service types" };

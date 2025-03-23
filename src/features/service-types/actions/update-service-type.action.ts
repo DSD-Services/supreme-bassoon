@@ -7,15 +7,16 @@ export async function updateServiceTypeAction(
   serviceTypeId: number,
   name: string,
 ) {
-  await reqRoles(["ADMIN"]);
+  const profile = await reqRoles(["ADMIN"]);
+  if (!profile) throw new Error("Forbidden");
 
   const supabase = await createClient();
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("service_types")
     .update({ name })
     .eq("id", serviceTypeId)
     .single();
 
-  return { success: error ? false : true };
+  return { data, error, success: error ? false : true };
 }

@@ -5,9 +5,14 @@ import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
 export async function createServiceTypeAction(formData: FormData) {
-  await reqRoles(["ADMIN"]);
+  const profile = await reqRoles(["ADMIN"]);
+  if (!profile) throw new Error("Forbidden");
 
   const name = formData.get("name") as string;
+
+  if (!name || name.length < 3) {
+    throw new Error("Name must be at least 3 characters long");
+  }
 
   const supabase = await createClient();
 

@@ -1,17 +1,14 @@
 "use server";
 
-import { protect } from "@/features/auth/queries";
+import { reqRoles } from "@/features/auth/queries";
 import { ProfileInput, ProfileSchema } from "../schemas";
-import { findOneProfile } from "@/features/profiles/queries";
 import { createClient } from "@/utils/supabase/server";
 
 export async function updateProfile(profileId: string, values: ProfileInput) {
-  const { userId } = await protect();
+  const profile = await reqRoles(["ADMIN", "CLIENT", "TECHNICIAN"]);
+  if (!profile) throw new Error("Forbidden");
 
-  const { data: profile } = await findOneProfile(userId);
-  if (!profile) return { error: "Unauthenticated" };
-
-  if (profile.role !== "ADMIN" && userId !== profile.id) {
+  if (profile.role !== "ADMIN" && profile.id !== profileId) {
     return { error: "Unauthorized" };
   }
 
@@ -19,7 +16,7 @@ export async function updateProfile(profileId: string, values: ProfileInput) {
 
   if (!parsedValues.success) {
     const error = parsedValues.error.issues?.[0].message;
-    return { error };
+    return { data: null, error };
   }
 
   const supabase = await createClient();
@@ -38,10 +35,10 @@ export async function updateProfile(profileId: string, values: ProfileInput) {
   } = parsedValues.data;
 
   if (profile.role !== "ADMIN" && role === "ADMIN") {
-    return { error: "Unauthorized" };
+    return { error: "Forbidden" };
   }
 
-  const { error } = await supabase
+  return await supabase
     .from("profiles")
     .update({
       ...(addressLine1 ? { address_line1: addressLine1 } : {}),
@@ -56,6 +53,4 @@ export async function updateProfile(profileId: string, values: ProfileInput) {
       ...(state ? { state: state } : {}),
     })
     .eq("id", profileId);
-
-  return { error: error ? error.message : null };
 }
