@@ -4,12 +4,14 @@ import StepButtons from "./step-buttons";
 import { CreateWorkOrderInput } from "@/features/work-orders/schemas";
 
 interface Step3ConfirmDateTimeProps {
+  step: number;
   prevStep: () => void;
   nextStep: () => void;
   formValues: CreateWorkOrderInput;
 }
 
 export default function Step3ConfirmDateTime({
+  step,
   prevStep,
   nextStep,
   formValues,
@@ -25,7 +27,10 @@ export default function Step3ConfirmDateTime({
   };
 
   return (
-    <div className="-mt-10 flex flex-col items-center justify-center px-2">
+    <div
+      aria-current={step === 3 ? "step" : undefined}
+      className="-mt-10 flex flex-col items-center justify-center px-2"
+    >
       <h2 className="flex pb-2 text-center text-base font-semibold md:text-lg">
         Confirm your selected appointment time:
       </h2>
