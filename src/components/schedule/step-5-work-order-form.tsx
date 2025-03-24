@@ -138,6 +138,18 @@ export default function Step5ContactInformation({
               {...register("secondaryPhone")}
             />
           </div>
+          <div className="flex flex-col mt-4">
+            <label htmlFor="jobDetails" className="text-sm">
+              Job Details
+            </label>
+            <textarea
+              id="jobDetails"
+              className="min-h-[100px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              defaultValue={formValues.jobDetails ?? ""}
+              {...register("jobDetails")}
+              placeholder="Please provide any additional details about the job..."
+            />
+          </div>
           <div className="flex justify-center">
             <span>*</span>
             <span className="pl-2 text-center text-xs text-slate-700 italic">
