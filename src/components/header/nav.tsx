@@ -35,7 +35,11 @@ export default function Nav({ navData, authenticated }: NavProps) {
       <MotionButtonWrapper>
         <div
           role="button"
-          aria-label="Open mobile navigation menu"
+          aria-label={
+            isMenuOpen
+              ? "Close mobile navigation menu"
+              : "Open mobile navigation menu"
+          }
           tabIndex={0}
           className="flex cursor-pointer transition hover:text-blue-200 md:hidden"
         >

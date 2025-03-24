@@ -26,11 +26,14 @@ export default function TimeslotList({
         return (
           <li
             key={slot.id}
+            role="button"
+            tabIndex={0}
             className="mx-4 my-2 cursor-pointer rounded bg-blue-100 p-2 text-black hover:bg-blue-300"
             onClick={(e) => {
               e.stopPropagation();
               handleSelectSlot(slot);
             }}
+            onKeyDown={(e) => e.key === "Enter" && handleSelectSlot(slot)}
           >
             {startTime.toFormat("h:mm a")} - {endTime.toFormat("h:mm a")}
           </li>
