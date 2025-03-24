@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { DateTime } from "luxon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleDown,
@@ -12,7 +13,6 @@ import {
 import SmallLabel from "@/components/dashboard/small-label";
 import WorkOrderGroup from "@/components/dashboard/work-order-group";
 import { HydratedWorkOrder } from "@/utils/supabase/types";
-import { formatDateTime } from "@/lib/utils";
 import ServicePartsTable from "./service-parts-table";
 import { WorkOrderActionButtons } from "./work-order-action-buttons";
 import { AnimatePresence, motion } from "framer-motion";
@@ -36,6 +36,34 @@ export default function WorkOrderCard({
   userRole,
 }: WorkOrderCardProps) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [formattedDate, setFormattedDate] = useState({
+    date: "",
+    startTime: "",
+    endTime: "",
+  });
+
+  const formatDateTime = (dateTime: string | null) => {
+    if (!dateTime) return { date: "", startTime: "", endTime: "" };
+
+    const dt = DateTime.fromISO(dateTime, { zone: "utc" }).setZone(
+      "America/Denver",
+    );
+
+    return {
+      date: dt.toFormat("MM/dd/yy"),
+      startTime: dt.toFormat("h:mm a"),
+      endTime: dt.plus({ hours: 1 }).toFormat("h:mm a"),
+    };
+  };
+
+  useEffect(() => {
+    if (workOrder.appointment_start) {
+      const { date, startTime, endTime } = formatDateTime(
+        workOrder.appointment_start,
+      );
+      setFormattedDate({ date, startTime, endTime });
+    }
+  }, [workOrder.appointment_start]);
 
   if (!userRole) {
     return (
@@ -91,17 +119,12 @@ export default function WorkOrderCard({
           <div className="mr-4 flex md:mr-0">
             <div className="mr-2 w-1/2 md:mr-4 md:w-1/3 md:min-w-[150px] lg:mr-10 lg:w-1/2 lg:min-w-[180px] lg:min-w-[220px]">
               <WorkOrderGroup labelText="Date &amp; Time">
-                {workOrder.appointment_start ? (
+                {formattedDate.date ? (
                   <>
-                    <span>
-                      {formatDateTime(workOrder.appointment_start).slice(0, 8)}
-                    </span>
+                    <span>{formattedDate.date}</span>
                     <span className="hidden lg:inline">,</span>{" "}
                     <span className="block lg:inline">
-                      {formatDateTime(workOrder.appointment_start).slice(10)} -{" "}
-                      {workOrder.appointment_end
-                        ? formatDateTime(workOrder.appointment_end).slice(10)
-                        : null}
+                      {formattedDate.startTime} - {formattedDate.endTime}
                     </span>
                   </>
                 ) : null}

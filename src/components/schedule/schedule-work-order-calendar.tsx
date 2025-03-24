@@ -1,4 +1,5 @@
 import FullCalendar from "@fullcalendar/react";
+import luxonPlugin from "@fullcalendar/luxon3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { EventClickArg } from "@fullcalendar/core/index.js";
@@ -18,7 +19,8 @@ export default function ScheduleWorkOrderCalendar({
 }: ScheduleWorkOrderCalendarProps) {
   return (
     <FullCalendar
-      plugins={[dayGridPlugin, interactionPlugin]}
+      timeZone="America/Denver"
+      plugins={[luxonPlugin, dayGridPlugin, interactionPlugin]}
       eventSources={[
         {
           events: backgroundEvents,
@@ -26,6 +28,7 @@ export default function ScheduleWorkOrderCalendar({
           backgroundColor: "#05df72",
         },
       ]}
+      titleFormat={"LLLL yyyy"}
       initialView="dayGridMonth"
       validRange={(currentDate) => {
         const startDate = new Date(currentDate.valueOf());
