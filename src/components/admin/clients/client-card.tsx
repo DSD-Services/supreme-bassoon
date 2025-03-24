@@ -12,7 +12,7 @@ export const ClientCard = ({ profile }: ClientCardProps) => {
       <details className="group flex-1 rounded border p-4 shadow">
         <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
           <p>
-            {profile.first_name} {profile.last_name}
+            {profile.last_name}, {profile.first_name}
           </p>
           <div className="flex items-center gap-4">
             <span className="flex size-6 items-center justify-center rounded-md bg-blue-500 px-2 text-xs text-white shadow group-open:rotate-180 hover:bg-blue-600">
