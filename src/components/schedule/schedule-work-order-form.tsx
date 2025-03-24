@@ -1,5 +1,4 @@
 "use client";
-// TODO -- display dates in user timezone
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -56,10 +55,11 @@ export default function ScheduleWorkOrderForm({
     register,
     handleSubmit,
     trigger,
+    clearErrors,
     watch,
     getValues,
     setValue,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<CreateWorkOrderInput>({
     resolver: zodResolver(CreateWorkOrderSchema),
     defaultValues: {
@@ -81,7 +81,6 @@ export default function ScheduleWorkOrderForm({
       },
     },
   });
-
   useEffect(() => {
     const backgroundEvents = groupTimeslotsByDay(allTimeslots);
     setBackgroundEvents(backgroundEvents);
@@ -256,6 +255,8 @@ export default function ScheduleWorkOrderForm({
         {step === 1 && (
           <Step1DepartmentService
             register={register}
+            errors={errors}
+            clearErrors={clearErrors}
             departments={departments}
             setIsLoading={setIsLoading}
             isLoading={isLoading}
@@ -290,7 +291,8 @@ export default function ScheduleWorkOrderForm({
             nextStep={nextStep}
           />
         )}
-        {/* Client has address on file and can use it or add new */}
+        {/* Only seen by a client with a complete address on file */}
+        {/* Client can choose to use existing address or add new */}
         {step === 4 && (
           <Step4SelectAddress
             userProfile={userProfile}
@@ -300,10 +302,13 @@ export default function ScheduleWorkOrderForm({
             nextStep={nextStep}
           />
         )}
-        {/* Client adds new address or confirms address */}
+        {/* Client adds new address OR confirms/updates existing address */}
         {step === 5 && (
           <Step5ContactInformation
             register={register}
+            watch={watch}
+            errors={errors}
+            clearErrors={clearErrors}
             formValues={getValues()}
             selectedAddress={selectedAddress}
             userProfile={userProfile}

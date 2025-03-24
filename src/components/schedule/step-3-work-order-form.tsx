@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import { formatDateLong } from "@/lib/utils";
 import StepButtons from "./step-buttons";
 import { CreateWorkOrderInput } from "@/features/work-orders/schemas";
@@ -13,6 +14,16 @@ export default function Step3ConfirmDateTime({
   nextStep,
   formValues,
 }: Step3ConfirmDateTimeProps) {
+  const timeZone = "America/Denver";
+
+  const formatTime = (date: Date) => {
+    return DateTime.fromJSDate(date).setZone(timeZone).toFormat("h:mm a");
+  };
+
+  const convertToSetTimeZone = (date: Date) => {
+    return DateTime.fromJSDate(date).setZone(timeZone);
+  };
+
   return (
     <div className="-mt-10 flex flex-col items-center justify-center px-2">
       <h2 className="flex pb-2 text-center text-base font-semibold md:text-lg">
@@ -25,20 +36,15 @@ export default function Step3ConfirmDateTime({
               Selected Time:
             </span>
             <span className="block text-lg font-medium">
-              {formatDateLong(new Date(formValues.appointmentStart))}
+              {formatDateLong(
+                convertToSetTimeZone(
+                  new Date(formValues.appointmentStart),
+                ).toJSDate(),
+              )}
             </span>
             <span className="block text-lg font-medium">
-              {new Date(formValues.appointmentStart).toLocaleTimeString([], {
-                hour: "numeric",
-                minute: "2-digit",
-                hour12: true,
-              })}{" "}
-              -{" "}
-              {new Date(formValues.appointmentEnd).toLocaleTimeString([], {
-                hour: "numeric",
-                minute: "2-digit",
-                hour12: true,
-              })}
+              {formatTime(new Date(formValues.appointmentStart))} -{" "}
+              {formatTime(new Date(formValues.appointmentEnd))}
             </span>
           </div>
           <p className="pt-4 italic">

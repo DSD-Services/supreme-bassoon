@@ -7,6 +7,7 @@ import {
   type AdminCreateUserInput,
   AdminCreateUserSchema,
 } from "@/features/users/schemas";
+import { generateCreateUserEmail, sendEmail } from "@/utils/email-templates";
 
 export async function createUserAdminAction(values: AdminCreateUserInput) {
   const profile = await reqRoles(["ADMIN"]);
@@ -19,14 +20,7 @@ export async function createUserAdminAction(values: AdminCreateUserInput) {
     return { error: error.message };
   }
 
-  const TEMP_PASSWORD =
-    `${parsedValues.data.firstName.substring(0, 2)}${Date.now()}`
-      .substring(0, 8)
-      .toUpperCase();
-
-  // Replace With Nodemailer =========================
-  console.info("[TEMP_PASSWORD]:", TEMP_PASSWORD);
-  // ==================================================
+  const TEMP_PASSWORD = `${Date.now()}`.substring(0, 8);
 
   const supabase = createAdminClient();
 
@@ -44,7 +38,17 @@ export async function createUserAdminAction(values: AdminCreateUserInput) {
     return { error: "Oops! Something went wrong." };
   }
 
-  if (role === "CLIENT") return { error: null };
+  if (role === "CLIENT") {
+    const emailTemplate = generateCreateUserEmail({
+      email,
+      password: TEMP_PASSWORD,
+      role: "CLIENT",
+    });
+    await sendEmail(email, emailTemplate.subject, emailTemplate.html);
+    return {
+      error: null,
+    };
+  }
 
   if (role === "TECHNICIAN" && !departmentId) {
     return { error: "Please select a department." };
@@ -64,6 +68,13 @@ export async function createUserAdminAction(values: AdminCreateUserInput) {
     );
     return { error: "Oops! Something went wrong." };
   }
+
+  const emailTemplate = generateCreateUserEmail({
+    email,
+    password: TEMP_PASSWORD,
+    role: "TECHNICIAN",
+  });
+  await sendEmail(email, emailTemplate.subject, emailTemplate.html);
 
   return { error: null };
 }

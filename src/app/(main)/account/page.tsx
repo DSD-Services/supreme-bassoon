@@ -90,13 +90,34 @@ export default async function Page() {
               />
               <div>
                 <p className="text-sm font-medium text-gray-500">Address</p>
-                <p className="font-medium text-gray-800">
-                  {profile.address_line1}
-                  {profile.address_line2 && `, ${profile.address_line2}`}
-                </p>
-                <p className="font-medium text-gray-800">
-                  {profile.city}, {profile.state} {profile.postal_code}
-                </p>
+                {profile.address_line1 ||
+                profile.city ||
+                profile.state ||
+                profile.postal_code ? (
+                  <>
+                    {profile.address_line1 && (
+                      <p className="font-medium text-gray-800">
+                        {profile.address_line1}
+                        {profile.address_line2
+                          ? `, ${profile.address_line2}`
+                          : ""}
+                      </p>
+                    )}
+                    {(profile.city || profile.state || profile.postal_code) && (
+                      <p className="font-medium text-gray-800">
+                        {profile.city}
+                        {profile.city && profile.state ? ", " : ""}
+                        {profile.state}
+                        {(profile.city || profile.state) && profile.postal_code
+                          ? " "
+                          : ""}
+                        {profile.postal_code}
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <p className="text-gray-500 italic">Address not provided</p>
+                )}
               </div>
             </div>
 
