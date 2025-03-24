@@ -84,6 +84,7 @@ export default function Step1DepartmentService({
           Department
         </label>
         <Select
+          id="department"
           {...register("departmentId", { required: true })}
           onChange={handleDepartmentSelect}
           className="rounded-lg border-r-10 border-transparent bg-blue-100 px-3 py-2 text-sm shadow-lg hover:cursor-pointer md:text-base"
@@ -101,6 +102,7 @@ export default function Step1DepartmentService({
           Service Type
         </label>
         <Select
+          id="serviceType"
           {...register("serviceTypeId", { required: true })}
           className={cn(
             "rounded-lg border-r-10 border-transparent bg-blue-100 px-3 py-2 text-sm shadow-lg hover:cursor-pointer md:text-base",
