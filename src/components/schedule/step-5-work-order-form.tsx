@@ -233,6 +233,7 @@ export default function Step5ContactInformation({
               defaultValue={userProfile.secondary_phone ?? ""}
               {...register("secondaryPhone")}
             />
+            <div className="h-4" />
           </div>
           <div className="mt-4 flex flex-col">
             <label htmlFor="jobDetails" className="text-sm text-blue-800">

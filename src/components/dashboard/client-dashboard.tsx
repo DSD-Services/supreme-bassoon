@@ -11,8 +11,8 @@ export const ClientDashboard = () => {
           Schedule Appointment
         </h2>
         <div className="m-0 flex flex-col items-center gap-2 rounded-none bg-blue-50 p-2 py-3 text-xs md:mb-3 md:gap-3 md:rounded-lg md:p-3 lg:mb-4 lg:p-4">
-          <Button asLink href="/schedule">
-            Schedule an appointment now
+          <Button asLink href="/schedule" className="text-sm md:text-base">
+            Schedule a new appointment
           </Button>
         </div>
         <h2 className="pt-4 text-xl font-semibold text-blue-800">
