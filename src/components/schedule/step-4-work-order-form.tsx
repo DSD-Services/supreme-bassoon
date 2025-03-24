@@ -11,6 +11,7 @@ type PartialProfile = Omit<
 interface Step4SelectAddressProps {
   setSelectedAddress: React.Dispatch<React.SetStateAction<"onFile" | "new">>;
   selectedAddress: "onFile" | "new";
+  step: number;
   prevStep: () => void;
   nextStep: () => void;
   userProfile: PartialProfile;
@@ -19,12 +20,16 @@ interface Step4SelectAddressProps {
 export default function Step4SelectAddress({
   setSelectedAddress,
   selectedAddress,
+  step,
   prevStep,
   nextStep,
   userProfile,
 }: Step4SelectAddressProps) {
   return (
-    <div className="flex flex-col items-center">
+    <div
+      aria-current={step === 4 ? "step" : undefined}
+      className="flex flex-col items-center"
+    >
       <h2 className="flex pb-2 text-center text-base font-semibold md:text-lg">
         Select your service address:
       </h2>

@@ -24,6 +24,7 @@ interface Step2SelectDateTimeProps {
   allTimeslots: Timeslot[];
   setFilteredSlots: React.Dispatch<React.SetStateAction<Timeslot[]>>;
   filteredSlots: Timeslot[];
+  step: number;
   prevStep: () => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   setValue: UseFormSetValue<CreateWorkOrderInput>;
@@ -38,6 +39,7 @@ export default function Step2SelectDateTime({
   allTimeslots,
   setFilteredSlots,
   filteredSlots,
+  step,
   prevStep,
   setStep,
   setValue,
@@ -148,7 +150,10 @@ export default function Step2SelectDateTime({
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center px-2 pb-2">
+      <div
+        aria-current={step === 2 ? "step" : undefined}
+        className="flex flex-col items-center justify-center px-2 pb-2"
+      >
         <h2 className="pb-1 text-center text-base font-semibold md:text-lg">
           Click on an available date highlighted in green:
         </h2>

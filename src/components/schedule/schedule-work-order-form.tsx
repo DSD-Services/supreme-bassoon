@@ -265,6 +265,7 @@ export default function ScheduleWorkOrderForm({
             setIsDisabled={setIsDisabled}
             isDisabled={isDisabled}
             setAllTimeslots={setAllTimeslots}
+            step={step}
             nextStep={nextStep}
             setValue={setValue}
           />
@@ -280,6 +281,7 @@ export default function ScheduleWorkOrderForm({
             allTimeslots={allTimeslots}
             setFilteredSlots={setFilteredSlots}
             filteredSlots={filteredSlots}
+            step={step}
             prevStep={prevStep}
             setStep={setStep}
           />
@@ -287,6 +289,7 @@ export default function ScheduleWorkOrderForm({
         {step === 3 && (
           <Step3ConfirmDateTime
             formValues={getValues()}
+            step={step}
             prevStep={prevStep}
             nextStep={nextStep}
           />
@@ -298,6 +301,7 @@ export default function ScheduleWorkOrderForm({
             userProfile={userProfile}
             setSelectedAddress={setSelectedAddress}
             selectedAddress={selectedAddress}
+            step={step}
             prevStep={prevStep}
             nextStep={nextStep}
           />
@@ -312,6 +316,7 @@ export default function ScheduleWorkOrderForm({
             formValues={getValues()}
             selectedAddress={selectedAddress}
             userProfile={userProfile}
+            step={step}
             prevStep={prevStep}
             nextStep={nextStep}
           />
@@ -323,6 +328,7 @@ export default function ScheduleWorkOrderForm({
             departmentName={departmentName}
             serviceTypeName={serviceTypeName}
             selectedDate={selectedDate}
+            step={step}
             prevStep={prevStep}
             isSubmitting={isSubmitting}
           />
