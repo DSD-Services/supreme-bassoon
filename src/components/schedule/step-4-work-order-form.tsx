@@ -43,6 +43,7 @@ export default function Step4SelectAddress({
                   name="selectServiceAddress"
                   checked={selectedAddress === "onFile"}
                   onChange={() => setSelectedAddress("onFile")}
+                  className="focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 />
                 <label
                   htmlFor="useOnFileAddress"
@@ -51,13 +52,16 @@ export default function Step4SelectAddress({
                   Use address on file:
                 </label>
               </div>
-              <div className="mx-10 mt-2 rounded-md bg-blue-50 p-3 text-sm shadow-md md:text-base">
-                <span className="block">{userProfile.address_line1}</span>
-                <span className="block">{userProfile.address_line2 ?? ""}</span>
-                <span className="">{userProfile.city},</span>{" "}
-                <span className="">{userProfile.state}</span>{" "}
-                <span className="">{userProfile.postal_code}</span>
-              </div>
+              <address className="mx-10 mt-2 rounded-md bg-blue-50 p-3 text-sm shadow-md md:text-base">
+                <p>{userProfile.address_line1}</p>
+                {userProfile.address_line2 && (
+                  <p>{userProfile.address_line2}</p>
+                )}
+                <p>
+                  {userProfile.city}, {userProfile.state}{" "}
+                  {userProfile.postal_code}
+                </p>
+              </address>
             </div>
             <div className="mt-4 mb-2 flex items-center">
               <input
@@ -67,8 +71,9 @@ export default function Step4SelectAddress({
                 value="new"
                 checked={selectedAddress === "new"}
                 onChange={() => setSelectedAddress("new")}
+                className="focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               />
-              <label htmlFor="useOnFileAddress" className="pl-3 font-semibold">
+              <label htmlFor="addNewAddress" className="pl-3 font-semibold">
                 Add a new service address
               </label>
             </div>

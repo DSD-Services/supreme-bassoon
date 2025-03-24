@@ -47,6 +47,13 @@ export default function Step2SelectDateTime({
   const [isProcessing, setIsProcessing] = useState(false);
 
   const timeslotListRef = useRef<HTMLUListElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isTimeslotModalOpen && modalRef.current) {
+      modalRef.current.focus();
+    }
+  }, [isTimeslotModalOpen]);
 
   useEffect(() => {
     if (timeslotListRef.current) {
@@ -168,7 +175,18 @@ export default function Step2SelectDateTime({
             ? formatDateLong(selectedDate)
             : "Select an available timeslot"
         }
+        aria-labelledby="timeslot-modal-title"
+        aria-describedby="timeslot-modal-desc"
       >
+        <h2 id="timeslot-modal-title" className="sr-only">
+          {selectedDate
+            ? `Available timeslots for ${formatDateLong(selectedDate)}`
+            : "Select an available timeslot"}
+        </h2>
+        <p id="timeslot-modal-desc" className="sr-only">
+          Use arrow keys or touch gestures to scroll through the available time
+          slots. Click a time slot to select it.
+        </p>
         {todaySelected ? (
           <TodaySelected />
         ) : filteredSlots.length > 0 ? (
