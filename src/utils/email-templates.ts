@@ -322,7 +322,7 @@ function generateMissingPartsSection(
           <thead>
             <tr>
               <th>Part</th>
-              <th>Quantity Needed</th>
+              <th>Quantity Missing</th>
               <th>Manufacturer</th>
             </tr>
           </thead>
