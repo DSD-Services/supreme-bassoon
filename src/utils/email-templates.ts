@@ -10,6 +10,13 @@ type WorkOrderEmailData = {
     postalCode: string;
   };
   serviceTypeName?: string;
+  reservedParts?: Array<{
+    partId: number;
+    partName?: string;
+    manufacturer?: string | null;
+    quantityReserved: number;
+    quantityNeeded: number;
+  }>;
   missingParts?: Array<{
     partId: number;
     partName?: string;
@@ -105,6 +112,13 @@ function generateBaseEmailTemplate(options: EmailTemplateOptions): string {
           font-weight: bold;
           margin: 20px 0;
         }
+        .reserved-parts {
+          background-color:rgb(217, 255, 211);
+          border-left: 4px solid rgb(36, 255, 7);
+          padding: 10px 15px;
+          margin: 15px 0;
+          border-radius: 0 5px 5px 0;
+        }
         .missing-parts {
           background-color: #fff3cd;
           border-left: 4px solid #ffc107;
@@ -115,6 +129,10 @@ function generateBaseEmailTemplate(options: EmailTemplateOptions): string {
         .missing-parts.admin {
           background-color: #f8d7da;
           border-left: 4px solid #dc3545;
+        }
+        .reserved-parts h3 {
+          color:rgb(39, 114, 28);
+          margin-top: 0;
         }
         .missing-parts h3 {
           color: #721c24;
@@ -248,6 +266,44 @@ function formatAddress(address: WorkOrderEmailData["serviceAddress"]): string {
   }, ${address.city}, ${address.state} ${address.postalCode}`;
 }
 
+// Reserved parts section for technician email
+
+function generateReservedPartsSection(data: WorkOrderEmailData): string {
+  if (!data.reservedParts || data.reservedParts.length === 0) {
+    return "<p><strong>Please refer to your dashboard for Reserved Parts information for this work order.</strong></p>";
+  }
+
+  return `
+      <div class="reserved-parts">
+        <h3>Reserved Parts</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Part</th>
+              <th>Qty Needed</th>
+              <th>Qty Reserved</th>
+              <th>Manufacturer</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data.reservedParts
+              .map(
+                (part) => `
+              <tr>
+                <td>${part.partName || `Part ${part.partId}`}</td>
+                <td>${part.quantityNeeded}</td>
+                <td>${part.quantityReserved}</td>
+                <td>${part.manufacturer || "N/A"}</td>
+              </tr>
+            `,
+              )
+              .join("")}
+          </tbody>
+        </table>
+      </div>
+    `;
+}
+
 // Missing parts section for technician email
 
 function generateMissingPartsSection(
@@ -255,7 +311,7 @@ function generateMissingPartsSection(
   isAdmin: boolean = false,
 ): string {
   if (!data.missingParts || data.missingParts.length === 0) {
-    return '<p><strong>All required parts are available.</strong></p>';
+    return "<p><strong>All required parts are available.</strong></p>";
   }
 
   if (isAdmin) {
@@ -300,13 +356,17 @@ function generateMissingPartsSection(
             </tr>
           </thead>
           <tbody>
-            ${data.missingParts.map(part => `
+            ${data.missingParts
+              .map(
+                (part) => `
               <tr>
                 <td>${part.partName || `Part ${part.partId}`}</td>
                 <td>${part.quantity}</td>
-                <td>${part.manufacturer || 'N/A'}</td>
+                <td>${part.manufacturer || "N/A"}</td>
               </tr>
-            `).join('')}
+            `,
+              )
+              .join("")}
           </tbody>
         </table>
       </div>
@@ -332,7 +392,7 @@ export function generateClientEmailTemplate(data: WorkOrderEmailData): {
     <h3>Service Details</h3>
     ${generateServiceDetails(data)}
     
-    <p>${data.technicianName || 'Your assigned technician'}${data.technicianLastName ? ` ${data.technicianLastName.charAt(0)}` : ''}. will arrive at your location during the scheduled time.</p>
+    <p>${data.technicianName || "Your assigned technician"}${data.technicianLastName ? ` ${data.technicianLastName.charAt(0)}` : ""}. will arrive at your location during the scheduled time.</p>
     
     <p class="thank-you">Thank you for your business!</p>
   `;
@@ -340,7 +400,7 @@ export function generateClientEmailTemplate(data: WorkOrderEmailData): {
   const footerContent = `
     If you need to reschedule or have any questions, please contact us at support@dsdservices.com.<br>
     Visit <a href="${process.env.NEXT_PUBLIC_API_URL}/dashboard">your dashboard</a> to manage all your appointments.<br>
-    Thank you for your business, The DSD Services Team
+    We look forward to seeing you soon, The DSD Services Team
   `;
 
   const html = generateBaseEmailTemplate({
@@ -367,7 +427,7 @@ export function generateTechnicianEmailTemplate(data: WorkOrderEmailData): {
   );
 
   const mainContent = `
-     <p>Hello ${data.technicianName || 'Technician'}${data.technicianLastName ? ` ${data.technicianLastName.charAt(0)}` : ''}.,</p>
+     <p>Hello ${data.technicianName || "Technician"}${data.technicianLastName ? ` ${data.technicianLastName.charAt(0)}` : ""}.,</p>
 
     <p>You have been assigned a new work order.</p>
     
@@ -387,7 +447,9 @@ export function generateTechnicianEmailTemplate(data: WorkOrderEmailData): {
       </div>
     </div>
     
-    ${data.jobDetails || data.appointmentNotes ? `
+    ${
+      data.jobDetails || data.appointmentNotes
+        ? `
       <div class="sectio job-section-gap">
         <div class="section-title">Job Details</div>
         <div class="job-details">
@@ -397,6 +459,8 @@ export function generateTechnicianEmailTemplate(data: WorkOrderEmailData): {
     `
         : ""
     }
+
+    ${generateReservedPartsSection(data)}
     
     ${generateMissingPartsSection(data)}
     

@@ -1,10 +1,9 @@
-
-import { 
-  generateClientEmailTemplate, 
+import {
+  generateClientEmailTemplate,
   generateTechnicianEmailTemplate,
   generateAdminMissingPartsTemplate,
-  sendEmail
-} from './email-templates';
+  sendEmail,
+} from "./email-templates";
 
 export type ServiceAddress = {
   addressLine1: string;
@@ -12,6 +11,14 @@ export type ServiceAddress = {
   city: string;
   state: string;
   postalCode: string;
+};
+
+export type ReservedPart = {
+  partId: number;
+  partName?: string;
+  manufacturer?: string | null;
+  quantityReserved: number;
+  quantityNeeded: number;
 };
 
 export type MissingPart = {
@@ -30,6 +37,7 @@ export type WorkOrderEmailContext = {
   appointmentEnd: string;
   serviceAddress: ServiceAddress;
   serviceTypeName?: string;
+  reservedParts?: ReservedPart[];
   missingParts?: MissingPart[];
   clientName?: string;
   clientLastName?: string;
@@ -48,15 +56,16 @@ export type WorkOrderEmailContext = {
  * @returns Results from email sending operations
  */
 export async function sendWorkOrderEmails(context: WorkOrderEmailContext) {
-  const { 
-    workOrderId, 
-    clientEmail, 
-    technicianEmail, 
+  const {
+    workOrderId,
+    clientEmail,
+    technicianEmail,
     adminEmail,
-    appointmentStart, 
-    appointmentEnd, 
+    appointmentStart,
+    appointmentEnd,
     serviceAddress,
     serviceTypeName,
+    reservedParts,
     missingParts,
     clientName,
     clientLastName,
@@ -66,7 +75,7 @@ export async function sendWorkOrderEmails(context: WorkOrderEmailContext) {
     secondaryPhone,
     jobDetails,
     appointmentNotes,
-    estimatedDuration
+    estimatedDuration,
   } = context;
 
   const emailData = {
@@ -75,6 +84,7 @@ export async function sendWorkOrderEmails(context: WorkOrderEmailContext) {
     appointmentEnd,
     serviceAddress,
     serviceTypeName,
+    reservedParts,
     missingParts,
     clientName,
     clientLastName,
@@ -84,7 +94,7 @@ export async function sendWorkOrderEmails(context: WorkOrderEmailContext) {
     secondaryPhone,
     jobDetails,
     appointmentNotes,
-    estimatedDuration
+    estimatedDuration,
   };
 
   // Send email to client
@@ -92,7 +102,7 @@ export async function sendWorkOrderEmails(context: WorkOrderEmailContext) {
   const clientEmailPromise = sendEmail(
     clientEmail,
     clientTemplate.subject,
-    clientTemplate.html
+    clientTemplate.html,
   );
 
   // Send email to technician
@@ -100,7 +110,7 @@ export async function sendWorkOrderEmails(context: WorkOrderEmailContext) {
   const technicianEmailPromise = sendEmail(
     technicianEmail,
     technicianTemplate.subject,
-    technicianTemplate.html
+    technicianTemplate.html,
   );
 
   // Only send admin email if there are missing parts and we have an admin email
@@ -110,9 +120,13 @@ export async function sendWorkOrderEmails(context: WorkOrderEmailContext) {
     adminEmailPromise = sendEmail(
       adminEmail,
       adminTemplate.subject,
-      adminTemplate.html
+      adminTemplate.html,
     );
   }
 
-  return Promise.all([clientEmailPromise, technicianEmailPromise, adminEmailPromise]);
+  return Promise.all([
+    clientEmailPromise,
+    technicianEmailPromise,
+    adminEmailPromise,
+  ]);
 }

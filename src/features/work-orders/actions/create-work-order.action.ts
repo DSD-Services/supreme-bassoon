@@ -5,7 +5,11 @@ import { type CreateWorkOrderInput, CreateWorkOrderSchema } from "../schemas";
 import { reqRoles } from "@/features/auth/queries";
 import { findAllServiceTypeParts } from "@/features/service-types/queries";
 import { deleteWorkOrderAction } from "./delete-work-order.action";
-import { sendWorkOrderEmails, type MissingPart } from "@/utils/email-service";
+import {
+  sendWorkOrderEmails,
+  type MissingPart,
+  type ReservedPart,
+} from "@/utils/email-service";
 
 export async function createWorkOrderAction(values: CreateWorkOrderInput) {
   const profile = await reqRoles(["CLIENT", "ADMIN"]);
@@ -29,7 +33,7 @@ export async function createWorkOrderAction(values: CreateWorkOrderInput) {
     serviceTypeId,
     jobDetails,
     primaryPhone,
-    secondaryPhone
+    secondaryPhone,
   } = parsedValues.data;
 
   const supabase = await createClient();
@@ -171,90 +175,111 @@ export async function createWorkOrderAction(values: CreateWorkOrderInput) {
     return { error: "Oops! Something went wrong." };
   }
 
-  
-  // Get service type name 
-const { data: serviceTypeData, error: serviceTypeError } = await supabase
-  .from("service_types")
-  .select("name")
-  .eq("id", serviceTypeId)
-  .single();
+  // Get service type name
+  const { data: serviceTypeData, error: serviceTypeError } = await supabase
+    .from("service_types")
+    .select("name")
+    .eq("id", serviceTypeId)
+    .single();
 
   if (serviceTypeError) {
-  console.error("[CreateWorkOrderError]: Unable to fetch service type details.");
-}
+    console.error(
+      "[CreateWorkOrderError]: Unable to fetch service type details.",
+    );
+  }
 
-const serviceTypeName = serviceTypeData?.name || "DSD Service";
+  const serviceTypeName = serviceTypeData?.name || "DSD Service";
 
-// Fetch the client's profile data
-const { data: clientData, error: clientError } = await supabase
-  .from("profiles")
-  .select("email, first_name, last_name, primary_phone, secondary_phone")
-  .eq("id", profile.id)
-  .single();
+  // Fetch the client's profile data
+  const { data: clientData, error: clientError } = await supabase
+    .from("profiles")
+    .select("email, first_name, last_name, primary_phone, secondary_phone")
+    .eq("id", profile.id)
+    .single();
 
-if (clientError || !clientData) {
-  console.error("[CreateWorkOrderError]: Unable to fetch client data.");
-  return {
-    error: "Oops! Something went wrong while fetching client data.",
-  };
-}
-
-// Fetch the technician's data
-const { data: technicianData, error: technicianError } = await supabase
-  .from("profiles")
-  .select("email, first_name, last_name")
-  .eq("id", technicianId)
-  .single();
-
-if (technicianError || !technicianData) {
-  console.error("[CreateWorkOrderError]: Unable to fetch technician data.");
-  return {
-    error: "Oops! Something went wrong while fetching technician data.",
-  };
-}
-
-// Process missing parts with details
-const missingPartsWithDetails: MissingPart[] = await Promise.all(
-  missingParts.map(async (part) => {
-    const { data: partData } = await supabase
-      .from("parts")
-      .select("id, name, manufacturer")
-      .eq("id", part.partId)
-      .single();
-
+  if (clientError || !clientData) {
+    console.error("[CreateWorkOrderError]: Unable to fetch client data.");
     return {
-      partId: part.partId,
-      partName: partData?.name,
-      manufacturer: partData?.manufacturer,
-      quantity: part.quantity
+      error: "Oops! Something went wrong while fetching client data.",
     };
-  })
-);
+  }
 
-// Send all emails 
-try {
-  await sendWorkOrderEmails({
-    workOrderId: data[0].id.toString(),
-    clientEmail: clientData.email,
-    technicianEmail: technicianData.email,
-    adminEmail: process.env.ADMIN_EMAIL || "",
-    appointmentStart,
-    appointmentEnd,
-    serviceAddress,
-    serviceTypeName,
-    missingParts: missingPartsWithDetails,
-    clientName: clientData.first_name,
-    clientLastName: clientData.last_name,
-    technicianName: technicianData.first_name,
-    technicianLastName: technicianData.last_name,
-    primaryPhone: clientData.primary_phone || "",
-    secondaryPhone: clientData.secondary_phone || secondaryPhone || "",
-    jobDetails: jobDetails || undefined,
-    appointmentNotes: appointmentNotes || undefined,
-  });
-} catch (error) {
-  console.error("[CreateWorkOrderError]: Error sending emails", error);
-}
+  // Fetch the technician's data
+  const { data: technicianData, error: technicianError } = await supabase
+    .from("profiles")
+    .select("email, first_name, last_name")
+    .eq("id", technicianId)
+    .single();
+
+  if (technicianError || !technicianData) {
+    console.error("[CreateWorkOrderError]: Unable to fetch technician data.");
+    return {
+      error: "Oops! Something went wrong while fetching technician data.",
+    };
+  }
+
+  const reservedPartsWithDetails: ReservedPart[] = await Promise.all(
+    reservedParts.map(async (part) => {
+      const stp = serviceTypeParts.find((stp) => stp.parts.id === part.partId);
+      const { data: reservedPartData } = await supabase
+        .from("parts")
+        .select("id, name, manufacturer")
+        .eq("id", part.partId)
+        .single();
+
+      return {
+        partId: part.partId,
+        partName: reservedPartData?.name,
+        manufacturer: reservedPartData?.manufacturer,
+        quantityNeeded: stp?.quantity || 0,
+        quantityReserved: part.quantity,
+      };
+    }),
+  );
+
+  // Process missing parts with details
+  const missingPartsWithDetails: MissingPart[] = await Promise.all(
+    missingParts.map(async (part) => {
+      const { data: partData } = await supabase
+        .from("parts")
+        .select("id, name, manufacturer")
+        .eq("id", part.partId)
+        .single();
+
+      return {
+        partId: part.partId,
+        partName: partData?.name,
+        manufacturer: partData?.manufacturer,
+        quantity: part.quantity,
+      };
+    }),
+  );
+
+  // Send all emails
+  try {
+    await sendWorkOrderEmails({
+      workOrderId: data[0].id.toString(),
+      clientEmail: clientData.email,
+      technicianEmail: technicianData.email,
+      adminEmail: process.env.ADMIN_EMAIL || "",
+      appointmentStart,
+      appointmentEnd,
+      serviceAddress,
+      serviceTypeName,
+      reservedParts: reservedPartsWithDetails,
+      missingParts: missingPartsWithDetails,
+      clientName: clientData.first_name,
+      clientLastName: clientData.last_name,
+      technicianName: technicianData.first_name,
+      technicianLastName: technicianData.last_name,
+      primaryPhone: clientData.primary_phone || "",
+      secondaryPhone: clientData.secondary_phone || secondaryPhone || "",
+      jobDetails: jobDetails || undefined,
+      appointmentNotes: appointmentNotes || undefined,
+    });
+  } catch (error) {
+    console.error("[CreateWorkOrderError]: Error sending emails", error);
+  }
 
   return { error: null };
 }
