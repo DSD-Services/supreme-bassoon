@@ -96,28 +96,37 @@ export async function createWorkOrderAction(values: CreateWorkOrderInput) {
   if (shouldUpdateProfile) {
     const updatedClientData: Record<string, any> = {};
 
-    if (
-      !clientProfile.address_line1 ||
-      !clientProfile.address_line2 ||
-      !clientProfile.city ||
-      !clientProfile.state ||
-      !clientProfile.postal_code
-    ) {
+    // Update address only if missing
+    if (!clientProfile.address_line1 && serviceAddress.addressLine1) {
       updatedClientData.address_line1 = serviceAddress.addressLine1;
+    }
+
+    if (!clientProfile.address_line2 && serviceAddress.addressLine2) {
       updatedClientData.address_line2 = serviceAddress.addressLine2;
+    }
+
+    if (!clientProfile.city && serviceAddress.city) {
       updatedClientData.city = serviceAddress.city;
+    }
+
+    if (!clientProfile.state && serviceAddress.state) {
       updatedClientData.state = serviceAddress.state;
+    }
+
+    if (!clientProfile.postal_code && serviceAddress.postalCode) {
       updatedClientData.postal_code = serviceAddress.postalCode;
     }
 
-    if (!clientProfile.primary_phone) {
+    // Update phones only if missing
+    if (!clientProfile.primary_phone && primaryPhone) {
       updatedClientData.primary_phone = primaryPhone;
     }
 
-    if (!clientProfile.secondary_phone) {
+    if (!clientProfile.secondary_phone && secondaryPhone) {
       updatedClientData.secondary_phone = secondaryPhone;
     }
 
+    // Only update if there are fields to update
     if (Object.keys(updatedClientData).length > 0) {
       const { error: updateProfileError } = await supabase
         .from("profiles")
