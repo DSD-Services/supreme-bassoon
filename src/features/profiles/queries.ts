@@ -8,6 +8,7 @@ import { PostgrestError } from "@supabase/supabase-js";
 
 type FindAllProfilesOptions<Role extends UserRole | undefined = undefined> = {
   role?: Role;
+  query?: string;
 };
 
 type FindAllProfilesReturn<Role extends UserRole | undefined> =
@@ -23,7 +24,7 @@ export async function findAllProfiles<Role extends UserRole | undefined>(
 ): Promise<FindAllProfilesReturn<Role>> {
   const supabase = await createClient();
 
-  const { role } = options;
+  const { role, query: searchQuery } = options;
 
   let query = supabase.from("profiles").select("*");
 
@@ -33,7 +34,15 @@ export async function findAllProfiles<Role extends UserRole | undefined>(
       .select("*, technician_details(*, departments(*))");
   }
 
-  if (role) query = query.eq("role", role);
+  if (role) {
+    query = query.eq("role", role);
+  }
+
+  if (searchQuery) {
+    query = query.or(
+      `first_name.ilike.%${searchQuery}%,last_name.ilike.%${searchQuery}%`,
+    );
+  }
 
   return (await query.order("last_name", {
     ascending: true,

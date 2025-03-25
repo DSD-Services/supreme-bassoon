@@ -1,49 +1,11 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { Profile } from "@/utils/supabase/types";
-import { ClientCard } from "./client-card";
-import { Input } from "@/components/ui/input";
+import { ClientCard } from "@/components/admin/clients/client-card";
 
-type ClientListProps = { initialProfiles: Array<Profile> };
+type ClientListProps = { profiles: Array<Profile> };
 
-export const ClientList = ({ initialProfiles }: ClientListProps) => {
-  const [profiles, setProfiles] = useState<Array<Profile>>(initialProfiles);
-  const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    setProfiles(initialProfiles);
-  }, [initialProfiles]);
-
-  const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const q = evt.target.value.trim();
-    setQuery(q);
-
-    const filterOn = q.length > 3 ? profiles : initialProfiles;
-
-    setProfiles(
-      filterOn.filter(({ first_name, last_name }) => {
-        const lowerQuery = q.toLowerCase();
-        return (
-          first_name.toLowerCase().includes(lowerQuery) ||
-          last_name.toLowerCase().includes(lowerQuery)
-        );
-      }),
-    );
-  };
-
+export const ClientList = ({ profiles }: ClientListProps) => {
   return (
     <>
-      <div>
-        <Input
-          type="search"
-          className=""
-          placeholder="Search..."
-          value={query}
-          onChange={handleChange}
-        />
-      </div>
-
       {profiles?.map((profile) => (
         <ClientCard key={profile.id} profile={profile} />
       ))}

@@ -4,9 +4,9 @@ import { Input } from "@/components/ui/input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 
-type SearchPartsFormProps = { initialQuery: string };
+type SearchFormProps = { initialQuery: string };
 
-export const SearchPartsForm = ({ initialQuery }: SearchPartsFormProps) => {
+export const SearchForm = ({ initialQuery }: SearchFormProps) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
