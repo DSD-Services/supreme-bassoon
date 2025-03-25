@@ -32,12 +32,11 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith(page),
   );
 
-  await new Promise((resolve) => setTimeout(resolve, 200));
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  const { data: session, error } = await supabase.auth.getSession();
-  const isAuthenticated = !!session?.session?.user;
-
-  console.log("Auth Check:", { session, error });
+  const isAuthenticated = !!user;
 
   if (!isAuthenticated && isProtectedPage) {
     return NextResponse.redirect(new URL("/login", request.url));

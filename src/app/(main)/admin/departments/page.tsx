@@ -1,24 +1,18 @@
-import { DeleteDepartmentDialog } from "@/components/admin/departments/delete-department-dialog";
-import { UpdateDepartmentForm } from "@/components/admin/departments/update-department-form";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { reqRoles } from "@/features/auth/queries";
-import { createDepartmentAction } from "@/features/departments/actions/create-department.action";
-import { findAllDepartments } from "@/features/departments/queries";
-import { faAdd, faLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { faLeftLong, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { notFound } from "next/navigation";
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import { isAdmin } from "@/features/auth/auth-guards";
+import { CreateDepartmentForm } from "@/features/departments/components/create-department-form";
+import { DepartmentListServer } from "@/features/departments/components/department-list-server";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Manage Departments",
 };
 
 export default async function Page() {
-  const profile = await reqRoles(["ADMIN"]);
-  if (!profile) notFound();
-
-  const { data: departments } = await findAllDepartments();
+  await isAdmin({ action: "redirect" });
 
   return (
     <div className="container mx-auto space-y-4 px-4 py-12">
@@ -26,29 +20,14 @@ export default async function Page() {
         <h1 className="text-3xl font-bold tracking-tight">
           Manage Departments
         </h1>
-        <Button asLink href="/dashboard">
+        <Button size="sm" asLink href="/dashboard">
           <FontAwesomeIcon icon={faLeftLong} />
         </Button>
       </div>
 
       <div className="bg-muted h-1" />
 
-      <form
-        action={createDepartmentAction}
-        className="flex flex-col gap-2 sm:flex-row"
-      >
-        <div>
-          <label htmlFor="name" className="sr-only">
-            Name
-          </label>
-          <Input type="text" id="name" name="name" placeholder="Name" />
-        </div>
-
-        <Button type="submit" variant="ghost" className="self-start">
-          <FontAwesomeIcon icon={faAdd} />
-          Insert
-        </Button>
-      </form>
+      <CreateDepartmentForm />
 
       <div className="bg-muted h-1" />
 
@@ -61,18 +40,23 @@ export default async function Page() {
             </tr>
           </thead>
 
-          <tbody>
-            {departments?.map((department) => (
-              <tr key={department.id} className="divide-x">
-                <td className="w-full px-6 py-3">
-                  <UpdateDepartmentForm department={department} />
-                </td>
-                <td className="px-6 py-3">
-                  <DeleteDepartmentDialog departmentId={department.id} />
-                </td>
-              </tr>
-            ))}
-          </tbody>
+          <Suspense
+            fallback={
+              <tbody>
+                <tr>
+                  <td className="w-full px-6 py-3">
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      className="animate-spin"
+                    />
+                  </td>
+                  <td className="px-6 py-3"></td>
+                </tr>
+              </tbody>
+            }
+          >
+            <DepartmentListServer />
+          </Suspense>
         </table>
       </div>
     </div>

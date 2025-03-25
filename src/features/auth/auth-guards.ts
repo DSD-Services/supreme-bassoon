@@ -1,5 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export async function isAdmin(
   { action }: { action: "throw" | "redirect" } = { action: "throw" },
@@ -28,6 +28,7 @@ export async function isAdmin(
   }
 
   if (!profile?.id) {
+    if (action === "redirect") notFound();
     throw new Error("Forbidden");
   }
 }

@@ -1,16 +1,16 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { faAdd } from "@fortawesome/free-solid-svg-icons";
+import { createDepartmentAction } from "@/features/departments/actions/create-department.action";
+import { Button } from "@/components/ui/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { useActionState, useEffect } from "react";
-import { createPartAction } from "@/features/parts/actions/create-part.action";
 import toast from "react-hot-toast";
 
-export const CreatePartForm = () => {
+export const CreateDepartmentForm = () => {
   const [state, formAction, isPending] = useActionState(
-    createPartAction,
+    createDepartmentAction,
     undefined,
   );
 
@@ -29,30 +29,6 @@ export const CreatePartForm = () => {
         <Input type="text" id="name" name="name" placeholder="Name" />
       </div>
 
-      <div>
-        <label htmlFor="quantity" className="sr-only">
-          Quantity
-        </label>
-        <Input
-          type="number"
-          id="quantity"
-          name="quantity"
-          placeholder="Quantity"
-        />
-      </div>
-
-      <div>
-        <label htmlFor="manufacturer" className="sr-only">
-          Manufacturer
-        </label>
-        <Input
-          type="text"
-          id="manufacturer"
-          name="manufacturer"
-          placeholder="Manufacturer"
-        />
-      </div>
-
       <Button
         type="submit"
         variant="ghost"
@@ -60,7 +36,7 @@ export const CreatePartForm = () => {
         disabled={isPending}
       >
         <FontAwesomeIcon icon={faAdd} />
-        {isPending ? "Creating..." : "Create Part"}
+        Insert
       </Button>
     </form>
   );
