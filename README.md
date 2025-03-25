@@ -88,7 +88,7 @@ Technologies used in the project:
 <a href="https://github.com/destocot"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
 </p>
 <p align="center">
-<a href=""target="_blank">Katie H.</a> &nbsp
+<a href="http://katiehom.com"target="_blank">Katie H.</a> &nbsp
 </p>
 <p align="center">
 <a href="https://github.com/katiehom"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
@@ -98,30 +98,30 @@ Technologies used in the project:
 <a href=""target="_blank">Maye J.</a> &nbsp
 </p>
 <p align="center">
-<a href=""target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
-<a href=""target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
+<a href="https://github.com/CodingLady22"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
+<a href="https://www.linkedin.com/in/mayejesuorobo/"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
 </p>
 <p align="center">
 <a href=""target="_blank">Acir S.</a> &nbsp
 </p>
 <p align="center">
-<a href=""target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
-<a href=""target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
+<a href="https://github.com/rudzzz"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
+<a href="https://www.linkedin.com/in/acir-rudson/"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
 </p>
 
 <!-- special thank to leads Jarrod and Minhoru -->
 <h3>Special Thanks to:</h3>
 <p align="center">
-<a href=""target="_blank">Jarrod B.</a> &nbsp
+<a href="github.com/Demonico "target="_blank">Jarrod B.</a> &nbsp
+</p>
+<p align="center">
+<a href="github.com/Demonico "target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
+<a href="https://www.linkedin.com/in/jarrodvandoren/"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
+</p>
+<p align="center">
+<a href="minhoru-cotache.netlify.app/ "target="_blank">Minhoru S.</a> &nbsp
 </p>
 <p align="center">
 <a href=""target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
-<a href=""target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
-</p>
-<p align="center">
-<a href=""target="_blank">Minhoru S.</a> &nbsp
-</p>
-<p align="center">
-<a href=""target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
-<a href=""target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
+<a href="linkedin.com/in/minhoru-cotache"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
 </p>
