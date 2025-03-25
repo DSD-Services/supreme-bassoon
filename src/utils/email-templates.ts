@@ -280,8 +280,8 @@ function generateReservedPartsSection(data: WorkOrderEmailData): string {
           <thead>
             <tr>
               <th>Part</th>
-              <th>Qty Needed</th>
-              <th>Qty Reserved</th>
+              <th>Quantity Needed</th>
+              <th>Quantity Reserved</th>
               <th>Manufacturer</th>
             </tr>
           </thead>
