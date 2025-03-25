@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { ActionState, loginAction } from "@/features/auth/actions/login.action";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useActionState, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -15,6 +15,20 @@ export const LoginForm = () => {
     undefined,
   );
   const [banner, setBanner] = useState<boolean | null>(null);
+  const searchParams = useSearchParams();
+  const resetSuccess = searchParams.get("resetSuccess");
+
+  useEffect(() => {
+    if (resetSuccess) {
+      const newUrl = new URL(window.location.href);
+      newUrl.searchParams.delete("resetSuccess");
+      window.history.replaceState({}, "", newUrl.toString());
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }
+  }, [resetSuccess, router]);
 
   useEffect(() => {
     if (state?.success) {
@@ -85,7 +99,7 @@ export const LoginForm = () => {
         />
         <div className="flex justify-end pt-1 pb-2 text-sm">
           <a
-            href="#"
+            href="/forgot-password"
             className="self-end font-semibold text-blue-600 hover:text-blue-500"
           >
             Forgot password?

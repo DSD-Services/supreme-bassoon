@@ -17,6 +17,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { SignOutButton } from "@/features/auth/components/sign-out-button";
 import { Metadata } from "next";
+import { UpdatePasswordDialog } from "@/app/(auth)/update-password/update-password-dialog";
 
 export const metadata: Metadata = {
   title: "Account",
@@ -253,7 +254,8 @@ export default async function Page() {
           </div>
         ) : null}
 
-        <div className="flex justify-end border-t border-gray-200 p-4">
+        <div className="flex justify-end gap-4 border-t border-gray-200 p-4">
+          <UpdatePasswordDialog />
           <SignOutButton />
         </div>
       </div>
