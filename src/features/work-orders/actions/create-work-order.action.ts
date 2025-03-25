@@ -72,6 +72,81 @@ export async function createWorkOrderAction(values: CreateWorkOrderInput) {
     }
   });
 
+  // Fetch the client's existing profile details
+  const { data: clientProfile, error: clientProfileError } = await supabase
+    .from("profiles")
+    .select(
+      "address_line1, address_line2, city, state, postal_code, primary_phone, secondary_phone",
+    )
+    .eq("id", profile.id)
+    .single();
+
+  if (clientProfileError) {
+    console.error("[FetchClientProfileError]:", clientProfileError.message);
+    return { error: "Could not retrieve client profile." };
+  }
+
+  // Check if contact info is missing
+  const shouldUpdateProfile =
+    !clientProfile.address_line1 ||
+    !clientProfile.address_line2 ||
+    !clientProfile.city ||
+    !clientProfile.state ||
+    !clientProfile.postal_code ||
+    !clientProfile.primary_phone ||
+    !clientProfile.secondary_phone;
+
+  // Prepare updated contact info
+  if (shouldUpdateProfile) {
+    const updatedClientData: Record<string, any> = {};
+
+    // Update address only if missing
+    if (!clientProfile.address_line1 && serviceAddress.addressLine1) {
+      updatedClientData.address_line1 = serviceAddress.addressLine1;
+    }
+
+    if (!clientProfile.address_line2 && serviceAddress.addressLine2) {
+      updatedClientData.address_line2 = serviceAddress.addressLine2;
+    }
+
+    if (!clientProfile.city && serviceAddress.city) {
+      updatedClientData.city = serviceAddress.city;
+    }
+
+    if (!clientProfile.state && serviceAddress.state) {
+      updatedClientData.state = serviceAddress.state;
+    }
+
+    if (!clientProfile.postal_code && serviceAddress.postalCode) {
+      updatedClientData.postal_code = serviceAddress.postalCode;
+    }
+
+    // Update phones only if missing
+    if (!clientProfile.primary_phone && primaryPhone) {
+      updatedClientData.primary_phone = primaryPhone;
+    }
+
+    if (!clientProfile.secondary_phone && secondaryPhone) {
+      updatedClientData.secondary_phone = secondaryPhone;
+    }
+
+    // Only update if there are fields to update
+    if (Object.keys(updatedClientData).length > 0) {
+      const { error: updateProfileError } = await supabase
+        .from("profiles")
+        .update(updatedClientData)
+        .eq("id", profile.id);
+
+      if (updateProfileError) {
+        console.error(
+          "[UpdateClientProfileError]:",
+          updateProfileError.message,
+        );
+        return { error: "Could not update client profile." };
+      }
+    }
+  }
+
   const { data, error } = await supabase
     .from("work_orders")
     .insert({
@@ -236,6 +311,7 @@ export async function createWorkOrderAction(values: CreateWorkOrderInput) {
       };
     }),
   );
+
 
   // Process missing parts with details
   const missingPartsWithDetails: MissingPart[] = await Promise.all(
