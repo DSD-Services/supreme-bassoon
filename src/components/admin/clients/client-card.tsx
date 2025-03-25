@@ -8,7 +8,7 @@ type ClientCardProps = { profile: Profile };
 
 export const ClientCard = ({ profile }: ClientCardProps) => {
   return (
-    <div key={profile.id} className="flex items-center gap-1">
+    <div className="flex items-center gap-1">
       <details className="group flex-1 rounded border p-4 shadow">
         <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
           <p>
