@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { CreatePartForm } from "@/features/parts/components/create-part-form";
-import { SearchPartsForm } from "@/features/parts/components/search-parts-form";
+import { SearchForm } from "@/components/admin/search-form";
 
 export const metadata: Metadata = {
   title: "Manage Inventory",
@@ -39,7 +39,7 @@ export default async function Page({ searchParams }: PageProps) {
 
       <div className="bg-muted h-1" />
 
-      <SearchPartsForm initialQuery={initialQuery} />
+      <SearchForm initialQuery={initialQuery} />
 
       <div className="bg-muted h-1" />
 
