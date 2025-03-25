@@ -5,7 +5,11 @@ import { type CreateWorkOrderInput, CreateWorkOrderSchema } from "../schemas";
 import { reqRoles } from "@/features/auth/queries";
 import { findAllServiceTypeParts } from "@/features/service-types/queries";
 import { deleteWorkOrderAction } from "./delete-work-order.action";
-import { sendWorkOrderEmails, type MissingPart } from "@/utils/email-service";
+import {
+  sendWorkOrderEmails,
+  type MissingPart,
+  type ReservedPart,
+} from "@/utils/email-service";
 
 export async function createWorkOrderAction(values: CreateWorkOrderInput) {
   const profile = await reqRoles(["CLIENT", "ADMIN"]);
@@ -289,6 +293,26 @@ export async function createWorkOrderAction(values: CreateWorkOrderInput) {
     };
   }
 
+  const reservedPartsWithDetails: ReservedPart[] = await Promise.all(
+    reservedParts.map(async (part) => {
+      const stp = serviceTypeParts.find((stp) => stp.parts.id === part.partId);
+      const { data: reservedPartData } = await supabase
+        .from("parts")
+        .select("id, name, manufacturer")
+        .eq("id", part.partId)
+        .single();
+
+      return {
+        partId: part.partId,
+        partName: reservedPartData?.name,
+        manufacturer: reservedPartData?.manufacturer,
+        quantityNeeded: stp?.quantity || 0,
+        quantityReserved: part.quantity,
+      };
+    }),
+  );
+
+
   // Process missing parts with details
   const missingPartsWithDetails: MissingPart[] = await Promise.all(
     missingParts.map(async (part) => {
@@ -318,6 +342,7 @@ export async function createWorkOrderAction(values: CreateWorkOrderInput) {
       appointmentEnd,
       serviceAddress,
       serviceTypeName,
+      reservedParts: reservedPartsWithDetails,
       missingParts: missingPartsWithDetails,
       clientName: clientData.first_name,
       clientLastName: clientData.last_name,
