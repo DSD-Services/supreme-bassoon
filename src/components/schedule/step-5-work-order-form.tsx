@@ -21,6 +21,7 @@ interface Step5ContactInformationProps {
   clearErrors: UseFormClearErrors<CreateWorkOrderInput>;
   formValues: CreateWorkOrderInput;
   selectedAddress: "onFile" | "new";
+  step: number;
   prevStep: () => void;
   nextStep: () => void;
   userProfile: PartialProfile;
@@ -33,6 +34,7 @@ export default function Step5ContactInformation({
   clearErrors,
   formValues,
   selectedAddress,
+  step,
   prevStep,
   nextStep,
   userProfile,
@@ -44,7 +46,10 @@ export default function Step5ContactInformation({
   };
 
   return (
-    <div className="m-2 flex flex-col items-center">
+    <div
+      aria-current={step === 5 ? "step" : undefined}
+      className="m-2 flex flex-col items-center"
+    >
       <h2 className="flex pb-2 text-center text-base font-semibold md:text-lg">
         {selectedAddress === "onFile" ? "Confirm" : "Enter"} your contact
         information:
@@ -233,6 +238,7 @@ export default function Step5ContactInformation({
               defaultValue={userProfile.secondary_phone ?? ""}
               {...register("secondaryPhone")}
             />
+            <div className="h-4" />
           </div>
           <div className="mt-4 flex flex-col">
             <label htmlFor="jobDetails" className="text-sm text-blue-800">

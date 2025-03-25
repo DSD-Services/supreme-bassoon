@@ -253,28 +253,56 @@ export default function WorkOrderCard({
                 </div>
               </div>
             </div>
-            <div className="mt-2 h-full w-full md:mt-4">
-              <div className="flex justify-center">
-                <div className="flex w-full justify-between rounded-md bg-gray-100 p-2">
-                  <div className="flex flex-col">
-                    <div className="flex">
+            {workOrder.job_details && (
+              <div className="mt-2 h-full w-full md:mt-4">
+                <div className="flex justify-center">
+                  <div className="flex w-full justify-between rounded-md bg-gray-100 p-2">
+                    <div className="flex flex-col">
+                      <div className="flex">
+                        <SmallLabel>Job details:</SmallLabel>
+                      </div>
+                      <p className="pt-1 text-xs md:text-sm">
+                        {workOrder.job_details}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            {userRole === "CLIENT" && workOrder.appointment_notes && (
+              <div className="mt-2 h-full w-full md:mt-4">
+                <div className="flex justify-center">
+                  <div className="flex w-full justify-between rounded-md bg-gray-100 p-2">
+                    <div className="flex flex-col">
                       <SmallLabel>Appointment notes:</SmallLabel>
-                      {(userRole === "TECHNICIAN" || userRole === "ADMIN") && (
+                      <p className="pt-1 text-xs md:text-sm">
+                        {workOrder.appointment_notes}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            {(userRole === "TECHNICIAN" || userRole === "ADMIN") && (
+              <div className="mt-2 h-full w-full md:mt-4">
+                <div className="flex justify-center">
+                  <div className="flex w-full justify-between rounded-md bg-gray-100 p-2">
+                    <div className="flex flex-col">
+                      <div className="flex">
+                        <SmallLabel>Appointment notes:</SmallLabel>
                         <span className="pl-2 text-slate-700 italic">
                           (Appointment notes are visible to the client)
                         </span>
-                      )}
+                      </div>
+                      <p className="pt-1 text-xs md:text-sm">
+                        {workOrder.appointment_notes}
+                      </p>
                     </div>
-                    <p className="pt-1 text-xs md:text-sm">
-                      {workOrder.appointment_notes}
-                    </p>
-                  </div>
-                  {(userRole === "TECHNICIAN" || userRole === "ADMIN") && (
                     <UpdateApptNotesDialog workOrder={workOrder} />
-                  )}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
             {(userRole === "TECHNICIAN" || userRole === "ADMIN") && (
               <div className="mt-3 w-full md:mt-4">
                 {hasMissingParts && (

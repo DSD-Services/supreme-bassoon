@@ -11,7 +11,7 @@ export default function Page() {
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="flex min-h-full flex-1 flex-col justify-center p-6 lg:px-8">
-        <div className="mt-2 rounded-lg bg-[#E2EAFF] p-6 shadow-lg sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="mt-2 max-w-md rounded-lg bg-blue-100 p-6 shadow-lg sm:mx-auto sm:w-full md:max-w-lg">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <h1 className="text-center text-2xl font-bold tracking-tight text-blue-800">
               Success!
@@ -30,32 +30,23 @@ export default function Page() {
             <strong>please contact us</strong> for assistance.
           </p>
           <p className="mt-4 text-center text-sm/6 text-slate-700">
-            You can return to your{" "}
-            <Button
-              asLink
-              href="/dashboard"
-              variant="link"
-              className="px-0 font-semibold text-blue-700"
-            >
-              Dashboard
-            </Button>{" "}
-            or{" "}
+            You can{" "}
             <Button
               asLink
               href="/schedule"
               variant="link"
               className="px-0 font-semibold text-blue-700"
             >
-              Schedule another service
-            </Button>
-            .
+              schedule another service
+            </Button>{" "}
+            <span>or return to your dashboard below.</span>
           </p>
         </div>
       </div>
       <div className="flex justify-center text-slate-700">
-        <Button asLink variant="ghost" href="/">
+        <Button asLink variant="ghost" href="/dashboard">
           <FontAwesomeIcon icon={faArrowLeft} />
-          Home
+          Back to your dashboard
         </Button>
       </div>
     </div>

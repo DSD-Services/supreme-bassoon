@@ -14,6 +14,7 @@ interface Step6ConfirmAppointmentProps {
   departmentName: string;
   serviceTypeName: string;
   selectedDate: Date | null;
+  step: number;
   prevStep: () => void;
   isSubmitting: boolean;
 }
@@ -23,6 +24,7 @@ export default function Step6ConfirmAppointment({
   formValues,
   departmentName,
   serviceTypeName,
+  step,
   prevStep,
   isSubmitting,
 }: Step6ConfirmAppointmentProps) {
@@ -37,7 +39,7 @@ export default function Step6ConfirmAppointment({
   };
 
   return (
-    <div>
+    <div aria-current={step === 6 ? "step" : undefined}>
       <h2 className="pb-2 text-center text-base font-semibold md:text-lg">
         Confirm &amp; submit your
         <span className="block"> appointment information:</span>
