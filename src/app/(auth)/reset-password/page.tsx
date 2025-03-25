@@ -2,29 +2,39 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { resetPassword } from "@/features/auth/actions/reset-password";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
 
 export default function ResetPassword() {
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
   const router = useRouter();
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await resetPassword(password);
+    try {
+      const response = await fetch("/api/auth/reset-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ newPassword: password }),
+      });
 
-    if (response.error) {
-      toast.error(response.error);
-    } else {
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Something went wrong");
+      }
+
       toast.success("Password updated successfully!");
 
       setTimeout(() => {
         router.push("/login?resetSuccess=true");
       }, 2000);
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
@@ -40,7 +50,6 @@ export default function ResetPassword() {
           <h2 className="mb-4 text-center text-xl font-semibold">
             Choose a new password
           </h2>
-          {message && <p className="mb-2 text-center text-sm">{message}</p>}
           <form onSubmit={handleResetPassword} className="space-y-4">
             <Input
               type="password"
