@@ -275,7 +275,7 @@ function generateReservedPartsSection(data: WorkOrderEmailData): string {
 
   return `
       <div class="reserved-parts">
-        <h3>Reserved Parts</h3>
+        <h3>Reserved Parts for ${data.serviceTypeName}</h3>
         <table>
           <thead>
             <tr>
