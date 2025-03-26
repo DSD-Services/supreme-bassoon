@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin from "@fullcalendar/interaction";
 import { scheduledAppointments } from "@/components/schedule/lib/events";
 import { EventClickArg, EventSourceInput } from "@fullcalendar/core/index.js";
 import { Dialog } from "@/components/ui/dialog";
 import WorkOrderGroup from "@/components/dashboard/work-order-group";
+import { findTechnicianSchedule, findTechnicianAppointments } from "../queries";
 
 export interface Appointment {
   title: string;
@@ -24,11 +27,22 @@ export interface Appointment {
   };
 }
 
-export default function TechnicianCalendar() {
+type Event = {
+  id: string;
+  title: string;
+  start: string;
+  end: string;
+  description?: string;
+  classNames?: string[];
+  extendedProps?: Record<string, []>;
+};
+
+export default function TechnicianCalendar({ technicianId }: { technicianId: string }) {
   const [showModal, setShowModal] = useState(false);
   const [selectedAppointment, setSelectedAppointment] =
     useState<Appointment | null>(null);
   const [isBreak, setIsBreak] = useState(false);
+   const [events, setEvents] = useState<Event[]>([]);
 
   const handleClose = () => {
     setShowModal(false);
@@ -60,7 +74,64 @@ export default function TechnicianCalendar() {
     }
     setSelectedAppointment(appointment);
     setShowModal(true);
+    
   };
+
+   useEffect(() => {
+    async function loadData() {
+      if (!technicianId) return;
+
+      try {
+        // Fetch work days, work hours, and breaks
+        const schedule = await findTechnicianSchedule(technicianId);
+
+        if (schedule) {
+          const workDays = schedule.work_days || [];
+          const workHours = schedule.work_hours || [];
+          const breaks = schedule.breaks || [];
+
+          // Convert work days, work hours, and breaks to calendar events
+          const scheduleEvents: Event[] = workDays.map((day) => ({
+            id: `work-${day}`,
+            title: "Work Day",
+            start: day.start,
+            end: day.end,
+            classNames: ["work-day"],
+          }));
+
+          const breakEvents: Event[] = breaks.map((brk) => ({
+            id: `break-${brk.start}`,
+            title: "Break",
+            start: brk.start,
+            end: brk.end,
+            description: "Break",
+            classNames: ["break-event"],
+          }));
+
+          // Fetch appointments
+          const appointments = await findTechnicianAppointments(technicianId);
+
+          const appointmentEvents: Event[] =
+            appointments?.map((appointment) => ({
+              id: appointment.id,
+              title: appointment.job_details,
+              start: appointment.appointment_start,
+              end: appointment.appointment_end,
+              extendedProps: {
+                departmentId: appointment.department_id,
+                serviceTypeId: appointment.service_type_id,
+              },
+            })) || [];
+
+          setEvents([...scheduleEvents, ...breakEvents, ...appointmentEvents]);
+        }
+      } catch (error) {
+        console.error("Error loading calendar data:", error);
+      }
+    }
+
+    loadData();
+  }, [technicianId]);
 
   return (
     <div>
