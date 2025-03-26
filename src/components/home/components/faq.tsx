@@ -24,7 +24,7 @@ const faqData: FAQItem[] = [
   {
     question: "Can I reschedule or cancel my appointment?",
     answer:
-      "Absolutely. You can reschedule or cancel your appointment through your account dashboard.",
+      "Absolutely. If you need to cancel your appointment, please contact us directly. You can then reschedule your appointment through your account dashboard.",
   },
   {
     question: "How do I know my service provider is qualified?",
