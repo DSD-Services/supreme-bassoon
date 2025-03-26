@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 interface FAQItem {
   question: string;
@@ -38,25 +41,45 @@ const FAQSection = () => {
   };
 
   return (
-    <div className="pt-8 pb-20" id="faqs">
-      <section className="mx-auto my-10 max-w-3xl rounded-lg bg-white p-6 shadow-none md:shadow-lg">
+    <div
+      className="bg-opacity-50 bg-[url('/images/background/tile_250x250_blue-50.png')] bg-fixed bg-center bg-repeat py-24"
+      id="faqs"
+    >
+      <section className="mx-6 max-w-xl rounded-lg bg-white p-6 shadow-lg sm:mx-auto md:max-w-3xl">
         <h2 className="mb-4 text-2xl font-semibold">
           Frequently Asked Questions
         </h2>
-
         <div className="space-y-4">
           {faqData.map((faq, index) => (
             <div key={index} className="border-b">
               <button
-                className="flex w-full items-center justify-between py-3 text-left font-medium focus:outline-none"
+                className="flex w-full cursor-pointer items-center justify-between py-3 text-left font-medium focus:outline-none"
                 onClick={() => toggleQuestion(index)}
               >
                 <span>{faq.question}</span>
-                <span>{openQuestion === index ? "-" : "+"}</span>
+                <motion.span
+                  initial={false}
+                  animate={{ rotate: openQuestion === index ? 180 : 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="ml-auto px-2 text-right text-xl font-medium text-blue-500 sm:px-4"
+                  style={{ transformOrigin: "center" }}
+                >
+                  <FontAwesomeIcon icon={faAngleDown} />
+                </motion.span>
               </button>
-              {openQuestion === index && (
-                <p className="px-4 pb-3 text-gray-600">{faq.answer}</p>
-              )}
+              <AnimatePresence>
+                {openQuestion === index && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="w-full overflow-hidden"
+                  >
+                    <p className="px-4 pb-3 text-gray-600">{faq.answer}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           ))}
         </div>
