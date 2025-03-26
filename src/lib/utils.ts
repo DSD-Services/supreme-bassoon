@@ -44,3 +44,7 @@ export const formatDateTime = (dateTime: string | null) => {
 export function formatDateLong(date: Date): string {
   return DateTime.fromJSDate(date).toFormat("MMMM d, yyyy");
 }
+
+export function formatDateLongWithWeekday(date: Date): string {
+  return DateTime.fromJSDate(date).toFormat("cccc, MMMM d, yyyy");
+}
