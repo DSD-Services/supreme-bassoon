@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@/components/ui/button";
 import { useDialog } from "@/components/ui/use-dialog";
 import { Dialog } from "@/components/ui/dialog";
-import { DeleteDepartmentForm } from "@/components/admin/departments/delete-department-form";
+import { DeleteDepartmentForm } from "@/features/departments/components/delete-department-form";
 
 type DeleteDepartmentDialogProps = { departmentId: string | number };
 

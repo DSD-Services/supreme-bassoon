@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,19 +12,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          get: (name) => cookies().get(name)?.value,
-          set: (name, value, options) =>
-            cookies().set({ name, value, ...options }),
-          remove: (name, options) =>
-            cookies().set({ name, value: "", ...options }),
-        },
-      },
-    );
+    const supabase = await createClient();
 
     const { error } = await supabase.auth.updateUser({ password: newPassword });
 

@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 type FormState = { error: string } | undefined;
 
 export async function createPartAction(
-  prevDate: FormState,
+  prevState: FormState,
   formData: FormData,
 ) {
   const profile = await reqRoles(["ADMIN"]);
