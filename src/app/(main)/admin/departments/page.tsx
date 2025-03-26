@@ -44,13 +44,12 @@ export default async function Page() {
             fallback={
               <tbody>
                 <tr>
-                  <td className="w-full px-6 py-3">
+                  <td className="px-6 py-3">
                     <FontAwesomeIcon
                       icon={faSpinner}
                       className="animate-spin"
                     />
                   </td>
-                  <td className="px-6 py-3"></td>
                 </tr>
               </tbody>
             }
