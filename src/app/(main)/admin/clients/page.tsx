@@ -39,7 +39,10 @@ export default async function Page({ searchParams }: PageProps) {
 
       <SearchForm initialQuery={initialQuery} />
 
-      <Suspense key={initialQuery} fallback={<ClientListSkeleton />}>
+      <Suspense
+        key={`client-list-${initialQuery}`}
+        fallback={<ClientListSkeleton />}
+      >
         <ClientListServer initialQuery={initialQuery} />
       </Suspense>
     </div>
