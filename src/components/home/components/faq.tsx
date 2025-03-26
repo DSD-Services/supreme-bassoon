@@ -19,7 +19,7 @@ const faqData: FAQItem[] = [
   {
     question: "Will I know what parts are needed for my repair?",
     answer:
-      "Yes! Once your appointment is scheduled, our system will determine the required parts based on the type of repair. If any parts are missing from inventory, your service provider will be notified before your appointment.",
+      "Once your appointment is scheduled, our system will determine the required parts based on the type of repair. Your service provider will arrive to your appointment with all of the proper parts for your service. You can rest easy knowing that we have it all taken care of.",
   },
   {
     question: "Can I reschedule or cancel my appointment?",
@@ -29,7 +29,7 @@ const faqData: FAQItem[] = [
   {
     question: "How do I know my service provider is qualified?",
     answer:
-      "All our service providers are licensed, background-checked professionals with experience in their respective fields. We ensure high-quality service and customer satisfaction.",
+      "All our service providers are licensed, bonded, and insured professionals with experience in their respective fields. We ensure high-quality service and customer satisfaction.",
   },
 ];
 
