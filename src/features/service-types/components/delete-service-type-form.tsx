@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { deleteServiceTypeAction } from "@/features/service-types/actions/delete-service-type.action";
 import { useTransition } from "react";

@@ -1,6 +1,6 @@
 import type { ServiceType } from "@/utils/supabase/types";
 import { ViewServiceTypePartsDialog } from "./view-service-type-parts-dialog";
-import { findAllServiceTypeParts } from "@/features/service-types/queries";
+import { findAllServiceTypeParts } from "@/features/service-type-parts/queries";
 import { findAllParts } from "@/features/parts/queries";
 
 type ViewServiceTypePartsServerDialogProps = {

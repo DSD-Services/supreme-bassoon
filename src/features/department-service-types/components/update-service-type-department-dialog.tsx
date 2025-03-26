@@ -10,7 +10,7 @@ import type {
   DepartmentServiceType,
   ServiceType,
 } from "@/utils/supabase/types";
-import { UpdateServiceTypeDepartmentForm } from "./update-service-type-department-form";
+import { UpdateServiceTypeDepartmentForm } from "@/features/department-service-types/components/update-service-type-department-form";
 
 type UpdateServiceTypeDepartmentDialogProps = {
   serviceType: ServiceType & {
@@ -39,10 +39,10 @@ export const UpdateServiceTypeDepartmentDialog = ({
             : "destructive"
         }
         onClick={openDialog}
-        className="w-full"
+        className="flex w-full justify-between"
         aria-label="Update Department"
       >
-        {serviceType.department_service_types?.departments.name ?? "Unassigned"}
+        {serviceType.department_service_types?.departments.name ?? ""}
         <FontAwesomeIcon icon={faPencil} />
       </Button>
 

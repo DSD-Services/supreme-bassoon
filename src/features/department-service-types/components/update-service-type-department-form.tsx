@@ -1,8 +1,6 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
-import { updateServiceTypeDepartmentAction } from "@/features/service-types/actions/update-service-type-department.action";
+import { updateServiceTypeDepartmentAction } from "@/features/department-service-types/actions/update-service-type-department.action";
 import type {
   Department,
   DepartmentServiceType,
@@ -11,7 +9,7 @@ import type {
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
-import React, { useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import toast from "react-hot-toast";
 
 type UpdateServiceTypeDepartmentFormProps = {
