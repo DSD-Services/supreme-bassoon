@@ -1,14 +1,12 @@
-import { DeletePartDialog } from "@/features/parts/components/delete-part-dialog";
-import { UpdatePartDialog } from "@/features/parts/components/update-part-quantity-form";
 import { Button } from "@/components/ui/button";
-import { reqRoles } from "@/features/auth/queries";
-import { findAllParts } from "@/features/parts/queries";
-import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { faLeftLong, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { notFound } from "next/navigation";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { CreatePartForm } from "@/features/parts/components/create-part-form";
 import { SearchForm } from "@/components/admin/search-form";
+import { isAdmin } from "@/features/auth/auth-guards";
+import { PartListServer } from "@/features/parts/components/part-list-server";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Manage Inventory",
@@ -17,12 +15,9 @@ export const metadata: Metadata = {
 type PageProps = { searchParams: Promise<{ q: string }> };
 
 export default async function Page({ searchParams }: PageProps) {
-  const profile = await reqRoles(["ADMIN"]);
-  if (!profile) notFound();
+  await isAdmin({ action: "redirect" });
 
   const initialQuery = (await searchParams).q || "";
-
-  const { data: parts } = await findAllParts({ query: initialQuery });
 
   return (
     <div className="container mx-auto space-y-4 px-4 py-12">
@@ -57,31 +52,28 @@ export default async function Page({ searchParams }: PageProps) {
                 <th className="px-3 py-1.5 text-start text-sm whitespace-nowrap capitalize sm:text-base">
                   manufacturer
                 </th>
-                <th className="px-3 py-1.5 text-start text-sm whitespace-nowrap sm:text-base"></th>
-                <th className="px-3 py-1.5 text-start text-sm whitespace-nowrap sm:text-base"></th>
+                <th className="px-3 py-1.5 text-start text-sm whitespace-nowrap sm:text-base" />
+                <th className="px-3 py-1.5 text-start text-sm whitespace-nowrap sm:text-base" />
               </tr>
             </thead>
-            <tbody className="divide-y">
-              {parts?.map((part) => (
-                <tr key={part.id} className="divide-x">
-                  <td className="px-3 py-1.5 text-sm whitespace-nowrap sm:text-base">
-                    {part.name}
-                  </td>
-                  <td className="px-3 py-1.5 text-sm whitespace-nowrap tabular-nums sm:text-base">
-                    {part.quantity}
-                  </td>
-                  <td className="px-3 py-1.5 text-sm whitespace-nowrap sm:text-base">
-                    {part.manufacturer}
-                  </td>
-                  <td className="px-3 py-1.5 text-sm whitespace-nowrap sm:text-base">
-                    <UpdatePartDialog part={part} />
-                  </td>
-                  <td className="px-3 py-1.5 text-sm whitespace-nowrap sm:text-base">
-                    <DeletePartDialog partId={part.id} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+
+            <Suspense
+              key={initialQuery}
+              fallback={
+                <tbody>
+                  <tr>
+                    <td className="px-3 py-1.5">
+                      <FontAwesomeIcon
+                        icon={faSpinner}
+                        className="animate-spin"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              }
+            >
+              <PartListServer initialQuery={initialQuery} />
+            </Suspense>
           </table>
         </div>
       </div>

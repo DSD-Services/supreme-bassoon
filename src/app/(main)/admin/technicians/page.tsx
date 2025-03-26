@@ -1,22 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { CreateTechnicianServer } from "@/features/users/components/create-technician-server";
-import { reqRoles } from "@/features/auth/queries";
-import { findAllProfiles } from "@/features/profiles/queries";
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { notFound } from "next/navigation";
-import { TechnicianList } from "@/components/admin/technicians/technician-list";
 import { Metadata } from "next";
+import { isAdmin } from "@/features/auth/auth-guards";
+import { SearchForm } from "@/components/admin/search-form";
+import { Suspense } from "react";
+import { TechnicianListServer } from "@/components/admin/technicians/technician-list-server";
+import { TechnicianListSkeleton } from "@/components/admin/technicians/technician-list-skeleton";
 
 export const metadata: Metadata = {
   title: "Manage Technicians",
 };
 
-export default async function Page() {
-  const profile = await reqRoles(["ADMIN"]);
-  if (!profile) notFound();
+type PageProps = { searchParams: Promise<{ q: string }> };
 
-  const { data: profiles } = await findAllProfiles({ role: "TECHNICIAN" });
+export default async function Page({ searchParams }: PageProps) {
+  await isAdmin({ action: "redirect" });
+
+  const initialQuery = (await searchParams).q || "";
 
   return (
     <div className="container mx-auto space-y-4 px-4 py-12">
@@ -24,7 +26,7 @@ export default async function Page() {
         <h1 className="text-3xl font-bold tracking-tight">
           Manage Technicians
         </h1>
-        <Button asLink href="/dashboard">
+        <Button size="sm" asLink href="/dashboard">
           <FontAwesomeIcon icon={faLeftLong} />
         </Button>
       </div>
@@ -37,7 +39,16 @@ export default async function Page() {
 
       <div className="bg-muted h-1" />
 
-      <TechnicianList initialProfiles={profiles ?? []} />
+      <SearchForm initialQuery={initialQuery} />
+
+      <div className="bg-muted h-1" />
+
+      <Suspense
+        key={`technician-list-${initialQuery}`}
+        fallback={<TechnicianListSkeleton />}
+      >
+        <TechnicianListServer initialQuery={initialQuery} />
+      </Suspense>
     </div>
   );
 }

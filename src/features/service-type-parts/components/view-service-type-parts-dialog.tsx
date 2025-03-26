@@ -10,9 +10,9 @@ import type {
   ServiceType,
   ServiceTypePart,
 } from "@/utils/supabase/types";
-import { UpdateServiceTypePartsForm } from "./update-service-type-parts-form";
-import { DeleteServiceTypePartButton } from "./delete-service-type-part-button";
-import { CreateServiceTypePartsForm } from "./create-service-type-parts-form";
+import { UpdateServiceTypePartsForm } from "@/features/service-type-parts/components/update-service-type-parts-form";
+import { DeleteServiceTypePartButton } from "@/features/service-type-parts/components/delete-service-type-part-button";
+import { CreateServiceTypePartsForm } from "@/features/service-type-parts/components/create-service-type-parts-form";
 
 type ViewServiceTypePartsDialogProps = {
   serviceType: ServiceType;

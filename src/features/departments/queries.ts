@@ -8,7 +8,7 @@ export async function findAllDepartments() {
   return await supabase
     .from("departments")
     .select("*")
-    .order("id", { ascending: true });
+    .order("name", { ascending: true });
 }
 
 export async function findOneDepartment(departmentId: string | number) {

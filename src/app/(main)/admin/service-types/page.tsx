@@ -1,33 +1,22 @@
-import { DeleteServiceTypeDialog } from "@/components/admin/service-types/delete-service-type-dialog";
-import { UpdateServiceTypeDepartmentDialog } from "@/components/admin/service-types/update-service-type-department-dialog";
-import { UpdateServiceTypeForm } from "@/components/admin/service-types/update-service-type-form";
-import { ViewServiceTypePartsServer } from "@/components/admin/service-types/view-service-type-parts-server";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { reqRoles } from "@/features/auth/queries";
-import { findAllDepartments } from "@/features/departments/queries";
-import { createServiceTypeAction } from "@/features/service-types/actions/create-service-type.action";
-import { findAllServiceTypes } from "@/features/service-types/queries";
-import { faAdd, faLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { faLeftLong, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { notFound } from "next/navigation";
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import { isAdmin } from "@/features/auth/auth-guards";
+import { ServerTypeListServer } from "@/features/service-types/components/service-type-list-server";
+import { CreateServiceTypeForm } from "@/features/service-types/components/create-service-type-form";
+import { SearchForm } from "@/components/admin/search-form";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Manage Service Types",
 };
 
-export default async function Page() {
-  const profile = await reqRoles(["ADMIN"]);
-  if (!profile) notFound();
+type PageProps = { searchParams: Promise<{ q: string }> };
+export default async function Page({ searchParams }: PageProps) {
+  await isAdmin({ action: "redirect" });
 
-  const [serviceTypesData, departmentsData] = await Promise.all([
-    findAllServiceTypes(),
-    findAllDepartments(),
-  ]);
-
-  const serviceTypes = serviceTypesData.data;
-  const departments = departmentsData.data;
+  const initialQuery = (await searchParams).q || "";
 
   return (
     <div className="container mx-auto space-y-4 px-4 py-12">
@@ -35,29 +24,18 @@ export default async function Page() {
         <h1 className="text-3xl font-bold tracking-tight">
           Manage Service Types
         </h1>
-        <Button asLink href="/dashboard">
+        <Button size="sm" asLink href="/dashboard">
           <FontAwesomeIcon icon={faLeftLong} />
         </Button>
       </div>
 
       <div className="bg-muted h-1" />
 
-      <form
-        action={createServiceTypeAction}
-        className="flex flex-col gap-2 sm:flex-row"
-      >
-        <div>
-          <label htmlFor="name" className="sr-only">
-            Name
-          </label>
-          <Input type="text" id="name" name="name" placeholder="Name" />
-        </div>
+      <CreateServiceTypeForm />
 
-        <Button type="submit" variant="ghost" className="self-start">
-          <FontAwesomeIcon icon={faAdd} />
-          Insert
-        </Button>
-      </form>
+      <div className="bg-muted h-1" />
+
+      <SearchForm initialQuery={initialQuery} />
 
       <div className="bg-muted h-1" />
 
@@ -65,36 +43,37 @@ export default async function Page() {
         <table className="mt-4 table-auto divide-y">
           <thead>
             <tr className="divide-x">
-              <th className="bg-muted px-6 py-3 text-start">name</th>
-              <th className="bg-muted px-6 py-3 text-start">department</th>
-              <th className="bg-muted px-6 py-3 text-start whitespace-nowrap">
-                service parts
+              <th className="bg-muted px-2 py-3 text-start text-xs sm:flex sm:px-4 sm:text-sm md:px-6 md:text-base">
+                name
+              </th>
+              <th className="bg-muted px-2 py-3 text-start text-xs sm:px-4 sm:text-sm md:px-6 md:text-base">
+                department
+              </th>
+              <th className="bg-muted px-2 py-3 text-center text-xs whitespace-nowrap sm:px-4 sm:text-start sm:text-sm md:px-6 md:text-base">
+                service{" "}
+                <span className="-mt-1 block sm:-mt-0 sm:inline">parts</span>
               </th>
               <th className="bg-muted px-6 py-3 text-start" />
             </tr>
           </thead>
 
-          <tbody>
-            {serviceTypes?.map((serviceType) => (
-              <tr key={serviceType.id} className="divide-x">
-                <td className="w-full px-6 py-3">
-                  <UpdateServiceTypeForm serviceType={serviceType} />
-                </td>
-                <td className="px-6 py-3">
-                  <UpdateServiceTypeDepartmentDialog
-                    serviceType={serviceType}
-                    departments={departments ?? []}
-                  />
-                </td>
-                <td className="px-6 py-3">
-                  <ViewServiceTypePartsServer serviceType={serviceType} />
-                </td>
-                <td className="px-6 py-3">
-                  <DeleteServiceTypeDialog serviceTypeId={serviceType.id} />
-                </td>
-              </tr>
-            ))}
-          </tbody>
+          <Suspense
+            key={`service-type-list-${initialQuery}`}
+            fallback={
+              <tbody>
+                <tr>
+                  <td className="w-full px-6 py-3">
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      className="animate-spin"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            }
+          >
+            <ServerTypeListServer initialQuery={initialQuery} />
+          </Suspense>
         </table>
       </div>
     </div>
