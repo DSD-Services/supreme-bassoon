@@ -8,6 +8,7 @@ import {
 } from "react-hook-form";
 import { CreateWorkOrderInput } from "@/features/work-orders/schemas";
 import { Profile } from "@/utils/supabase/types";
+import { cn } from "@/lib/utils";
 
 type PartialProfile = Omit<
   Profile,
@@ -252,8 +253,15 @@ export default function Step5ContactInformation({
               placeholder="Please provide any additional details about the job..."
             />
             {jobDetailsInput && (
-              <p className="text-xs text-gray-500">
-                {`Max characters: 1000.  ${jobDetailsInput.length}/1000`}
+              <p
+                className={cn(
+                  "mt-px flex items-end justify-end text-xs text-gray-500",
+                  {
+                    "text-red-600": jobDetailsInput.length > 1000,
+                  },
+                )}
+              >
+                {`${jobDetailsInput.length}/1000`}
               </p>
             )}
           </div>
