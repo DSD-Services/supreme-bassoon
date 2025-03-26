@@ -33,7 +33,7 @@ export const ServiceTypeList = ({
     <tbody>
       {serviceTypes?.map((serviceType) => (
         <tr key={serviceType.id} className="divide-x">
-          <td className="w-full overflow-x-auto px-0 py-3 sm:px-4 md:px-6">
+          <td className="w-full overflow-x-auto px-0 px-2 py-3 sm:px-4 md:px-6">
             <UpdateServiceTypeForm serviceType={serviceType} />
           </td>
           <td className="px-2 py-3 sm:px-4 md:px-6">
