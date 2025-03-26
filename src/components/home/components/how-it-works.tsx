@@ -77,21 +77,23 @@ const steps = [
 const HowItWorks: React.FC = () => {
   return (
     <section
-      className="mx-auto max-w-4xl px-6 py-12 text-center"
+      className="bg-[url('/images/background/tile_250x250_blue-50.png')] bg-fixed bg-center bg-repeat py-24"
       id="how-it-works"
     >
-      <h2 className="mb-8 text-3xl font-bold">How It Works</h2>
-      <div className="grid gap-6 md:grid-cols-3">
-        {steps.map((step) => (
-          <div
-            key={step.id}
-            className="flex flex-col items-center rounded-2xl bg-white p-6 shadow-lg"
-          >
-            {step.icon}
-            <h3 className="mt-4 text-xl font-semibold">{step.title}</h3>
-            <p className="mt-2 text-gray-600">{step.description}</p>
-          </div>
-        ))}
+      <div className="mx-auto max-w-4xl px-6 text-center">
+        <h2 className="mb-8 text-3xl font-bold">How It Works</h2>
+        <div className="grid gap-6 md:grid-cols-3">
+          {steps.map((step) => (
+            <div
+              key={step.id}
+              className="flex flex-col items-center rounded-2xl bg-white p-6 shadow-lg"
+            >
+              {step.icon}
+              <h3 className="mt-4 text-xl font-semibold">{step.title}</h3>
+              <p className="mt-2 text-gray-600">{step.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
