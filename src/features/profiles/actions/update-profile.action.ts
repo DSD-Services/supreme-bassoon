@@ -41,16 +41,16 @@ export async function updateProfile(profileId: string, values: ProfileInput) {
   return await supabase
     .from("profiles")
     .update({
-      ...(addressLine1 ? { address_line1: addressLine1 } : {}),
-      ...(addressLine2 ? { address_line2: addressLine2 } : {}),
-      ...(city ? { city: city } : {}),
+      address_line1: addressLine1 ? addressLine1 : "",
+      address_line2: addressLine2 ? addressLine2 : "",
+      city: city ? city : "",
+      state: state ? state : "",
+      postal_code: postalCode ? postalCode : "",
+      primary_phone: primaryPhone ? primaryPhone : "",
+      secondary_phone: secondaryPhone ? secondaryPhone : "",
       first_name: firstName,
       last_name: lastName,
-      ...(postalCode ? { postal_code: postalCode } : {}),
-      ...(primaryPhone ? { primary_phone: primaryPhone } : {}),
       ...(role ? { role: role } : {}),
-      ...(secondaryPhone ? { secondary_phone: secondaryPhone } : {}),
-      ...(state ? { state: state } : {}),
     })
     .eq("id", profileId);
 }
