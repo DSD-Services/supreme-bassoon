@@ -39,7 +39,7 @@ export const UpdateServiceTypeDepartmentDialog = ({
             : "destructive"
         }
         onClick={openDialog}
-        className="w-full"
+        className="flex w-full justify-between"
         aria-label="Update Department"
       >
         {serviceType.department_service_types?.departments.name ?? ""}

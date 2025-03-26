@@ -43,10 +43,15 @@ export default async function Page({ searchParams }: PageProps) {
         <table className="mt-4 table-auto divide-y">
           <thead>
             <tr className="divide-x">
-              <th className="bg-muted px-6 py-3 text-start">name</th>
-              <th className="bg-muted px-6 py-3 text-start">department</th>
-              <th className="bg-muted px-6 py-3 text-start whitespace-nowrap">
-                service parts
+              <th className="bg-muted px-2 py-3 text-start text-xs sm:flex sm:px-4 sm:text-sm md:px-6 md:text-base">
+                name
+              </th>
+              <th className="bg-muted px-2 py-3 text-start text-xs sm:px-4 sm:text-sm md:px-6 md:text-base">
+                department
+              </th>
+              <th className="bg-muted px-2 py-3 text-center text-xs whitespace-nowrap sm:px-4 sm:text-start sm:text-sm md:px-6 md:text-base">
+                service{" "}
+                <span className="-mt-1 block sm:-mt-0 sm:inline">parts</span>
               </th>
               <th className="bg-muted px-6 py-3 text-start" />
             </tr>

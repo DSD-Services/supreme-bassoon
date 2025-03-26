@@ -33,16 +33,16 @@ export const ServiceTypeList = ({
     <tbody>
       {serviceTypes?.map((serviceType) => (
         <tr key={serviceType.id} className="divide-x">
-          <td className="w-full px-6 py-3">
+          <td className="w-full overflow-x-auto px-0 py-3 sm:px-4 md:px-6">
             <UpdateServiceTypeForm serviceType={serviceType} />
           </td>
-          <td className="px-6 py-3">
+          <td className="px-2 py-3 sm:px-4 md:px-6">
             <UpdateServiceTypeDepartmentDialog
               serviceType={serviceType}
               departments={departments}
             />
           </td>
-          <td className="px-6 py-3">
+          <td className="px-2 py-3 sm:px-4 md:px-6">
             <Suspense
               fallback={
                 <Button size="sm" disabled variant="ghost" className="w-full">
@@ -53,7 +53,7 @@ export const ServiceTypeList = ({
               <ViewServiceTypePartsServer serviceType={serviceType} />
             </Suspense>
           </td>
-          <td className="px-6 py-3">
+          <td className="px-2 py-3 sm:px-4 md:px-6">
             <DeleteServiceTypeDialog serviceTypeId={serviceType.id} />
           </td>
         </tr>
