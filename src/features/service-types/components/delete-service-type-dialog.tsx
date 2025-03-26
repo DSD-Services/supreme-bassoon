@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@/components/ui/button";
 import { useDialog } from "@/components/ui/use-dialog";
 import { Dialog } from "@/components/ui/dialog";
-import { DeleteServiceTypeForm } from "@/components/admin/service-types/delete-service-type-form";
+import { DeleteServiceTypeForm } from "@/features/service-types/components/delete-service-type-form";
 
 type DeleteServiceTypeDialogProps = { serviceTypeId: string | number };
 
@@ -17,7 +17,7 @@ export const DeleteServiceTypeDialog = ({
   return (
     <>
       <Button
-        size="sm"
+        size="icon"
         variant="destructive"
         onClick={openDialog}
         aria-label="Delete Service Type"

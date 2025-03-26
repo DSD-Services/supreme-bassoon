@@ -3,13 +3,14 @@
 import { createClient } from "@/utils/supabase/server";
 import { type CreateWorkOrderInput, CreateWorkOrderSchema } from "../schemas";
 import { reqRoles } from "@/features/auth/queries";
-import { findAllServiceTypeParts } from "@/features/service-types/queries";
+import { findAllServiceTypeParts } from "@/features/service-type-parts/queries";
 import { deleteWorkOrderAction } from "./delete-work-order.action";
 import {
   sendWorkOrderEmails,
   type MissingPart,
   type ReservedPart,
 } from "@/utils/email-service";
+import { HydratedWorkOrder } from "@/utils/supabase/types";
 
 export async function createWorkOrderAction(values: CreateWorkOrderInput) {
   const profile = await reqRoles(["CLIENT", "ADMIN"]);
@@ -98,7 +99,12 @@ export async function createWorkOrderAction(values: CreateWorkOrderInput) {
 
   // Prepare updated contact info
   if (shouldUpdateProfile) {
-    const updatedClientData: Record<string, any> = {};
+    const updatedClientData: Partial<
+      HydratedWorkOrder["service_address"] & {
+        primary_phone?: string;
+        secondary_phone?: string;
+      }
+    > = {};
 
     // Update address only if missing
     if (!clientProfile.address_line1 && serviceAddress.addressLine1) {
@@ -311,7 +317,6 @@ export async function createWorkOrderAction(values: CreateWorkOrderInput) {
       };
     }),
   );
-
 
   // Process missing parts with details
   const missingPartsWithDetails: MissingPart[] = await Promise.all(

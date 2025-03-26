@@ -1,12 +1,21 @@
 import { createClient } from "@/utils/supabase/server";
 
-export async function findAllServiceTypes() {
+type FindAllServiceTypesOptions = { query?: string };
+
+export async function findAllServiceTypes(
+  options: FindAllServiceTypesOptions = {},
+) {
   const supabase = await createClient();
 
-  return await supabase
+  const query = supabase
     .from("service_types")
-    .select("*, department_service_types(*, departments(*))")
-    .order("name", { ascending: true });
+    .select("*, department_service_types(*, departments(*))");
+
+  if (options.query) {
+    query.ilike("name", `%${options.query}%`);
+  }
+
+  return query.order("name", { ascending: true });
 }
 
 export async function findOneServiceType(serviceTypeId: number) {
@@ -17,14 +26,4 @@ export async function findOneServiceType(serviceTypeId: number) {
     .select("*")
     .eq("id", serviceTypeId)
     .single();
-}
-
-export async function findAllServiceTypeParts(serviceTypeId: number) {
-  const supabase = await createClient();
-
-  return await supabase
-    .from("service_type_parts")
-    .select("*, parts(*)")
-    .eq("service_type_id", serviceTypeId)
-    .order("id", { ascending: true });
 }

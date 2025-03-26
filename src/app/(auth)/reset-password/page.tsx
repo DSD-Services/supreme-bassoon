@@ -34,7 +34,11 @@ export default function ResetPassword() {
         router.push("/login?resetSuccess=true");
       }, 2000);
     } catch (error) {
-      toast.error(error.message);
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Oops! Something went wrong");
+      }
     }
   };
 

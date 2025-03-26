@@ -1,5 +1,3 @@
-"use client";
-
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,9 +14,12 @@ export const UpdatePasswordForm = ({ onSuccess }: UpdatePasswordFormProps) => {
     handleSubmit,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm();
-
-  const supabase = createClient();
+  } = useForm({
+    defaultValues: {
+      password: "",
+      confirmPassword: "",
+    },
+  });
 
   const onSubmit = async (data: {
     password: string;
@@ -28,6 +29,8 @@ export const UpdatePasswordForm = ({ onSuccess }: UpdatePasswordFormProps) => {
       toast.error("Passwords do not match.");
       return;
     }
+
+    const supabase = createClient();
 
     const { error } = await supabase.auth.updateUser({
       password: data.password,
