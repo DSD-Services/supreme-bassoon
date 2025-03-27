@@ -87,7 +87,7 @@ Technologies used in the project:
   <a href="https://github.com/destocot" target="_blank">
     <img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Badge">
   </a>
-  <a href="https://www.linkedin.com/in/destocot" target="_blank">
+  <a href="https://www.linkedin.com/in/khurram-ali1" target="_blank">
     <img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge">
   </a>
   <a href="https://www.youtube.com/@GiraffeReactor" target="_blank">
