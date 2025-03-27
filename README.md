@@ -6,7 +6,7 @@
 
 <h2>🚀 Demo</h2>
 
-[http://localhost:3000](http://localhost:3000)
+https://dsd-services-app.vercel.app/
 
 <h2>Project Screenshots:</h2>
 
