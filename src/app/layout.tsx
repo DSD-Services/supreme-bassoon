@@ -16,6 +16,12 @@ export const metadata: Metadata = {
     default: "DSD Services",
   },
   description: "Booking system for plumbing, electrical work and HVAC repairs.",
+  keywords: ["plumbing", "electrical", "HVAC", "repairs", "services"],
+  openGraph: {
+    images: ["opengraph-image.png"],
+    description:
+      "Professional booking system for plumbing, electrical work and HVAC repair services.",
+  },
 };
 
 export default function RootLayout({

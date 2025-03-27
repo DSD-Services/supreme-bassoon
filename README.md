@@ -1,8 +1,6 @@
 <h1 align="center" id="title">DSD Services</h1>
 
-<p align="center"><img src="https://socialify.git.ci/Demonico/supreme-bassoon/image?custom_description=Local+Contract+Service+Booking+System&amp;description=1&amp;font=Inter&amp;language=1&amp;logo=https%3A%2F%2Fpouch.jumpshare.com%2Fpreview%2F2lod8mHlL4OIUc3FZ5mvFS0q1UxrW83DZvudixD4OWrjDizt7UbmziTnv6Tom7HPVF4xW6MEulR3U_kwM8vkMFCRHSETOw8wySW-u22wITM&amp;name=1&amp;owner=1&amp;pattern=Solid&amp;stargazers=1&amp;theme=Light" alt="project-image"></p>
-
-<p id="description">This project is a web-based booking system for local contract services such as plumbing, electrical work and HVAC repairs. The system allows customers to schedule service appointments by selecting available time slots.</p>
+<p align="center"><img src="https://i.imgur.com/ldcKaoe.png" alt="DSD Services" width="180" /></p>
 
 <p align="center"><img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&amp;logo=next.js&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&amp;logo=typescript&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&amp;logo=tailwind-css&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&amp;logo=framer&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/React_Hook_Form-EC5990?style=for-the-badge&amp;logo=reacthookform&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/Supabase-3FCF8E?style=for-the-badge&amp;logo=supabase&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/Zod-3E61EE?style=for-the-badge&amp;logo=apachespark&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&amp;logo=postgresql&amp;logoColor=white" alt="shields"></p>
 
@@ -12,11 +10,13 @@
 
 <h2>Project Screenshots:</h2>
 
-<img src="https://placehold.co/600x400/EEE/31343C" alt="project-screenshot" width="600" height="400/">
+[<img src="https://i.imgur.com/PqeS06R.png" width="49%" />](https://i.imgur.com/PqeS06R.png)
+[<img src="https://i.imgur.com/gBU4S3j.png" width="49%" />](https://i.imgur.com/gBU4S3j.png)
 
-<img src="https://placehold.co/600x400/EEE/31343C" alt="project-screenshot" width="600" height="400/">
+[<img src="https://i.imgur.com/K2hQ3n8.png" width="49%" />](https://i.imgur.com/K2hQ3n8.png)
+[<img src="https://i.imgur.com/b5FQkuQ.png" width="49%" />](https://i.imgur.com/b5FQkuQ.png)
 
-<img src="https://placehold.co/600x400/EEE/31343C" alt="project-screenshot" width="600" height="400/">
+[<img src="https://i.imgur.com/cE4saAC.png" width="49%" />](https://i.imgur.com/cE4saAC.png)
 
 <h2>🧐 Features</h2>
 
@@ -84,9 +84,17 @@ Technologies used in the project:
 <a href="https://khurramali.site"target="_blank">Khurram A.</a> &nbsp
 </p>
 <p align="center">
-<a href="https://github.com/destocot"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
-<a href="https://github.com/destocot"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
+  <a href="https://github.com/destocot" target="_blank">
+    <img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Badge">
+  </a>
+  <a href="https://www.linkedin.com/in/destocot" target="_blank">
+    <img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge">
+  </a>
+  <a href="https://www.youtube.com/@GiraffeReactor" target="_blank">
+    <img src="https://img.shields.io/badge/Subscribe%20on%20YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube Badge">
+  </a>
 </p>
+
 <p align="center">
 <a href="http://katiehom.com"target="_blank">Katie H.</a> &nbsp
 </p>
