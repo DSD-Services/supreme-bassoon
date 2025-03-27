@@ -6,7 +6,8 @@
 
 <h2>🚀 Demo</h2>
 
-[http://localhost:3000](http://localhost:3000)
+https://dsd-services-app.vercel.app/
+
 
 <h2>Project Screenshots:</h2>
 
@@ -87,7 +88,8 @@ Technologies used in the project:
   <a href="https://github.com/destocot" target="_blank">
     <img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Badge">
   </a>
-  <a href="https://www.linkedin.com/in/destocot" target="_blank">
+  <a href="https://www.linkedin.com/in/khurram-ali1" target="_blank">
+
     <img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge">
   </a>
   <a href="https://www.youtube.com/@GiraffeReactor" target="_blank">
@@ -103,14 +105,18 @@ Technologies used in the project:
 <a href="https://www.linkedin.com/in/katiehom/"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
 </p>
 <p align="center">
-<a href=""target="_blank">Maye J.</a> &nbsp
+
+<a href="https://codinglady22.github.io/Portfolio2.0/"target="_blank">Maye J.</a> &nbsp
+
 </p>
 <p align="center">
 <a href="https://github.com/CodingLady22"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
 <a href="https://www.linkedin.com/in/mayejesuorobo/"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
 </p>
 <p align="center">
-<a href=""target="_blank">Acir S.</a> &nbsp
+
+<a href="https://github.com/rudzzz"target="_blank">Acir S.</a> &nbsp
+
 </p>
 <p align="center">
 <a href="https://github.com/rudzzz"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
@@ -120,16 +126,18 @@ Technologies used in the project:
 <!-- special thank to leads Jarrod and Minhoru -->
 <h3>Special Thanks to:</h3>
 <p align="center">
-<a href="github.com/Demonico "target="_blank">Jarrod B.</a> &nbsp
+
+<a href="https://github.com/Demonico"target="_blank">Jarrod V.</a> &nbsp
 </p>
 <p align="center">
-<a href="github.com/Demonico "target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
+<a href="https://github.com/Demonico"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
 <a href="https://www.linkedin.com/in/jarrodvandoren/"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
 </p>
 <p align="center">
-<a href="minhoru-cotache.netlify.app/ "target="_blank">Minhoru S.</a> &nbsp
+<a href="minhoru-cotache.netlify.app/ "target="_blank">Minhoru C.</a> &nbsp
 </p>
 <p align="center">
-<a href=""target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
+<a href="https://github.com/Minhoru123"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
+
 <a href="linkedin.com/in/minhoru-cotache"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
 </p>

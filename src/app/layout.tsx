@@ -4,6 +4,7 @@ import "./globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { Toaster } from "react-hot-toast";
+
 config.autoAddCss = false;
 
 const sofiaSans = Sofia_Sans({
@@ -11,7 +12,9 @@ const sofiaSans = Sofia_Sans({
 });
 
 export const metadata: Metadata = {
+
   metadataBase: new URL(String(process.env.NEXT_PUBLIC_API_URL)),
+
   title: {
     template: "%s | DSD Services",
     default: "DSD Services",

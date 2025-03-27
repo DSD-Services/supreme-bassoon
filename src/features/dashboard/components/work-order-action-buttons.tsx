@@ -161,6 +161,7 @@ export const WorkOrderActionButtons = ({
   return null;
 };
 
+<!-- 
 // const CannotCancelTooltip = () => {
 //   return (
 //     <Tooltip infoText="Unable to cancel within 24hrs of appointment">
@@ -171,3 +172,4 @@ export const WorkOrderActionButtons = ({
 //     </Tooltip>
 //   );
 // };
+ -->
