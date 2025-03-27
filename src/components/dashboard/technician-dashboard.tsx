@@ -1,7 +1,31 @@
+import { protect } from "@/features/auth/queries";
 import WorkOrderList from "@/features/dashboard/components/work-order-list";
 import TechnicianCalendar from "@/features/technician-details/components/tech-calendar";
+import { generateBreakEvents } from "@/features/technician-details/lib/generate-break-events";
+import TransformWorkOrders from "@/features/technician-details/lib/transform-work-orders";
+import {
+  findTechnicianSchedule,
+  getTechnicianBusinessHours,
+} from "@/features/technician-details/queries";
 
-export default function TechnicianDashboard() {
+export default async function TechnicianDashboard() {
+  const { userId } = await protect();
+
+  const { data, error } = await findTechnicianSchedule(userId);
+
+  if (error || !data) {
+    return <div>Error: {error || "No data found"}</div>;
+  }
+
+  const { technicianDetails, workOrders } = data;
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+  const businessHours = await getTechnicianBusinessHours(userId);
+  const breakEvents = await generateBreakEvents(technicianDetails);
+  const calendarWorkOrders = TransformWorkOrders(workOrders);
+
   return (
     <div className="container mx-auto space-y-4 px-2 py-12">
       <div className="px-2 md:px-4 lg:px-10">
@@ -14,7 +38,14 @@ export default function TechnicianDashboard() {
         <h2 className="pt-4 text-xl font-semibold text-blue-800">
           Your Schedule
         </h2>
-        <TechnicianCalendar />
+        <p className="text-center text-sm text-slate-700 italic">
+          (Appointments displayed for past 30 and next 30 days)
+        </p>
+        <TechnicianCalendar
+          businessHours={businessHours}
+          breakEvents={breakEvents}
+          workOrders={calendarWorkOrders}
+        />
       </div>
     </div>
   );
