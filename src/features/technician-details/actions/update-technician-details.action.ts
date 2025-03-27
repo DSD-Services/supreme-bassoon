@@ -36,13 +36,15 @@ export async function updateTechnicianDetails(
     workStartTime,
   } = parsedValues.data;
 
-  return await supabase.from("technician_details").upsert({
-    id: technicianId,
-    ...(breakEndTime ? { break_end_time: breakEndTime } : {}),
-    ...(breakStartTime ? { break_start_time: breakStartTime } : {}),
-    ...(departmentId ? { department_id: departmentId } : {}),
-    ...(workDays ? { work_days: workDays } : {}),
-    ...(workEndTime ? { work_end_time: workEndTime } : {}),
-    ...(workStartTime ? { work_start_time: workStartTime } : {}),
-  });
+  return await supabase
+    .from("technician_details")
+    .update({
+      ...(breakEndTime ? { break_end_time: breakEndTime } : {}),
+      ...(breakStartTime ? { break_start_time: breakStartTime } : {}),
+      ...(departmentId ? { department_id: departmentId } : {}),
+      ...(workDays ? { work_days: workDays } : {}),
+      ...(workEndTime ? { work_end_time: workEndTime } : {}),
+      ...(workStartTime ? { work_start_time: workStartTime } : {}),
+    })
+    .eq("id", technicianId);
 }
