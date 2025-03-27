@@ -61,6 +61,7 @@ export default function WorkOrderCard({
       const { date, startTime, endTime } = formatDateTime(
         workOrder.appointment_start,
       );
+
       setFormattedDate({ date, startTime, endTime });
     }
   }, [workOrder.appointment_start]);
@@ -117,7 +118,7 @@ export default function WorkOrderCard({
       <div className="flex flex-row justify-between">
         <div className="flex w-full flex-col md:flex-row">
           <div className="mr-4 flex md:mr-0">
-            <div className="mr-2 w-1/2 md:mr-4 md:w-1/3 md:min-w-[150px] lg:mr-10 lg:w-1/2 lg:min-w-[180px] lg:min-w-[220px]">
+            <div className="mr-2 w-1/2 md:mr-4 md:w-1/3 md:min-w-[150px] lg:mr-10 lg:w-1/2 lg:min-w-[220px]">
               <WorkOrderGroup labelText="Date &amp; Time">
                 {formattedDate.date ? (
                   <>
@@ -201,7 +202,7 @@ export default function WorkOrderCard({
           >
             <div className="mr-10">
               <div className="flex flex-col md:flex-row">
-                <div className="mt-3 mr-0 flex flex-grow flex-col md:mt-4 md:mr-0 md:mr-10">
+                <div className="mt-3 mr-0 flex flex-grow flex-col md:mt-4 md:mr-10">
                   <WorkOrderGroup labelText="Service Address">
                     <span className="text-xs font-semibold md:text-sm">
                       {workOrder.service_address?.address_line1}
@@ -316,14 +317,15 @@ export default function WorkOrderCard({
                 </div>
               </div>
             )}
-            {(userRole === "TECHNICIAN" || userRole === "ADMIN") && (
-              <div className="col-span-6 mt-3">
-                <WorkOrderActionButtons
-                  workOrderId={workOrder.id}
-                  currentWorkOrderStatus={workOrder.status}
-                />
-              </div>
-            )}
+            <div className="col-span-6 mt-3">
+              <WorkOrderActionButtons
+                workOrderId={workOrder.id}
+                currentWorkOrderStatus={workOrder.status}
+                userRole={userRole}
+                aptStart={workOrder.appointment_start!}
+                clientEmail={workOrder.client.email}
+              />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

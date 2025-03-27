@@ -48,3 +48,13 @@ export function formatDateLong(date: Date): string {
 export function formatDateLongWithWeekday(date: Date): string {
   return DateTime.fromJSDate(date).toFormat("cccc, MMMM d, yyyy");
 }
+
+export function diffInHours(date: string | Date) {
+  const dt =
+    date instanceof Date
+      ? DateTime.fromJSDate(date, { zone: "America/Denver" })
+      : DateTime.fromISO(date, { zone: "America/Denver" });
+  const now = DateTime.now().setZone("America/Denver");
+  const diff = now.diff(dt, "hours").hours;
+  return diff;
+}
