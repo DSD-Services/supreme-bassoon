@@ -130,6 +130,6 @@ Technologies used in the project:
 <a href="minhoru-cotache.netlify.app/ "target="_blank">Minhoru C.</a> &nbsp
 </p>
 <p align="center">
-<a href="[https://github.com/Minhoru123](https://github.com/Minhoru123)"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
+<a href="https://github.com/Minhoru123"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
 <a href="linkedin.com/in/minhoru-cotache"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
 </p>
