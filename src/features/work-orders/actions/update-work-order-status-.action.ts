@@ -1,13 +1,26 @@
 "use server";
 
-import { protect, reqRoles } from "@/features/auth/queries";
+import { reqRoles } from "@/features/auth/queries";
+import { changeWorkOrderStatusEmail, sendEmail } from "@/utils/email-templates";
 import { createClient } from "@/utils/supabase/server";
 import { WorkOrderStatus } from "@/utils/supabase/types";
 
-export async function updateWorkOrderStatusAction(
-  workOrderId: number,
-  status: WorkOrderStatus,
-) {
+export async function updateWorkOrderStatusAction({
+  workOrderId,
+  status,
+  aptStart,
+  clientEmail,
+}: {
+  workOrderId: number;
+  status: WorkOrderStatus;
+  aptStart: string;
+  clientEmail: string;
+}) {
+  const profile = await reqRoles(["CLIENT", "ADMIN", "TECHNICIAN"]);
+  if (!profile) {
+    return { error: "Unauthorized" };
+  }
+
   const supabase = await createClient();
 
   const query = supabase
@@ -16,22 +29,49 @@ export async function updateWorkOrderStatusAction(
     .eq("id", workOrderId);
 
   if (status === "CANCELLED") {
-    await protect();
     const { error } = await query;
-    return { error };
+    if (error) {
+      return { error: error.message };
+    } else {
+      const emailTemplate = changeWorkOrderStatusEmail({
+        workOrderId,
+        newStatus: status,
+        aptStart,
+      });
+      sendEmail(clientEmail, emailTemplate.subject, emailTemplate.html);
+      return { error: null };
+    }
   }
-
-  const profile = await reqRoles(["ADMIN", "TECHNICIAN"]);
 
   if (profile?.role === "TECHNICIAN") {
     const { error } = await query.eq("technician_id", profile.id);
-    return { error };
+    if (error) {
+      return { error: error?.message };
+    } else {
+      const emailTemplate = changeWorkOrderStatusEmail({
+        workOrderId,
+        newStatus: status,
+        aptStart,
+      });
+      sendEmail(clientEmail, emailTemplate.subject, emailTemplate.html);
+      return { error: null };
+    }
   }
 
   if (profile?.role === "ADMIN") {
     const { error } = await query;
-    return { error };
+    if (error) {
+      return { error: error?.message };
+    } else {
+      const emailTemplate = changeWorkOrderStatusEmail({
+        workOrderId,
+        newStatus: status,
+        aptStart,
+      });
+      sendEmail(clientEmail, emailTemplate.subject, emailTemplate.html);
+      return { error: null };
+    }
   }
 
-  return { error: { message: "Oops! Something went wrong" } };
+  return { error: "Oops! Something went wrong" };
 }

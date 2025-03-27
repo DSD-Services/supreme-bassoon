@@ -1,3 +1,6 @@
+import { capitalize, formatDateTime } from "@/lib/utils";
+import { WorkOrderStatus } from "./supabase/types";
+
 type WorkOrderEmailData = {
   workOrderId: string;
   appointmentStart: string;
@@ -575,6 +578,44 @@ export function generateCreateUserEmail(data: CreateUserEmailData): {
     title: "DSD Services - Welcome to DSD Services!",
     // logoUrl: `http://localhost:3000/images/dsd-house-white.png`,
     headerColor: data.role === "CLIENT" ? "#14532d" : "#7c2d12",
+    mainContent,
+    footerContent: footerContent,
+  });
+
+  return { subject, html };
+}
+
+export function changeWorkOrderStatusEmail(data: {
+  workOrderId: number;
+  newStatus: WorkOrderStatus;
+  aptStart: string;
+}) {
+  const subject = `DSD Services - Work Order #${data.workOrderId} Status Update`;
+
+  const aptDateInfo = formatDateTime(data.aptStart);
+
+  const mainContent = `
+    <p>The status of Work Order #${data.workOrderId} has been updated to ${capitalize(data.newStatus.replaceAll("_", " ").toLowerCase())}.</p>
+    <p><strong>Appointment Date:</strong> ${aptDateInfo.date}</p>
+    <p><strong>Appointment Time:</strong> ${aptDateInfo.startTime}</p>
+    <p>Visit your dashboard for more details.</p>
+  `;
+
+  const footerContent = `
+    <p>If you have any questions, please contact our support team.</p>
+  `;
+
+  const headerColor =
+    data.newStatus === "CANCELLED"
+      ? "#dc3545"
+      : data.newStatus === "COMPLETED"
+        ? "#28a745"
+        : "#007bff";
+
+  const html = generateBaseEmailTemplate({
+    title: `DSD Services - Work Order #${data.workOrderId} Status Update`,
+    // logoUrl: `http://localhost:3000/images/dsd-house-white.png`,
+    headerColor,
     mainContent,
     footerContent: footerContent,
   });
