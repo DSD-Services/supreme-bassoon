@@ -1,31 +1,44 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import type { UserRole } from "@/utils/supabase/types";
+import { RegisterInput, RegisterSchema } from "../schemas";
 
-export async function registerAction(formData: FormData) {
+export async function registerAction(values: RegisterInput) {
+  const parsedValues = RegisterSchema.safeParse(values);
+
+  if (!parsedValues.success) {
+    const [error] = parsedValues.error.issues;
+    return { error: error.message };
+  }
+
   const supabase = await createClient();
 
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-  const firstName = formData.get("firstName") as string;
-  const lastName = formData.get("lastName") as string;
-  const role = formData.get("role") as UserRole;
+  const { data: existingUser } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("email", parsedValues.data.email)
+    .single();
+
+  if (existingUser) {
+    return { error: "An account with this email is already registered." };
+  }
 
   const { error } = await supabase.auth.signUp({
-    email,
-    password,
+    email: parsedValues.data.email,
+    password: parsedValues.data.password,
     options: {
-      data: { first_name: firstName, last_name: lastName, role },
+      data: {
+        first_name: parsedValues.data.firstName,
+        last_name: parsedValues.data.lastName,
+        role: "CLIENT",
+      },
     },
   });
 
   if (error) {
-    throw new Error("Registration failed");
+    console.error("[RegisterError]:", error);
+    return { error: "Oops! Something went wrong." };
   }
 
-  revalidatePath("/", "layout");
-  redirect("/login");
+  return { error: null };
 }

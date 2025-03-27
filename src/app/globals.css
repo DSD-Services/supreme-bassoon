@@ -1,16 +1,8 @@
 @import "tailwindcss";
 
-@plugin "@tailwindcss/forms";
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
@@ -19,12 +11,6 @@
 :root {
   --background: hsl(0 0% 100%);
   --foreground: hsl(222.2 84% 4.9%);
-  --primary: hsl(221.2 83.2% 53.3%);
-  --primary-foreground: hsl(210 40% 98%);
-  --secondary: hsl(213 97% 87%);
-  --secondary-foreground: hsl(222.2 47.4% 11.2%);
-  --destructive: hsl(0 84.2% 60.2%);
-  --destructive-foreground: hsl(210 40% 98%);
   --muted: hsl(210 40% 96.1%);
   --muted-foreground: hsl(215.4 16.3% 46.9%);
   --border: hsl(214.3 31.8% 91.4%);
@@ -37,4 +23,119 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.fc-h-event,
+.fc-v-event {
+  background-color: theme("colors.blue.500");
+  border: 1px solid theme("colors.blue.600");
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+  background-color: theme("colors.blue.200");
+}
+
+.fc-event,
+.fc-event-grid {
+  cursor: pointer;
+}
+
+.fc .fc-toolbar.fc-header-toolbar {
+  margin: 0px 0px 8px;
+}
+
+.fc .fc-toolbar-title {
+  color: theme("colors.blue.500");
+  margin: 0px 16px 0px 16px;
+
+  @media screen and (max-width: 640) {
+    font-size: large;
+    margin: 0px 12px 0px 12px;
+    text-align: center;
+  }
+}
+
+.fc .fc-col-header-cell-cushion {
+  @media screen and (max-width: 750) {
+    font-size: 14px;
+    text-align: center;
+  }
+  @media screen and (max-width: 400) {
+    font-size: 12px;
+    text-align: center;
+  }
+}
+
+.fc-bus-hours {
+  background-color: #f0f8ff;
+  color: #000;
+  border: 1px solid #aaa;
+}
+
+.fc .fc-button {
+  background-color: theme("colors.blue.800");
+  border: none;
+}
+
+.fc .fc-button:hover {
+  background-color: theme("colors.blue.900");
+  border: none;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+  background-color: theme("colors.blue.600");
+  border: none;
+}
+
+.fc .fc-button-primary:disabled {
+  background-color: theme("colors.blue.600");
+  border: none;
+}
+
+.break-event {
+  background-color: theme("colors.slate.500") !important;
+  border: 1px solid theme("colors.slate.600") !important;
+  color: black;
+}
+
+.bg-event-green {
+  background-color: rgba(0, 255, 0, 0.3) !important;
+  border: 1px solid green !important;
+}
+
+.bg-event-yellow {
+  background-color: rgba(255, 255, 0, 0.3) !important;
+  border: 1px solid yellow !important;
+}
+
+.bg-event-red {
+  background-color: rgba(255, 85, 0, 0.3) !important;
+  border: 1px solid rgb(255, 89, 0) !important;
+}
+
+.inner-shadow {
+  box-shadow: inset 0 0 10px lightgray;
+}
+
+body.modal-open {
+  overflow: hidden !important;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 5px;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
+}
+
+.tooltip-item {
+  cursor: pointer;
 }

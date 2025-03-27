@@ -4,20 +4,23 @@ import { useEffect, useRef } from "react";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";
-import MotionButtonWrapper from "../buttons/motion-button-wrapper";
-import { NavDataItem } from "./nav-items";
-import { NavLink } from "./nav-link";
+import MotionButtonWrapper from "@/components/ui/motion-button-wrapper";
+import { NavDataItem } from "@/components/header/nav-items";
+import { NavLink } from "@/components/header/nav-link";
+import { SignOutButton } from "@/features/auth/components/sign-out-button";
 
 interface MobileMenuProps {
   handleMenuClick: () => void;
   isMenuOpen: boolean;
   navData: NavDataItem[];
+  authenticated?: boolean;
 }
 
 export default function MobileMenu({
   handleMenuClick,
   isMenuOpen,
   navData,
+  authenticated,
 }: MobileMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -35,8 +38,16 @@ export default function MobileMenu({
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent | TouchEvent) {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        handleMenuClick();
+      const isClickInsideMenu = menuRef.current?.contains(event.target as Node);
+      const clickedLabel = (event.target as HTMLElement)?.textContent?.trim();
+      const isClickOnNavLabel = navData.some(
+        (item) => item.label === clickedLabel,
+      );
+
+      if (menuRef.current && (!isClickInsideMenu || isClickOnNavLabel)) {
+        setTimeout(() => {
+          handleMenuClick();
+        }, 500);
       }
     }
 
@@ -47,7 +58,7 @@ export default function MobileMenu({
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("touchstart", handleClickOutside);
     };
-  }, [handleMenuClick]);
+  }, [handleMenuClick, navData]);
 
   return (
     <AnimatePresence mode="wait">
@@ -69,7 +80,7 @@ export default function MobileMenu({
             }}
             ref={menuRef}
             aria-label="Mobile navigation menu"
-            className="bg-primary bg-opacity-90 fixed top-0 right-0 z-20 h-full w-full max-w-[240px] sm:w-1/3"
+            className="bg-opacity-90 fixed top-0 right-0 z-20 h-full w-full max-w-[240px] bg-blue-600 shadow-lg sm:w-1/3"
           >
             <div className="flex justify-end">
               <MotionButtonWrapper>
@@ -83,7 +94,7 @@ export default function MobileMenu({
                 </div>
               </MotionButtonWrapper>
             </div>
-            <div className="text-primary-foreground flex flex-col gap-8 p-6 font-semibold transition">
+            <div className="ml-10 flex h-full max-h-[calc(100dvh-4rem)] flex-col items-start gap-8 p-6 font-semibold text-white transition">
               {navData.map((item) => (
                 <NavLink
                   key={item.label}
@@ -92,6 +103,12 @@ export default function MobileMenu({
                   icon={item.icon}
                 />
               ))}
+              <div className="flex-1" />
+              {authenticated ? (
+                <div className="flex justify-center">
+                  <SignOutButton />
+                </div>
+              ) : null}
             </div>
           </motion.div>
         </>

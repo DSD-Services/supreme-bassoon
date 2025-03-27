@@ -33,7 +33,7 @@ export type Database = {
           {
             foreignKeyName: "department_service_types_service_type_id_fkey"
             columns: ["service_type_id"]
-            isOneToOne: false
+            isOneToOne: true
             referencedRelation: "service_types"
             referencedColumns: ["id"]
           },
@@ -57,20 +57,20 @@ export type Database = {
       missing_parts: {
         Row: {
           id: number
-          part_id: number | null
-          quantity: number | null
+          part_id: number
+          quantity: number
           work_order_id: number | null
         }
         Insert: {
           id?: never
-          part_id?: number | null
-          quantity?: number | null
+          part_id: number
+          quantity?: number
           work_order_id?: number | null
         }
         Update: {
           id?: never
-          part_id?: number | null
-          quantity?: number | null
+          part_id?: number
+          quantity?: number
           work_order_id?: number | null
         }
         Relationships: [
@@ -93,18 +93,21 @@ export type Database = {
       parts: {
         Row: {
           id: number
+          manufacturer: string | null
           name: string
-          quantity: number | null
+          quantity: number
         }
         Insert: {
           id?: never
+          manufacturer?: string | null
           name: string
-          quantity?: number | null
+          quantity?: number
         }
         Update: {
           id?: never
+          manufacturer?: string | null
           name?: string
-          quantity?: number | null
+          quantity?: number
         }
         Relationships: []
       }
@@ -114,9 +117,10 @@ export type Database = {
           address_line2: string | null
           city: string | null
           created_at: string
-          first_name: string | null
+          email: string
+          first_name: string
           id: string
-          last_name: string | null
+          last_name: string
           postal_code: string | null
           primary_phone: string | null
           role: Database["public"]["Enums"]["userrole"]
@@ -129,9 +133,10 @@ export type Database = {
           address_line2?: string | null
           city?: string | null
           created_at?: string
-          first_name?: string | null
+          email: string
+          first_name: string
           id: string
-          last_name?: string | null
+          last_name: string
           postal_code?: string | null
           primary_phone?: string | null
           role: Database["public"]["Enums"]["userrole"]
@@ -144,9 +149,10 @@ export type Database = {
           address_line2?: string | null
           city?: string | null
           created_at?: string
-          first_name?: string | null
+          email?: string
+          first_name?: string
           id?: string
-          last_name?: string | null
+          last_name?: string
           postal_code?: string | null
           primary_phone?: string | null
           role?: Database["public"]["Enums"]["userrole"]
@@ -159,20 +165,20 @@ export type Database = {
       reserved_parts: {
         Row: {
           id: number
-          part_id: number | null
-          quantity: number | null
+          part_id: number
+          quantity: number
           work_order_id: number | null
         }
         Insert: {
           id?: never
-          part_id?: number | null
-          quantity?: number | null
+          part_id: number
+          quantity?: number
           work_order_id?: number | null
         }
         Update: {
           id?: never
-          part_id?: number | null
-          quantity?: number | null
+          part_id?: number
+          quantity?: number
           work_order_id?: number | null
         }
         Relationships: [
@@ -195,20 +201,20 @@ export type Database = {
       service_type_parts: {
         Row: {
           id: number
-          part_id: number | null
-          quantity: number | null
+          part_id: number
+          quantity: number
           service_type_id: number | null
         }
         Insert: {
           id?: never
-          part_id?: number | null
-          quantity?: number | null
+          part_id: number
+          quantity?: number
           service_type_id?: number | null
         }
         Update: {
           id?: never
-          part_id?: number | null
-          quantity?: number | null
+          part_id?: number
+          quantity?: number
           service_type_id?: number | null
         }
         Relationships: [
@@ -299,34 +305,46 @@ export type Database = {
           appointment_end: string | null
           appointment_notes: string | null
           appointment_start: string | null
-          client_id: string | null
-          department_id: number | null
+          client_id: string
+          department_id: number
           id: number
-          service_type_id: number | null
+          job_details: string | null
+          primary_phone: string
+          secondary_phone: string | null
+          service_address: Json
+          service_type_id: number
           status: Database["public"]["Enums"]["workorderstatus"]
-          technician_id: string | null
+          technician_id: string
         }
         Insert: {
           appointment_end?: string | null
           appointment_notes?: string | null
           appointment_start?: string | null
-          client_id?: string | null
-          department_id?: number | null
+          client_id: string
+          department_id: number
           id?: never
-          service_type_id?: number | null
+          job_details?: string | null
+          primary_phone: string
+          secondary_phone?: string | null
+          service_address: Json
+          service_type_id: number
           status?: Database["public"]["Enums"]["workorderstatus"]
-          technician_id?: string | null
+          technician_id: string
         }
         Update: {
           appointment_end?: string | null
           appointment_notes?: string | null
           appointment_start?: string | null
-          client_id?: string | null
-          department_id?: number | null
+          client_id?: string
+          department_id?: number
           id?: never
-          service_type_id?: number | null
+          job_details?: string | null
+          primary_phone?: string
+          secondary_phone?: string | null
+          service_address?: Json
+          service_type_id?: number
           status?: Database["public"]["Enums"]["workorderstatus"]
-          technician_id?: string | null
+          technician_id?: string
         }
         Relationships: [
           {
@@ -364,7 +382,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
     }
     Enums: {
       userrole: "CLIENT" | "TECHNICIAN" | "ADMIN"

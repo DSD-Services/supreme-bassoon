@@ -1,36 +1,135 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<h1 align="center" id="title">DSD Services</h1>
 
-## Getting Started
+<p align="center"><img src="https://i.imgur.com/ldcKaoe.png" alt="DSD Services" width="180" /></p>
 
-First, run the development server:
+<p align="center"><img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&amp;logo=next.js&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&amp;logo=typescript&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&amp;logo=tailwind-css&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&amp;logo=framer&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/React_Hook_Form-EC5990?style=for-the-badge&amp;logo=reacthookform&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/Supabase-3FCF8E?style=for-the-badge&amp;logo=supabase&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/Zod-3E61EE?style=for-the-badge&amp;logo=apachespark&amp;logoColor=white" alt="shields"><img src="https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&amp;logo=postgresql&amp;logoColor=white" alt="shields"></p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+<h2>🚀 Demo</h2>
+
+[http://localhost:3000](http://localhost:3000)
+
+<h2>Project Screenshots:</h2>
+
+[<img src="https://i.imgur.com/PqeS06R.png" width="49%" />](https://i.imgur.com/PqeS06R.png)
+[<img src="https://i.imgur.com/gBU4S3j.png" width="49%" />](https://i.imgur.com/gBU4S3j.png)
+
+[<img src="https://i.imgur.com/K2hQ3n8.png" width="49%" />](https://i.imgur.com/K2hQ3n8.png)
+[<img src="https://i.imgur.com/b5FQkuQ.png" width="49%" />](https://i.imgur.com/b5FQkuQ.png)
+
+[<img src="https://i.imgur.com/cE4saAC.png" width="49%" />](https://i.imgur.com/cE4saAC.png)
+
+<h2>🧐 Features</h2>
+
+Here are some of the project's best features:
+
+- Customers can pick a time slot to book a service across multiple departments.
+- Lists required parts and checks PostgreSQL inventory using Supabase. Missing parts trigger contractor notifications.
+- Supabase Auth sends confirmation and reminder emails with Nodemailer for alerts on missing parts.
+- Admins manage schedules and inventory with secure access using Supabase’s row-level security.
+- Customers track bookings and update info with Supabase Auth validated by Zod.
+- Fully mobile-friendly using Tailwind CSS for responsive design.
+
+<h2>🛠️ Installation Steps:</h2>
+
+<p>1. Clone the repository</p>
+
+```
+git clone https://github.com/Demonico/supreme-bassoon.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<p>2. Change into the directory</p>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+cd supreme-bassoon
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+<p>3. Install dependencies</p>
 
-## Learn More
+```
+npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+<p>4. Create a .env</p>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+touch .env
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+<p>5. Add environment variables to .env</p>
 
-## Deploy on Vercel
+```
+.env.example for reference
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<p>6. Start development server</p>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+npm run dev
+```
+
+<h2>💻 Built with</h2>
+
+Technologies used in the project:
+
+- Next.JS + TypeScript
+- Tailwind CSS + Framer Motion
+- React Hook Form + Zod
+- Supabase
+- PostgreSQL
+
+<!-- linked and socials for the team -->
+<h2>🤝 Team</h2>
+
+<p align="center">
+<a href="https://khurramali.site"target="_blank">Khurram A.</a> &nbsp
+</p>
+<p align="center">
+  <a href="https://github.com/destocot" target="_blank">
+    <img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Badge">
+  </a>
+  <a href="https://www.linkedin.com/in/destocot" target="_blank">
+    <img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge">
+  </a>
+  <a href="https://www.youtube.com/@GiraffeReactor" target="_blank">
+    <img src="https://img.shields.io/badge/Subscribe%20on%20YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube Badge">
+  </a>
+</p>
+
+<p align="center">
+<a href="http://katiehom.com"target="_blank">Katie H.</a> &nbsp
+</p>
+<p align="center">
+<a href="https://github.com/katiehom"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
+<a href="https://www.linkedin.com/in/katiehom/"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
+</p>
+<p align="center">
+<a href=""target="_blank">Maye J.</a> &nbsp
+</p>
+<p align="center">
+<a href="https://github.com/CodingLady22"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
+<a href="https://www.linkedin.com/in/mayejesuorobo/"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
+</p>
+<p align="center">
+<a href=""target="_blank">Acir S.</a> &nbsp
+</p>
+<p align="center">
+<a href="https://github.com/rudzzz"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
+<a href="https://www.linkedin.com/in/acir-rudson/"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
+</p>
+
+<!-- special thank to leads Jarrod and Minhoru -->
+<h3>Special Thanks to:</h3>
+<p align="center">
+<a href="github.com/Demonico "target="_blank">Jarrod B.</a> &nbsp
+</p>
+<p align="center">
+<a href="github.com/Demonico "target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
+<a href="https://www.linkedin.com/in/jarrodvandoren/"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
+</p>
+<p align="center">
+<a href="minhoru-cotache.netlify.app/ "target="_blank">Minhoru S.</a> &nbsp
+</p>
+<p align="center">
+<a href=""target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
+<a href="linkedin.com/in/minhoru-cotache"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
+</p>

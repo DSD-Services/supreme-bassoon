@@ -4,15 +4,16 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons/faBars";
 import MobileMenu from "./mobile-menu";
-import MotionButtonWrapper from "../buttons/motion-button-wrapper";
+import MotionButtonWrapper from "../ui/motion-button-wrapper";
 import { NavDataItem } from "./nav-items";
 import { NavLink } from "./nav-link";
 
 interface NavProps {
   navData: NavDataItem[];
+  authenticated?: boolean;
 }
 
-export default function Nav({ navData }: NavProps) {
+export default function Nav({ navData, authenticated }: NavProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleMenuClick = () => {
@@ -28,14 +29,17 @@ export default function Nav({ navData }: NavProps) {
             href={item.href}
             label={item.label}
             icon={item.icon}
-            roles={item.roles}
           />
         ))}
       </div>
       <MotionButtonWrapper>
         <div
           role="button"
-          aria-label="Open mobile navigation menu"
+          aria-label={
+            isMenuOpen
+              ? "Close mobile navigation menu"
+              : "Open mobile navigation menu"
+          }
           tabIndex={0}
           className="flex cursor-pointer transition hover:text-blue-200 md:hidden"
         >
@@ -50,6 +54,7 @@ export default function Nav({ navData }: NavProps) {
         handleMenuClick={handleMenuClick}
         isMenuOpen={isMenuOpen}
         navData={navData}
+        authenticated={authenticated}
       />
     </nav>
   );
