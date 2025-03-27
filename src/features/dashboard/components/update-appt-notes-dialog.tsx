@@ -24,7 +24,7 @@ export const UpdateApptNotesDialog = ({
         onClick={openDialog}
       >
         <FontAwesomeIcon icon={faPencil} />
-        Edit
+        <span className="hidden md:block">Edit</span>
       </Button>
 
       <Dialog
