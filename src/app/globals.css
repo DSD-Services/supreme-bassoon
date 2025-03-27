@@ -49,8 +49,20 @@
   margin: 0px 16px 0px 16px;
 
   @media screen and (max-width: 640) {
-    font-size: x-large;
+    font-size: large;
     margin: 0px 12px 0px 12px;
+    text-align: center;
+  }
+}
+
+.fc .fc-col-header-cell-cushion {
+  @media screen and (max-width: 750) {
+    font-size: 14px;
+    text-align: center;
+  }
+  @media screen and (max-width: 400) {
+    font-size: 12px;
+    text-align: center;
   }
 }
 
