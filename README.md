@@ -80,6 +80,9 @@ Technologies used in the project:
 <!-- linked and socials for the team -->
 <h2>🤝 Team</h2>
 
+<div align="center">
+<img src="https://i.imgur.com/0xjsJDa.jpg" alt="Khurram A." width="150px">
+</div>
 <p align="center">
 <a href="https://khurramali.site"target="_blank">Khurram A.</a> &nbsp
 </p>
@@ -95,6 +98,9 @@ Technologies used in the project:
   </a>
 </p>
 
+<div align="center">
+<img src="https://i.imgur.com/jjslUPZ.png" alt="Katie H." width="150px">
+</div>
 <p align="center">
 <a href="http://katiehom.com"target="_blank">Katie H.</a> &nbsp
 </p>
@@ -102,6 +108,10 @@ Technologies used in the project:
 <a href="https://github.com/katiehom"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
 <a href="https://www.linkedin.com/in/katiehom/"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
 </p>
+
+<div align="center">
+  <img src="https://i.imgur.com/kodfige.jpg" alt="Maye J." width="150px">
+</div>
 <p align="center">
 <a href="https://codinglady22.github.io/Portfolio2.0/"target="_blank">Maye J.</a> &nbsp
 </p>
@@ -109,6 +119,9 @@ Technologies used in the project:
 <a href="https://github.com/CodingLady22"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
 <a href="https://www.linkedin.com/in/mayejesuorobo/"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
 </p>
+<div align="center">
+  <img src="https://i.imgur.com/YBG3a6W.png" alt="Acir S." width="150px">
+</div>
 <p align="center">
 <a href="https://github.com/rudzzz"target="_blank">Acir S.</a> &nbsp
 </p>
