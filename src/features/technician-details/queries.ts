@@ -54,7 +54,7 @@ export async function findTechnicianSchedule(
     return { data: null, error: "Failed to fetch work orders" };
   }
 
-  if (!workOrders || workOrders.length === 0) {
+  if (!workOrders) {
     return { data: null, error: "Work orders not found" };
   }
 

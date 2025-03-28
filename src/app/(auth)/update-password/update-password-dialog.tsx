@@ -13,7 +13,7 @@ export const UpdatePasswordDialog = () => {
   return (
     <>
       <Button
-        className="inline-flex h-9 cursor-pointer items-center justify-center gap-2 rounded-md bg-red-500 px-4 py-2 text-sm font-medium whitespace-nowrap text-white shadow transition-colors hover:bg-red-800 focus-visible:ring-1 focus-visible:ring-red-800 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
+        className="inline-flex h-9 cursor-pointer items-center justify-center gap-2 rounded-md bg-blue-900 px-4 py-2 text-sm font-medium whitespace-nowrap text-white shadow transition-colors hover:bg-blue-800 focus-visible:ring-1 focus-visible:ring-red-800 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
         size="sm"
         variant="secondary"
         onClick={openDialog}
