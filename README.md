@@ -80,69 +80,79 @@ Technologies used in the project:
 <!-- linked and socials for the team -->
 <h2>🤝 Team</h2>
 
-<div align="center">
-<img src="https://i.imgur.com/0xjsJDa.jpg" alt="Khurram A." width="150px">
-</div>
-<p align="center">
-<a href="https://khurramali.site"target="_blank">Khurram A.</a> &nbsp
-</p>
-<p align="center">
-  <a href="https://github.com/destocot" target="_blank">
-    <img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Badge">
-  </a>
-  <a href="https://www.linkedin.com/in/khurram-ali1" target="_blank">
-    <img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge">
-  </a>
-  <a href="https://www.youtube.com/@GiraffeReactor" target="_blank">
-    <img src="https://img.shields.io/badge/Subscribe%20on%20YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube Badge">
-  </a>
-</p>
+<table align="center">
+  <tr>
+    <td align="center" width="300px" height="300px">
+      <img src="https://i.imgur.com/0xjsJDa.jpg" alt="Khurram A." width="150px"><br>
+      <a href="https://khurramali.site" target="_blank"><b>Khurram A.</b></a><br>
+      <a href="https://github.com/destocot" target="_blank">
+        <img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white">
+      </a><br>
+      <a href="https://www.linkedin.com/in/khurram-ali1" target="_blank">
+        <img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">
+      </a><br>
+      <a href="https://www.youtube.com/@GiraffeReactor" target="_blank">
+        <img src="https://img.shields.io/badge/Subscribe%20on%20YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white">
+      </a>
+    </td>
+    <td align="center" width="300px" height="300px">
+      <img src="https://i.imgur.com/jjslUPZ.png" alt="Katie H." width="150px"><br>
+      <a href="http://katiehom.com" target="_blank"><b>Katie H.</b></a><br>
+      <a href="https://github.com/katiehom" target="_blank">
+        <img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white">
+      </a><br>
+      <a href="https://www.linkedin.com/in/katiehom/" target="_blank">
+        <img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="300px" height="300px">
+      <img src="https://i.imgur.com/kodfige.jpg" alt="Maye J." width="150px"><br>
+      <a href="https://codinglady22.github.io/Portfolio2.0/" target="_blank"><b>Maye J.</b></a><br>
+      <a href="https://github.com/CodingLady22" target="_blank">
+        <img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white">
+      </a><br>
+      <a href="https://www.linkedin.com/in/mayejesuorobo/" target="_blank">
+        <img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">
+      </a>
+    </td>
+    <td align="center" width="300px" height="300px">
+      <img src="https://i.imgur.com/YBG3a6W.png" alt="Acir S." width="150px"><br>
+      <a href="https://github.com/rudzzz" target="_blank"><b>Acir S.</b></a><br>
+      <a href="https://github.com/rudzzz" target="_blank">
+        <img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white">
+      </a><br>
+      <a href="https://www.linkedin.com/in/acir-rudson/" target="_blank">
+        <img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">
+      </a>
+    </td>
+  </tr>
+</table>
 
-<div align="center">
-<img src="https://i.imgur.com/jjslUPZ.png" alt="Katie H." width="150px">
-</div>
-<p align="center">
-<a href="http://katiehom.com"target="_blank">Katie H.</a> &nbsp
-</p>
-<p align="center">
-<a href="https://github.com/katiehom"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
-<a href="https://www.linkedin.com/in/katiehom/"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
-</p>
-
-<div align="center">
-  <img src="https://i.imgur.com/kodfige.jpg" alt="Maye J." width="150px">
-</div>
-<p align="center">
-<a href="https://codinglady22.github.io/Portfolio2.0/"target="_blank">Maye J.</a> &nbsp
-</p>
-<p align="center">
-<a href="https://github.com/CodingLady22"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
-<a href="https://www.linkedin.com/in/mayejesuorobo/"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
-</p>
-<div align="center">
-  <img src="https://i.imgur.com/YBG3a6W.png" alt="Acir S." width="150px">
-</div>
-<p align="center">
-<a href="https://github.com/rudzzz"target="_blank">Acir S.</a> &nbsp
-</p>
-<p align="center">
-<a href="https://github.com/rudzzz"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
-<a href="https://www.linkedin.com/in/acir-rudson/"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
-</p>
 
 <!-- special thank to leads Jarrod and Minhoru -->
-<h3>Special Thanks to:</h3>
-<p align="center">
-<a href="https://github.com/Demonico"target="_blank">Jarrod V.</a> &nbsp
-</p>
-<p align="center">
-<a href="https://github.com/Demonico"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
-<a href="https://www.linkedin.com/in/jarrodvandoren/"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
-</p>
-<p align="center">
-<a href="minhoru-cotache.netlify.app/ "target="_blank">Minhoru C.</a> &nbsp
-</p>
-<p align="center">
-<a href="https://github.com/Minhoru123"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="shields"></a>
-<a href="linkedin.com/in/minhoru-cotache"target="_blank"><img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="shields"></a>
-</p>
+<h3 align="center">Special Thanks to:</h3>
+
+<table align="center">
+  <tr>
+    <td align="center" width="300px" height="200px">
+      <a href="https://github.com/Demonico" target="_blank"><b>Jarrod V.</b></a><br>
+      <a href="https://github.com/Demonico" target="_blank">
+        <img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white">
+      </a><br>
+      <a href="https://www.linkedin.com/in/jarrodvandoren/" target="_blank">
+        <img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">
+      </a>
+    </td>
+    <td align="center" width="300px" height="200px">
+      <a href="https://minhoru-cotache.netlify.app/" target="_blank"><b>Minhoru C.</b></a><br>
+      <a href="https://github.com/Minhoru123" target="_blank">
+        <img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white">
+      </a><br>
+      <a href="https://www.linkedin.com/in/minhoru-cotache" target="_blank">
+        <img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">
+      </a>
+    </td>
+  </tr>
+</table>
